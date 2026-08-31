@@ -1,0 +1,227 @@
+{% extends "base.html.j2" %}
+{% block titre %}Plaquette — saison {{ saison }}{% endblock %}
+{% block description %}La compagnie, les groupes, les créneaux et les coûts — saison {{ saison }}.{% endblock %}
+
+{% macro picto(nom) %}
+{%- if nom == "site" -%}
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+  <circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/>
+</svg>
+{%- elif nom == "facebook" -%}
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+  <rect x="3" y="3" width="18" height="18" rx="4"/><path d="M13.5 21v-8h2.5l.5-3h-3V8.5c0-1 .3-1.5 1.5-1.5h1.5V4.2c-.6-.1-1.4-.2-2.2-.2-2.2 0-3.8 1.3-3.8 3.8V10H8v3h2.5v8"/>
+</svg>
+{%- elif nom == "instagram" -%}
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+  <rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.2" cy="6.8" r="1.1" fill="currentColor" stroke="none"/>
+</svg>
+{%- endif -%}
+{% endmacro %}
+
+{% macro carte_groupe(identifiant) %}
+{% set g = plaquette.groupes | selectattr("id", "equalto", identifiant) | first %}
+<article class="groupe">
+  <h3>{{ g.titre }}</h3>
+  {% if g.get('public') or g.get('places') %}
+  <div class="public">
+    {{ g.get('public', '') | texte_riche }}
+    {%- if g.get('places') %}<p>{{ g['places'] }} places</p>{% endif %}
+  </div>
+  {% endif %}
+  {% for c in g.creneaux_resolus %}
+  <p class="quand">{{ c.jour | capitalize }} {{ c.debut | heure_fr }} – {{ c.fin | heure_fr }}</p>
+  {% endfor %}
+  <div class="descr">{{ g.description | texte_riche }}</div>
+  {% if g.couts %}
+  <p class="cout">
+    {% for c in g.couts %}{{ c.montant }} € ({{ c.libelle }}){{ " · " if not loop.last }}{% endfor %}
+    {% if g.formation_fmt %}<span>dont formation et matériel {{ g.formation_fmt }} €</span>{% endif %}
+  </p>
+  {% endif %}
+</article>
+{% endmacro %}
+
+{% block styles %}
+.telecharger { margin: 0 0 1rem; }
+.telecharger a { color: var(--accent); font-weight: 600; }
+.plaquette {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1rem;
+}
+.planche { display: contents; }
+.volet {
+  background: var(--carte);
+  border: 1px solid var(--filet);
+  border-radius: 6px;
+  padding: 1.1rem 1.2rem;
+}
+.volet h2 {
+  margin: 0 0 0.7rem;
+  font-size: 1.05rem;
+  color: var(--bleu);
+  border-bottom: 1px solid var(--filet);
+  padding-bottom: 0.4rem;
+}
+.volet p { margin: 0.35rem 0; font-size: 0.92rem; }
+.couverture {
+  background: var(--bleu);
+  color: var(--fond);
+  border-color: var(--bleu);
+  text-align: center;
+}
+.couverture .logo-couv {
+  height: 150px;
+  width: auto;
+  border-radius: 6px;
+  margin: 0.4rem auto 0;
+  display: block;
+}
+.couverture .manuscrit { font-size: 2rem; line-height: 1.05; margin: 1rem 0 0.1rem; color: #ccd4ea; }
+.couverture h2 {
+  color: var(--fond);
+  border: none;
+  font-size: 1.35rem;
+  margin: 0 0 0.8rem;
+  padding: 0;
+}
+.couverture p { color: #dfe4f2; }
+.label-image {
+  display: block;
+  margin: 1.2rem auto 0;
+  max-width: 78%;
+  height: auto;
+  border: 2px solid var(--accent);
+  border-radius: 8px;
+}
+.groupe {
+  border-left: 3px solid var(--accent);
+  padding: 0.1rem 0 0.15rem 0.75rem;
+  margin: 0 0 0.9rem;
+}
+.groupe h3 { margin: 0; font-size: 0.98rem; }
+.groupe .public p { color: var(--gris); font-weight: 600; margin: 0.15rem 0; }
+.groupe .quand { font-weight: 600; color: var(--bleu); }
+.groupe .descr p { color: var(--gris); }
+.groupe .cout { font-weight: 700; }
+.groupe .cout span { display: block; font-weight: 400; color: var(--gris); font-size: 0.85rem; }
+.contact { margin: 0 0 0.7rem; }
+.contact .role { color: var(--gris); font-size: 0.85rem; margin: 0; }
+.contact .qui { font-weight: 600; margin: 0; }
+.reseau { display: flex; align-items: center; gap: 0.55rem; margin: 0.45rem 0; }
+.reseau svg { width: 22px; height: 22px; color: var(--accent); flex: none; }
+.qr-liste { display: flex; flex-wrap: wrap; gap: 1.1rem; margin-top: 0.6rem; }
+.qr { text-align: center; margin: 0; }
+.qr svg { width: 30mm; height: 30mm; display: block; }
+.qr figcaption { font-size: 0.8rem; color: var(--gris); margin-top: 0.25rem; max-width: 30mm; }
+.securite { font-weight: 700; }
+@media print {
+  @page { size: A4 landscape; margin: 0; }
+  body { background: #fff; font-size: 9px; }
+  header, nav.site, footer, .telecharger { display: none; }
+  main { padding: 0; max-width: none; }
+  .plaquette { display: block; }
+  .planche { display: flex; width: 297mm; height: 210mm; page-break-after: always; }
+  .volet {
+    width: 99mm;
+    height: 210mm;
+    padding: 9mm 8mm;
+    border: none;
+    border-radius: 0;
+    overflow: hidden;
+  }
+  .volet + .volet { border-left: 0.3mm dashed var(--filet); }
+  .couverture { border: none; print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+  .volet h2 { font-size: 13px; }
+  .volet p, .groupe p { font-size: 9.5px; line-height: 1.45; }
+  .groupe h3 { font-size: 11px; }
+  .groupe .cout span { font-size: 8.5px; }
+  .contact .role { font-size: 8.5px; }
+  .contact .qui { font-size: 10.5px; }
+  .couverture .manuscrit { font-size: 21px; }
+  .couverture h2 { font-size: 15px; }
+  .couverture .logo-couv { height: 42mm; }
+  .label-image { max-width: 62mm; margin-top: 10mm; }
+  .reseau svg { width: 5mm; height: 5mm; }
+  .qr svg { width: 26mm; height: 26mm; }
+  .qr figcaption { font-size: 8px; max-width: 26mm; }
+}
+{% endblock %}
+{% block contenu %}
+{% if pdf_disponible %}
+<p class="telecharger">
+  <a href="{{ pdf_plaquette }}" download>Télécharger la plaquette en PDF (dépliant à imprimer)</a>
+</p>
+{% endif %}
+<div class="plaquette">
+  <div class="planche">
+    <section class="volet couverture">
+      {% if logo_existe %}<img class="logo-couv" src="{{ prefixe }}static/img/logo.jpg" alt="Blason de la Compagnie d'archers de Pontoise">{% endif %}
+      <p class="manuscrit">{{ club }}</p>
+      <h2>{{ plaquette.accroche }}</h2>
+      <p>{{ plaquette.qu_est_ce }}</p>
+      {% if label_existe %}
+      <img class="label-image" src="{{ prefixe }}static/img/label-ambition.png"
+           alt="{{ plaquette.label.intitule }} — {{ plaquette.label.validite }}">
+      {% endif %}
+    </section>
+    <section class="volet">
+      <h2>La compagnie</h2>
+      {{ plaquette.presentation | texte_riche }}
+      <h2>Lieux de pratique</h2>
+      {% for lieu in plaquette.lieux %}
+      <p><strong>{{ lieu.nom }}</strong></p>
+      {{ lieu.detail | texte_riche }}
+      {% endfor %}
+      <h2>Tir libre en autonomie</h2>
+      {{ plaquette.tir_libre_autonomie | texte_riche }}
+    </section>
+    <section class="volet">
+      <h2>Contacts</h2>
+      {% for c in plaquette.contacts %}
+      <div class="contact">
+        <p class="role">{{ c.role }}</p>
+        {% if c.get('nom') %}<p class="qui">{{ c['nom'] }}</p>{% endif %}
+        <p><a href="mailto:{{ c.courriel }}">{{ c.courriel }}</a></p>
+      </div>
+      {% endfor %}
+      <h2>Pour en savoir plus</h2>
+      {% for r in plaquette.reseaux %}
+      <p class="reseau">
+        {{ picto(r.picto) }}
+        {% if r.get('lien') %}<a href="{{ r['lien'] }}">{{ r.libelle }}</a>{% else %}<span>{{ r.libelle }}</span>{% endif %}
+      </p>
+      {% endfor %}
+      <div class="qr-liste">
+        {% for q in plaquette.qr_codes %}
+        <figure class="qr">
+          {{ q.lien | qr_svg }}
+          <figcaption>{{ q.libelle }}</figcaption>
+        </figure>
+        {% endfor %}
+      </div>
+    </section>
+  </div>
+  <div class="planche">
+    <section class="volet">
+      <h2>Les jeunes débutants</h2>
+      <p class="securite">{{ plaquette.securite_jeunes }}</p>
+      {{ carte_groupe("petits-robins-debutants") }}
+      {{ carte_groupe("jeunes-debutants") }}
+    </section>
+    <section class="volet">
+      <h2>Jeunes confirmés</h2>
+      {{ carte_groupe("jeunes-confirmes") }}
+      <h2>Parcours et tir traditionnel</h2>
+      {{ carte_groupe("tir-de-parcours") }}
+      {{ carte_groupe("arc-sans-viseur") }}
+    </section>
+    <section class="volet">
+      <h2>Les adultes</h2>
+      {{ carte_groupe("adultes-debutants") }}
+      {{ carte_groupe("adultes-confirmes") }}
+      {{ carte_groupe("perfectionnement-adultes") }}
+    </section>
+  </div>
+</div>
+{% endblock %}

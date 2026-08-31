@@ -20,6 +20,7 @@ from typing import Any
 
 import yaml
 from jinja2 import Environment, FileSystemLoader, StrictUndefined
+from markupsafe import Markup, escape
 
 RACINE = Path(__file__).resolve().parent.parent
 TEMPLATES = RACINE / "templates"
@@ -32,6 +33,7 @@ PAGES = {
     "planning/paysage.html.j2": "planning/paysage.html",
     "planning/embarque.html.j2": "planning/embarque.html",
     "tarifs/tableau.html.j2": "tarifs/index.html",
+    "plaquette/page.html.j2": "plaquette/index.html",
     "tarifs/calculateur.html.j2": "calculateur/index.html",
 }
 
@@ -55,6 +57,26 @@ def en_minutes(valeur: str) -> int:
     """Convertit « HH:MM » en minutes depuis minuit."""
     heures, minutes = valeur.split(":")
     return int(heures) * 60 + int(minutes)
+
+
+def texte_riche(valeur: str) -> Markup:
+    """Convertit les retours à la ligne du YAML en HTML.
+
+    Une ligne vide sépare deux paragraphes, un simple retour à la
+    ligne produit un <br>. Le contenu est échappé.
+    """
+    paragraphes = [p.strip() for p in valeur.strip().split("\n\n") if p.strip()]
+    rendus = [
+        "<p>" + "<br>".join(escape(ligne) for ligne in p.splitlines()) + "</p>" for p in paragraphes
+    ]
+    return Markup("".join(rendus))
+
+
+def qr_svg(lien: str) -> Markup:
+    """Génère un QR code SVG inline, aux couleurs de la charte."""
+    import segno
+
+    return Markup(segno.make(lien, error="m").svg_inline(dark="#1b2b5a", border=1, svgclass=None))
 
 
 def en_centimes(valeur: Any) -> int:
@@ -325,6 +347,10 @@ def contexte_tarifs(donnees: dict[str, Any]) -> dict[str, Any]:
     ).replace("</", "<\\/")
 
     return {
+        "totaux_categories": {
+            c["id"]: sum(en_centimes(c[p]) for p in PARTS) + part_compagnie
+            for c in donnees["categories"]
+        },
         "saison_tarifs": donnees["saison_tarifs"],
         "part_compagnie_fmt": euros_fr(part_compagnie),
         "remises_famille": remises,
@@ -335,18 +361,12 @@ def contexte_tarifs(donnees: dict[str, Any]) -> dict[str, Any]:
     }
 
 
-def generer_pdf(saison: str) -> bool:
-    """Rend le planning paysage en PDF via WeasyPrint, si disponible."""
-    try:
-        from weasyprint import HTML
-    except ImportError:
-        print("AVERTISSEMENT : WeasyPrint absent, PDF non généré", file=sys.stderr)
-        return False
-    source = DIST / "planning" / "paysage.html"
-    sortie = DIST / "planning" / f"planning-{saison}.pdf"
+def generer_pdf(source: Path, sortie: Path) -> None:
+    """Rend une page HTML en PDF via WeasyPrint (importé par l'appelant)."""
+    from weasyprint import HTML
+
     HTML(filename=str(source)).write_pdf(str(sortie))
     print(f"Généré : {sortie.relative_to(RACINE)}")
-    return True
 
 
 def verifier_styles(html: str, nom: str) -> list[str]:
@@ -361,6 +381,69 @@ def verifier_styles(html: str, nom: str) -> list[str]:
     return erreurs
 
 
+# ------------------------------------------------------------------ plaquette
+
+
+def valider_plaquette(
+    plq: dict[str, Any], planning: dict[str, Any], tarifs: dict[str, Any]
+) -> list[str]:
+    """Vérifie les références croisées de la plaquette vers planning et tarifs."""
+    erreurs: list[str] = []
+    for cle in ("accroche", "qu_est_ce", "presentation", "contacts", "reseaux", "groupes"):
+        if cle not in plq:
+            erreurs.append(f"plaquette : clé racine manquante : {cle}")
+    if erreurs:
+        return erreurs
+
+    creneaux_connus = {(c["jour"], c["debut"]) for c in planning["creneaux"]}
+    categories_connues = {c["id"] for c in tarifs["categories"]}
+
+    for g in plq["groupes"]:
+        ref = f"groupe {g.get('id', '?')}"
+        for r in g.get("creneaux", []):
+            if (r.get("jour"), r.get("debut")) not in creneaux_connus:
+                erreurs.append(
+                    f"{ref} : créneau introuvable dans le planning "
+                    f"({r.get('jour')} {r.get('debut')})"
+                )
+        for licence in g.get("licences", []):
+            if licence.get("categorie") not in categories_connues:
+                erreurs.append(
+                    f"{ref} : catégorie tarifaire inconnue « {licence.get('categorie')} »"
+                )
+        if "formation" in g and en_centimes(g["formation"]) < 0:
+            erreurs.append(f"{ref} : formation négative")
+    return erreurs
+
+
+def contexte_plaquette(
+    plq: dict[str, Any], planning: dict[str, Any], totaux: dict[str, int]
+) -> dict[str, Any]:
+    """Résout les références des groupes vers les créneaux et les coûts."""
+    par_cle = {(c["jour"], c["debut"]): c for c in planning["creneaux"]}
+    groupes = []
+    for g in plq["groupes"]:
+        formation = en_centimes(g.get("formation", 0))
+        couts = [
+            {
+                "libelle": licence["libelle"],
+                "montant": euros_fr(totaux[licence["categorie"]] + formation),
+            }
+            for licence in g.get("licences", [])
+        ]
+        groupes.append(
+            {
+                **g,
+                "creneaux_resolus": [
+                    par_cle[(r["jour"], r["debut"])] for r in g.get("creneaux", [])
+                ],
+                "couts": couts,
+                "formation_fmt": euros_fr(formation) if formation else None,
+            }
+        )
+    return {"plaquette": {**plq, "groupes": groupes}}
+
+
 # ---------------------------------------------------------------------- build
 
 
@@ -368,8 +451,13 @@ def principal() -> int:
     """Point d'entrée : valide les deux sources, puis génère dist/."""
     planning = yaml.safe_load((RACINE / "data" / "planning.yaml").read_text(encoding="utf-8"))
     tarifs = yaml.safe_load((RACINE / "data" / "tarifs.yaml").read_text(encoding="utf-8"))
+    plq = yaml.safe_load((RACINE / "data" / "plaquette.yaml").read_text(encoding="utf-8"))
 
-    erreurs = valider_planning(planning) + valider_tarifs(tarifs)
+    erreurs = (
+        valider_planning(planning)
+        + valider_tarifs(tarifs)
+        + valider_plaquette(plq, planning, tarifs)
+    )
     if erreurs:
         for erreur in erreurs:
             print(f"ERREUR : {erreur}", file=sys.stderr)
@@ -390,16 +478,22 @@ def principal() -> int:
         lstrip_blocks=True,
     )
     env.filters["heure_fr"] = heure_fr
+    env.filters["texte_riche"] = texte_riche
+    env.filters["qr_svg"] = qr_svg
 
     if (RACINE / "static").is_dir():
         shutil.copytree(RACINE / "static", DIST / "static", dirs_exist_ok=True)
 
+    contexte_t = contexte_tarifs(tarifs)
     commun = {
         **contexte_planning(planning),
-        **contexte_tarifs(tarifs),
+        **contexte_t,
+        **contexte_plaquette(plq, planning, contexte_t["totaux_categories"]),
         "date_generation": date.today().strftime("%d/%m/%Y"),
         "logo_existe": (RACINE / "static" / "img" / "logo.jpg").is_file(),
         "pdf_planning": f"planning-{planning['saison']}.pdf",
+        "pdf_plaquette": f"plaquette-{planning['saison']}.pdf",
+        "label_existe": (RACINE / "static" / "img" / "label-ambition.png").is_file(),
         "pdf_disponible": importlib.util.find_spec("weasyprint") is not None,
     }
 
@@ -424,7 +518,14 @@ def principal() -> int:
         print(f"Généré : {destination.relative_to(RACINE)}")
 
     if commun["pdf_disponible"]:
-        generer_pdf(planning["saison"])
+        generer_pdf(
+            DIST / "planning" / "paysage.html",
+            DIST / "planning" / commun["pdf_planning"],
+        )
+        generer_pdf(
+            DIST / "plaquette" / "index.html",
+            DIST / "plaquette" / commun["pdf_plaquette"],
+        )
     return 0
 
 
