@@ -7,7 +7,7 @@
 <div class="grille">
   <div class="entetes">
     <span></span>
-    {% for jour in jours_complets %}
+    {% for jour in jours_grille %}
     <h2>{{ jour.nom | capitalize }}</h2>
     {% endfor %}
   </div>
@@ -17,7 +17,7 @@
       <span class="heure-axe" style="top: {{ h.haut }}%">{{ h.label }}</span>
       {% endfor %}
     </div>
-    {% for jour in jours_complets %}
+    {% for jour in jours_grille %}
     <div class="colonne">
       {% for b in jour.blocs %}
       <article
@@ -36,12 +36,17 @@
   </div>
   <div class="rangee-libre">
     <span></span>
-    {% for jour in jours_complets %}
+    {% for jour in jours_grille %}
     <p class="libre">
       {% if jour.tir_libre %}<strong>Tir libre</strong><br />
       {{ jour.tir_libre }}{% endif %}
     </p>
     {% endfor %}
   </div>
+  {% for jour in jours_hors_grille %}
+  <p class="libre libre-pleine">
+    <strong>{{ jour.nom | capitalize }} — Tir libre</strong> : {{ jour.tir_libre }}
+  </p>
+  {% endfor %}
 </div>
 <p class="note">{{ note_globale }}</p>

@@ -8,15 +8,15 @@
   color: var(--gris);
 }
 .legende span { display: inline-flex; align-items: center; gap: 0.45rem; }
-.pastille { width: 13px; height: 13px; border-radius: 2px; flex: none; }
+.pastille { display: inline-block; width: 13px; height: 13px; border-radius: 2px; flex: none; }
 .pastille.jeunes { background: var(--accent); }
 .pastille.adultes { background: var(--bleu); }
 .pastille.tous { background: var(--bleu-moyen); }
 .pastille.libre { background: none; border: 2px dashed var(--accent); }
-.grille { min-width: 860px; }
+.grille { min-width: {{ 58 + jours_grille | length * 115 }}px; }
 .entetes, .corps, .rangee-libre {
   display: grid;
-  grid-template-columns: 58px repeat(7, 1fr);
+  grid-template-columns: 58px repeat({{ jours_grille | length }}, 1fr);
   column-gap: 6px;
 }
 .entetes h2 {
@@ -67,7 +67,7 @@
 .bloc.compact {
   padding: 3px 4px;
   border-left-width: 2px;
-  font-size: clamp(0.54rem, 0.48vw + 0.28rem, 0.66rem);
+  font-size: clamp(0.6rem, 0.5vw + 0.32rem, 0.72rem);
   line-height: 1.22;
 }
 .bloc.compact h3 { margin: 1px 0; }
@@ -90,13 +90,5 @@
   font-size: clamp(0.66rem, 0.4vw + 0.4rem, 0.76rem);
   color: var(--accent);
 }
+.libre-pleine { margin: 6px 0 0 64px; }
 .note { font-size: 1.2rem; font-weight: 600; margin: 1.2rem 0 0.2rem; }
-  :root { --hauteur-grille: 128mm; }
-  body { background: #fff; font-size: 11px; }
-  header { background: none; color: var(--encre); border-bottom-color: var(--encre); padding: 0 0 0.4rem; }
-  header .manuscrit { color: var(--gris); }
-  nav.site, .autre-vue { display: none; }
-  main { overflow: visible; padding: 0; }
-  .grille { min-width: 0; }
-  .bloc, .colonne { print-color-adjust: exact; -webkit-print-color-adjust: exact; }
-}

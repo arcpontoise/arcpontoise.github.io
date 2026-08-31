@@ -9,6 +9,7 @@ saisi dans les données, tout est calculé ici.
 
 from __future__ import annotations
 
+import importlib.util
 import json
 import re
 import shutil
@@ -101,22 +102,54 @@ def valider_planning(donnees: dict[str, Any]) -> list[str]:
     return erreurs
 
 
-def repartir_couloirs(creneaux: list[dict[str, Any]]) -> list[tuple[int, int]]:
-    """Attribue à chaque créneau (trié par début) un couloir et la largeur du groupe.
+def poids_contenu(c: dict[str, Any]) -> int:
+    """Estime la place nécessaire à un créneau (longueur du texte affiché)."""
+    return (
+        len(c["intitule"])
+        + len(c.get("detail") or "")
+        + sum(len(e) + 2 for e in c["encadrants"])
+        + 14  # horaire
+    )
 
-    Les créneaux qui se chevauchent dans la même journée sont répartis
-    côte à côte ; retourne pour chacun (index_couloir, nb_couloirs).
+
+def repartir_couloirs(creneaux: list[dict[str, Any]]) -> list[tuple[float, float, int]]:
+    """Répartit les créneaux qui se chevauchent en couloirs côte à côte.
+
+    Retourne pour chaque créneau (gauche, largeur) en pourcentage de la
+    colonne, et le nombre de couloirs de son groupe. Les largeurs sont
+    proportionnelles au contenu, avec un plancher, pour qu'un créneau
+    chargé ne soit pas étranglé par un créneau court.
     """
-    positions: list[tuple[int, int]] = []
-    groupe: list[int] = []
-    couloirs: list[int] = []
+    plancher = 26.0
+    resultats: list[tuple[float, float, int]] = [(0.0, 100.0, 1)] * len(creneaux)
+    groupe: list[tuple[int, int]] = []  # (index créneau, index couloir)
+    couloirs: list[int] = []  # minute de fin de chaque couloir
     fin_groupe = -1
+
+    def clore_groupe() -> None:
+        nb = len(couloirs)
+        if not groupe:
+            return
+        if nb == 1:
+            return  # valeurs par défaut déjà en place
+        poids = [0] * nb
+        for i, couloir in groupe:
+            poids[couloir] = max(poids[couloir], poids_contenu(creneaux[i]))
+        parts = [p / sum(poids) * 100 for p in poids]
+        etroits = [k for k, p in enumerate(parts) if p < plancher]
+        reste = 100 - plancher * len(etroits)
+        total_larges = sum(p for k, p in enumerate(parts) if k not in etroits)
+        parts = [
+            plancher if k in etroits else p / total_larges * reste for k, p in enumerate(parts)
+        ]
+        gauches = [sum(parts[:k]) for k in range(nb)]
+        for i, couloir in groupe:
+            resultats[i] = (round(gauches[couloir], 3), round(parts[couloir], 3), nb)
 
     for i, c in enumerate(creneaux):
         debut, fin = en_minutes(c["debut"]), en_minutes(c["fin"])
         if debut >= fin_groupe:
-            for j in groupe:
-                positions[j] = (positions[j][0], len(couloirs))
+            clore_groupe()
             groupe, couloirs = [], []
         affecte = next((k for k, libre in enumerate(couloirs) if libre <= debut), None)
         if affecte is None:
@@ -124,13 +157,11 @@ def repartir_couloirs(creneaux: list[dict[str, Any]]) -> list[tuple[int, int]]:
             couloirs.append(fin)
         else:
             couloirs[affecte] = fin
-        positions.append((affecte, 1))
-        groupe.append(i)
+        groupe.append((i, affecte))
         fin_groupe = max(fin_groupe, fin)
 
-    for j in groupe:
-        positions[j] = (positions[j][0], len(couloirs))
-    return positions
+    clore_groupe()
+    return resultats
 
 
 def calculer_blocs(
@@ -138,7 +169,7 @@ def calculer_blocs(
 ) -> list[dict[str, Any]]:
     """Calcule la position de chaque créneau en pourcentage de la grille horaire."""
     blocs = []
-    for c, (couloir, nb) in zip(creneaux, repartir_couloirs(creneaux), strict=True):
+    for c, (gauche, largeur, nb) in zip(creneaux, repartir_couloirs(creneaux), strict=True):
         haut = (en_minutes(c["debut"]) - debut_grille) / duree_grille * 100
         hauteur = (en_minutes(c["fin"]) - en_minutes(c["debut"])) / duree_grille * 100
         blocs.append(
@@ -146,8 +177,8 @@ def calculer_blocs(
                 **c,
                 "haut": round(haut, 3),
                 "hauteur": round(hauteur, 3),
-                "gauche": round(couloir / nb * 100, 3),
-                "largeur": round(100 / nb, 3),
+                "gauche": gauche,
+                "largeur": largeur,
                 "compact": nb > 1,
             }
         )
@@ -188,7 +219,8 @@ def contexte_planning(donnees: dict[str, Any]) -> dict[str, Any]:
         "club": donnees["club"],
         "note_globale": donnees["note_globale"],
         "jours": [j for j in jours if j["creneaux"] or j["tir_libre"]],
-        "jours_complets": jours,
+        "jours_grille": [j for j in jours if j["creneaux"]],
+        "jours_hors_grille": [j for j in jours if not j["creneaux"] and j["tir_libre"]],
         "heures": heures,
         "nb_heures": duree_grille // 60,
     }
@@ -303,6 +335,32 @@ def contexte_tarifs(donnees: dict[str, Any]) -> dict[str, Any]:
     }
 
 
+def generer_pdf(saison: str) -> bool:
+    """Rend le planning paysage en PDF via WeasyPrint, si disponible."""
+    try:
+        from weasyprint import HTML
+    except ImportError:
+        print("AVERTISSEMENT : WeasyPrint absent, PDF non généré", file=sys.stderr)
+        return False
+    source = DIST / "planning" / "paysage.html"
+    sortie = DIST / "planning" / f"planning-{saison}.pdf"
+    HTML(filename=str(source)).write_pdf(str(sortie))
+    print(f"Généré : {sortie.relative_to(RACINE)}")
+    return True
+
+
+def verifier_styles(html: str, nom: str) -> list[str]:
+    """Vérifie l'équilibre des accolades de chaque bloc <style> d'une page."""
+    erreurs = []
+    for i, bloc in enumerate(re.findall(r"<style>(.*?)</style>", html, re.S), start=1):
+        if bloc.count("{") != bloc.count("}"):
+            erreurs.append(
+                f"{nom} : bloc <style> n°{i} déséquilibré "
+                f"({bloc.count('{')} ouvrantes, {bloc.count('}')} fermantes)"
+            )
+    return erreurs
+
+
 # ---------------------------------------------------------------------- build
 
 
@@ -341,6 +399,8 @@ def principal() -> int:
         **contexte_tarifs(tarifs),
         "date_generation": date.today().strftime("%d/%m/%Y"),
         "logo_existe": (RACINE / "static" / "img" / "logo.jpg").is_file(),
+        "pdf_planning": f"planning-{planning['saison']}.pdf",
+        "pdf_disponible": importlib.util.find_spec("weasyprint") is not None,
     }
 
     for template, sortie in PAGES.items():
@@ -354,8 +414,17 @@ def principal() -> int:
             contexte["page"] = "accueil"
         destination = DIST / sortie
         destination.parent.mkdir(parents=True, exist_ok=True)
-        destination.write_text(env.get_template(template).render(contexte), encoding="utf-8")
+        html = env.get_template(template).render(contexte)
+        problemes = verifier_styles(html, sortie)
+        if problemes:
+            for probleme in problemes:
+                print(f"ERREUR : {probleme}", file=sys.stderr)
+            return 1
+        destination.write_text(html, encoding="utf-8")
         print(f"Généré : {destination.relative_to(RACINE)}")
+
+    if commun["pdf_disponible"]:
+        generer_pdf(planning["saison"])
     return 0
 
 

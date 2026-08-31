@@ -71,7 +71,7 @@ header .adresse { margin: 0.3rem 0 0; color: #ccd4ea; font-size: 0.92rem; }
 }
 {% endblock %}
 {% block contenu %}
-<p class="autre-vue"><a href="paysage.html">Vue semaine, en grille paysage</a></p>
+<p class="autre-vue"><a href="paysage.html">Vue semaine, en grille paysage</a> — {% if pdf_disponible %}<a href="{{ pdf_planning }}" download>Télécharger le planning en PDF</a>{% endif %}</p>
 <div class="legende" aria-hidden="true">
   <span><i class="pastille jeunes"></i>Jeunes</span>
   <span><i class="pastille adultes"></i>Adultes</span>

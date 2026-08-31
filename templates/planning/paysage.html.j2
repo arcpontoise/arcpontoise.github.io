@@ -5,10 +5,29 @@
 main { overflow-x: auto; }
 .autre-vue { margin: 0 0 1rem; }
 .autre-vue a { color: var(--accent); font-weight: 600; }
+{% include "planning/_grille.css" %}
 @media print {
   @page { size: A4 landscape; margin: 8mm; }
-{% include "planning/_grille.css" %}
+  :root { --hauteur-grille: 118mm; }
+  body { background: #fff; font-size: 10px; }
+  .legende { margin: 0 0 2mm; font-size: 8px; }
+  .legende .pastille { width: 8px; height: 8px; }
+  .legende span { white-space: nowrap; }
+  .rangee-libre .libre, .libre-pleine { font-size: 7.5px; padding: 1mm 1.5mm; }
+  .libre-pleine { margin-left: 16mm; }
+  .note { font-size: 9px; margin: 2mm 0 0; }
+  footer { display: none; }
+  header { background: none; color: var(--encre); border-bottom-color: var(--encre); padding: 0 0 0.4rem; }
+  header .manuscrit { color: var(--gris); }
+  .logo { height: 34px; }
+  nav.site, .autre-vue { display: none; }
+  main { overflow: visible; padding: 0; }
+  .grille { min-width: 0; }
+  .bloc { font-size: 8.5px; }
+  .bloc.compact { font-size: 8px; }
+  .bloc, .colonne { print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+}
 {% endblock %}
 {% block contenu %}
-<p class="autre-vue"><a href="./">Vue liste, adaptée au téléphone</a></p>
+<p class="autre-vue"><a href="./">Vue liste, adaptée au téléphone</a> — {% if pdf_disponible %}<a href="{{ pdf_planning }}" download>Télécharger le planning en PDF</a>{% endif %}</p>
 {% include "planning/_grille.html.j2" %}{% endblock %}
