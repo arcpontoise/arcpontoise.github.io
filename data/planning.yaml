@@ -77,7 +77,7 @@ creneaux:
     encadrants:
       - Laurent Dufourt
       - Sandrine Keerstock
-      - Jade Mailliard
+      - Jade Mailliart
 
   - jour: vendredi
     debut: "17:30"
@@ -85,7 +85,7 @@ creneaux:
     intitule: Petits Robins débutants
     public: jeunes
     encadrants:
-      - Guillaume Barre
+      - Guillaume Barré
       - Catherine François
 
   - jour: vendredi
@@ -117,7 +117,7 @@ tir_libre:
   lundi: En journée et en dehors du créneau encadré du soir
   mardi: En journée uniquement, pas de tir libre en soirée
   mercredi: En journée et en dehors des créneaux encadrés
-  jeudi: Jusqu'à 19 h 30 ou après 21 h 30
+  jeudi: En journée et en dehors des créneaux encadrés
   vendredi: Jusqu'à 19 h ou après 21 h 30
   samedi: En journée uniquement en hiver, après 19 h en extérieur
   dimanche: Toute la journée

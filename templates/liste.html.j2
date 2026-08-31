@@ -52,7 +52,7 @@ h1 { margin: 0.15rem 0 0.4rem; font-size: 1.9rem; font-weight: 600; letter-spaci
 .pastille.adultes { background: var(--bleu); }
 .pastille.tous { background: var(--vert); }
 .pastille.libre { background: none; border: 2px dashed var(--vert); }
-main { padding: 0 1.25rem 2rem; }
+main { padding: 0 1.25rem 1.5rem; }
 .semaine {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -97,7 +97,7 @@ footer {
   font-size: 0.88rem;
   color: var(--gris);
 }
-footer p { max-width: 60ch; }
+footer p { font-size: 1.2rem; font-weight: 600; margin: 0.2rem 0; }
 a:focus-visible, :focus-visible { outline: 3px solid var(--or); outline-offset: 2px; }
 @media print {
   body { background: #fff; font-size: 12px; }
@@ -140,7 +140,10 @@ a:focus-visible, :focus-visible { outline: 3px solid var(--or); outline-offset: 
       </article>
       {% endfor %}
       {% if jour.tir_libre %}
-      <p class="libre"><strong>Tir libre</strong> — {{ jour.tir_libre }}</p>
+      <p class="libre">
+        <strong>Tir libre</strong><br />
+      {{ jour.tir_libre }}
+      </p>
       {% endif %}
     </section>
   {% endfor %}
@@ -148,7 +151,7 @@ a:focus-visible, :focus-visible { outline: 3px solid var(--or); outline-offset: 
 </main>
 <footer class="gabarit">
   <p>{{ note_globale }}</p>
-  <p>Mis à jour le {{ date_generation }} — <a href="https://arcpontoise.fr/">arcpontoise.fr</a></p>
+  <span>Mis à jour le {{ date_generation }} — <a href="https://arcpontoise.fr/">arcpontoise.fr</a></span>
 </footer>
 </body>
 </html>

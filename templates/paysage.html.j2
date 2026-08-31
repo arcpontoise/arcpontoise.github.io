@@ -16,7 +16,7 @@
   --fond: #eef1f5;
   --carte: #ffffff;
   --filet: #d4dae2;
-  --hauteur-grille: 620px;
+  --hauteur-grille: 700px;
 }
 * { box-sizing: border-box; }
 body {
@@ -53,8 +53,8 @@ nav a { color: var(--bleu); font-weight: 600; }
 .pastille.adultes { background: var(--bleu); }
 .pastille.tous { background: var(--vert); }
 .pastille.libre { background: none; border: 2px dashed var(--vert); }
-main { padding: 0 1.25rem 2rem; overflow-x: auto; }
-.grille { min-width: 1080px; }
+main { padding: 0 1.25rem 1.5rem; overflow-x: auto; }
+.grille { min-width: 1220px; }
 .entetes, .corps, .rangee-libre {
   display: grid;
   grid-template-columns: 58px repeat(7, 1fr);
@@ -102,7 +102,18 @@ main { padding: 0 1.25rem 2rem; overflow-x: auto; }
   color: #fff;
   font-size: 0.78rem;
   line-height: 1.3;
+  overflow-wrap: break-word;
+  hyphens: auto;
 }
+.bloc time { white-space: nowrap; }
+.bloc.compact {
+  padding: 3px 4px;
+  border-left-width: 2px;
+  font-size: 0.66rem;
+  line-height: 1.22;
+}
+.bloc.compact h3 { font-size: 0.68rem; margin: 1px 0; }
+.bloc.compact p { font-size: 0.62rem; }
 .bloc.jeunes { background: var(--or); border-color: #7c5c12; }
 .bloc.adultes { background: var(--bleu); border-color: var(--bleu-fonce); }
 .bloc.tous { background: var(--vert); border-color: #1f4a30; }
@@ -118,11 +129,11 @@ main { padding: 0 1.25rem 2rem; overflow-x: auto; }
   color: var(--vert);
 }
 footer {
-  padding: 1.1rem 1.25rem;
+  padding: 0rem 1.25rem;
   font-size: 0.85rem;
   color: var(--gris);
 }
-footer p { max-width: 70ch; }
+footer p { font-size: 1.2rem; font-weight: 600; margin: 0.2rem 0; }
 a:focus-visible, :focus-visible { outline: 3px solid var(--or); outline-offset: 2px; }
 @media print {
   @page { size: A4 landscape; margin: 8mm; }
@@ -170,8 +181,9 @@ a:focus-visible, :focus-visible { outline: 3px solid var(--or); outline-offset: 
       <div class="colonne">
         {% for b in jour.blocs %}
         <article
-          class="bloc {{ b.public }}"
-          style="top: {{ b.haut }}%; height: {{ b.hauteur }}%; left: {{ b.gauche }}%; width: {{ b.largeur }}%;">
+          class="bloc {{ b.public }}{% if b.compact %} compact{% endif %}"
+          style="top: {{ b.haut }}%; height: {{ b.hauteur }}%; left: {{ b.gauche }}%; width: {{ b.largeur }}%;"
+          title="{{ b.debut | heure_fr }} – {{ b.fin | heure_fr }} : {{ b.intitule }}{% if b.get('detail') %} ({{ b['detail'] }}){% endif %}{% if b.encadrants %} — {{ b.encadrants | join(', ') }}{% endif %}">
           <time datetime="{{ b.debut }}">{{ b.debut | heure_fr }}</time>
           – <time datetime="{{ b.fin }}">{{ b.fin | heure_fr }}</time>
           <h3>{{ b.intitule }}</h3>
@@ -186,7 +198,8 @@ a:focus-visible, :focus-visible { outline: 3px solid var(--or); outline-offset: 
       <span></span>
       {% for jour in jours_complets %}
       <p class="libre">
-        {% if jour.tir_libre %}<strong>Tir libre</strong> — {{ jour.tir_libre }}{% endif %}
+        {% if jour.tir_libre %}<strong>Tir libre</strong><br />
+        {{ jour.tir_libre }}{% endif %}
       </p>
       {% endfor %}
     </div>
@@ -194,7 +207,7 @@ a:focus-visible, :focus-visible { outline: 3px solid var(--or); outline-offset: 
 </main>
 <footer class="gabarit">
   <p>{{ note_globale }}</p>
-  <p>Mis à jour le {{ date_generation }} — <a href="https://arcpontoise.fr/">arcpontoise.fr</a></p>
+  <span>Mis à jour le {{ date_generation }} — <a href="https://arcpontoise.fr/">arcpontoise.fr</a></span>
 </footer>
 </body>
 </html>

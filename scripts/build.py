@@ -120,6 +120,7 @@ def calculer_blocs(
                 "hauteur": round(hauteur, 3),
                 "gauche": round(couloir / nb * 100, 3),
                 "largeur": round(100 / nb, 3),
+                "compact": nb > 1,
             }
         )
     return blocs
