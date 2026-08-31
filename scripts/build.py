@@ -60,23 +60,25 @@ def en_minutes(valeur: str) -> int:
 
 
 def texte_riche(valeur: str) -> Markup:
-    """Convertit les retours à la ligne du YAML en HTML.
+    """Convertit un texte YAML en paragraphes HTML.
 
-    Une ligne vide sépare deux paragraphes, un simple retour à la
-    ligne produit un <br>. Le contenu est échappé.
+    Dans les données, une ligne vide sépare deux paragraphes. Avec le
+    style plié « >- », les lignes d'un même paragraphe peuvent être
+    coupées librement dans le fichier sans effet sur le rendu.
     """
-    paragraphes = [p.strip() for p in valeur.strip().split("\n\n") if p.strip()]
-    rendus = [
-        "<p>" + "<br>".join(escape(ligne) for ligne in p.splitlines()) + "</p>" for p in paragraphes
-    ]
-    return Markup("".join(rendus))
+    paragraphes = [p.strip() for p in valeur.strip().splitlines() if p.strip()]
+    return Markup("".join(f"<p>{escape(p)}</p>" for p in paragraphes))
 
 
 def qr_svg(lien: str) -> Markup:
     """Génère un QR code SVG inline, aux couleurs de la charte."""
     import segno
 
-    return Markup(segno.make(lien, error="m").svg_inline(dark="#1b2b5a", border=1, svgclass=None))
+    return Markup(
+        segno.make(lien, error="m").svg_inline(
+            dark="#1b2b5a", border=1, svgclass=None, omitsize=True
+        )
+    )
 
 
 def en_centimes(valeur: Any) -> int:

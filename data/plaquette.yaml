@@ -4,8 +4,10 @@
 # de catégorie vers data/tarifs.yaml : le build résout et vérifie
 # toutes les références, et calcule les coûts (licence + formation).
 #
-# Dans les textes, un simple retour à la ligne (bloc « |- ») produit un
-# retour à la ligne ; une ligne vide produit un nouveau paragraphe.
+# Dans les textes (blocs « >- »), une LIGNE VIDE sépare deux
+# paragraphes. À l'intérieur d'un paragraphe, les lignes peuvent être
+# coupées librement pour rester sous 120 colonnes : elles seront
+# rassemblées au rendu.
 
 accroche: La passion du tir à l'arc depuis 1903
 
@@ -13,25 +15,27 @@ qu_est_ce: >-
   Le tir à l'arc est un sport de compétition et de détente.
   Il développe la concentration, la précision et l'esprit d'équipe.
 
-presentation: |-
-  Plus d'une centaine de membres pratiquent le tir à l'arc dans différentes disciplines : tir en salle, tir olympique, tir de tradition (Beursault), tir en campagne, tir 3D…
+presentation: >-
+  Plus d'une centaine de membres pratiquent le tir à l'arc dans
+  différentes disciplines : tir en salle, tir olympique, tir de
+  tradition (Beursault), tir en campagne, tir 3D…
 
   Tous niveaux — débutants, compétitions, loisirs.
-
 lieux:
   - nom: Salle d'armes et terrain
-    detail: |-
+    detail: >-
       1 rue Pierre de Coubertin, 95300 Pontoise
+
       Toute l'année
   - nom: Gymnase Marie Laurencin
-    detail: |-
+    detail: >-
       D'octobre à fin mars, pour les jeunes du mercredi soir.
+tir_libre_autonomie: >-
+  Pas de restriction d'horaire ni de jour, après autorisation de la
+  Capitaine-Présidente ou des entraîneurs, et pour les majeurs.
 
-tir_libre_autonomie: |-
-  Pas de restriction d'horaire ni de jour, après autorisation de la Capitaine-Présidente ou des entraîneurs, et pour les majeurs.
-
-  Hors précisions du planning, le tir libre se fait en demi pas de tir pendant les créneaux encadrés, au rythme de l'encadrant.
-
+  Hors précisions du planning, le tir libre se fait en demi pas de tir
+  pendant les créneaux encadrés, au rythme de l'encadrant.
 securite_jeunes: >-
   Par mesure de sécurité, les jeunes doivent tous être inscrits dans
   un groupe encadré.
@@ -62,19 +66,20 @@ reseaux:
     lien: https://www.instagram.com/compagnie_archers_pontoise/
 
 qr_codes:
-  - libelle: Planning, tarifs et calculateur
-    lien: https://infos.arcpontoise.fr
   - libelle: Le site de la compagnie
     lien: https://arcpontoise.fr
+  - libelle: Informations
+    lien: https://infos.arcpontoise.fr
 
 groupes:
   - id: petits-robins-debutants
     titre: Petits Robins débutants
     public: U11 et U13, 8 ans révolus au 01/09/2026
     places: 8
-    description: |-
-      Apprentissage sous forme ludique des gestes fondamentaux du tir à l'arc, encadré par deux encadrants dont un certifié.
-      L'arc est mis à disposition sous conditions.
+    description: >-
+      Apprentissage sous forme ludique des gestes fondamentaux du tir à
+      l'arc, encadré par deux encadrants dont un certifié. L'arc est mis
+      à disposition sous conditions.
     formation: 60.00
     licences:
       - categorie: jeune
@@ -87,12 +92,13 @@ groupes:
 
   - id: jeunes-debutants
     titre: Jeunes débutants et para-archers
-    public: |-
+    public: >-
       À partir de U15, nés en 2014 ou avant
     places: 12
-    description: |-
-      Formation première année encadrée par un entraîneur et deux encadrants dont un certifié.
-      L'arc est mis à disposition sous conditions.
+    description: >-
+      Formation première année encadrée par un entraîneur et deux
+      encadrants dont un certifié. L'arc est mis à disposition sous
+      conditions.
     formation: 156.00
     licences:
       - categorie: jeune
@@ -104,9 +110,10 @@ groupes:
   - id: jeunes-confirmes
     titre: Jeunes confirmés et compétiteurs
     public: 2ᵉ année et plus, U13 à U21
-    description: |-
-      Encadré par deux entraîneurs et un encadrant. Gymnase en hiver, terrain d'avril à fin juin.
-      Possibilité de location d'arc avec caution, selon le niveau acquis.
+    description: >-
+      Encadré par deux entraîneurs et un encadrant. Gymnase en hiver,
+      terrain d'avril à fin juin. Possibilité de location d'arc avec
+      caution, selon le niveau acquis.
     licences:
       - categorie: jeune
         libelle: licence FFTA
@@ -119,8 +126,9 @@ groupes:
   - id: tir-de-parcours
     titre: Tir de parcours
     public: Nature, campagne et 3D
-    description: |-
-      Sortir du pas de tir : distances inconnues, terrain naturel, cibles animalières ou blasons en extérieur.
+    description: >-
+      Sortir du pas de tir : distances inconnues, terrain naturel,
+      cibles animalières ou blasons en extérieur.
 
       Ouvert à tous les archers autonomes, quel que soit le type d'arc.
     creneaux:
@@ -138,8 +146,9 @@ groupes:
 
   - id: adultes-debutants
     titre: Adultes débutants et U21
-    public: |-
+    public: >-
       Adultes nés en 2006 ou avant
+
       U21 nés de 2007 à 2009
     places: 10
     description: >-
