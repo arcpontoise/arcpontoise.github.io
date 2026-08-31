@@ -60,13 +60,14 @@
 }
 .decor {
   position: absolute;
-  right: -14%;
-  bottom: -6%;
-  width: 62%;
-  height: auto;
-  opacity: 0.38;
+  right: 7%;
+  bottom: 7%;
+  height: 58%;
+  width: auto;
+  opacity: 0.3;
   z-index: 0;
 }
+.couverture .decor { opacity: 0.6; }
 .volet > *:not(.decor) { position: relative; z-index: 1; }
 .affiliation { margin-top: auto; padding-top: 1rem; text-align: center; }
 .affiliation img { width: 46mm; max-width: 70%; height: auto; }
@@ -126,7 +127,13 @@
 .contact .qui { font-weight: 600; margin: 0; }
 .reseau { display: flex; align-items: center; gap: 0.55rem; margin: 0.45rem 0; }
 .reseau svg { width: 22px; height: 22px; color: var(--accent); flex: none; }
-.qr-liste { display: flex; flex-wrap: wrap; gap: 1.1rem; margin-top: 0.6rem; }
+.qr-liste {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.1rem;
+  margin-top: 0.6rem;
+}
 .qr { text-align: center; margin: 0; }
 .qr svg { width: 30mm; height: 30mm; display: block; }
 .qr figcaption { font-size: 0.8rem; color: var(--gris); margin-top: 0.25rem; max-width: 30mm; }
@@ -162,7 +169,8 @@
   .label-image { max-width: 62mm; margin-top: 7mm; }
   .reseau svg { width: 6mm; height: 6mm; }
   .groupe { margin-bottom: 4mm; padding-left: 3mm; }
-  .qr-liste { gap: 6mm; margin-top: 3mm; }
+  .qr-liste { gap: 8mm; margin-top: 4mm; }
+  .decor { height: 118mm; right: 9mm; bottom: 26mm; }
   .volet > .affiliation {
     position: absolute;
     left: 8mm;
