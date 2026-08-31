@@ -1,0 +1,123 @@
+---
+# Source de vérité du planning hebdomadaire.
+# Transcrit depuis le document fourni par la capitainerie.
+# Toute modification passe par ce fichier : le HTML est généré.
+
+saison: "2026-2027"
+club: Compagnie d'archers de Pontoise
+source: planning_rentree_2026-2027.pdf
+
+note_globale: >-
+  Merci de vous adapter au rythme de l'entraîneur présent si vous venez
+  sur un tir libre commun, s'il n'y a pas de séparation par le filet.
+
+# public : jeunes | adultes | tous
+creneaux:
+  - jour: lundi
+    debut: "14:00"
+    fin: "17:00"
+    intitule: Le rendez-vous des jeunes retraités
+    detail: Au jeu d'arc
+    public: adultes
+    encadrants:
+      - Thierry Chouc
+
+  - jour: lundi
+    debut: "19:30"
+    fin: "22:00"
+    intitule: Adultes perfectionnements
+    public: adultes
+    encadrants:
+      - Hervé Ferrand
+      - Julien Moreau
+
+  - jour: mardi
+    debut: "18:30"
+    fin: "22:00"
+    intitule: Adultes pratique à la compétition
+    public: adultes
+    encadrants:
+      - Thierry Defrance
+
+  - jour: mercredi
+    debut: "16:30"
+    fin: "18:30"
+    intitule: Petits Robins perfectionnements
+    public: jeunes
+    encadrants:
+      - Monique Defrance
+      - Didier Muller
+      - François Ladague
+
+  - jour: mercredi
+    debut: "19:00"
+    fin: "21:30"
+    intitule: Jeunes perfectionnements et compétiteurs
+    detail: Gymnase en hiver
+    public: jeunes
+    encadrants:
+      - Laurence Fontaine
+      - Laurent Fontaine
+      - Emmanuel Sandret
+      - Christian Peronnet
+
+  - jour: mercredi
+    debut: "19:00"
+    fin: "21:30"
+    intitule: Arc sans viseur
+    public: tous
+    encadrants: []
+
+  - jour: jeudi
+    debut: "19:30"
+    fin: "21:30"
+    intitule: Jeunes débutants
+    detail: À partir de U15 — para tir à l'arc
+    public: jeunes
+    encadrants:
+      - Laurent Dufourt
+      - Sandrine Keerstock
+      - Jade Mailliart
+
+  - jour: vendredi
+    debut: "17:30"
+    fin: "19:00"
+    intitule: Petits Robins débutants
+    public: jeunes
+    encadrants:
+      - Guillaume Barré
+      - Catherine François
+
+  - jour: vendredi
+    debut: "19:00"
+    fin: "21:30"
+    intitule: Adultes débutants
+    public: adultes
+    encadrants:
+      - Emmanuel Thon
+      - François Ladague
+
+  - jour: samedi
+    debut: "14:00"
+    fin: "17:00"
+    intitule: Jeunes compétiteurs et perfectionnement
+    detail: Sur permanence d'un référent majeur
+    public: jeunes
+    encadrants: []
+
+  - jour: samedi
+    debut: "17:00"
+    fin: "19:00"
+    intitule: Tir 3D
+    public: tous
+    encadrants:
+      - Vincent Kolodziej
+
+tir_libre:
+  lundi: En journée et en dehors du créneau encadré du soir
+  mardi: En journée uniquement, pas de tir libre en soirée
+  mercredi: En journée et en dehors des créneaux encadrés
+  jeudi: En journée et en dehors des créneaux encadrés
+  vendredi: Jusqu'à 19 h ou après 21 h 30
+  samedi: En journée uniquement en hiver, après 19 h en extérieur
+  dimanche: Toute la journée

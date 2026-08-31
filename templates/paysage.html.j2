@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Planning {{ saison }} (vue semaine) — {{ club }}</title>
+<meta name="description" content="Grille hebdomadaire des créneaux, saison {{ saison }}.">
+<style>
+:root {
+  --bleu: #24406e;
+  --bleu-fonce: #182c4e;
+  --or: #a97e1c;
+  --vert: #2f6b46;
+  --encre: #1d2733;
+  --gris: #5b6572;
+  --fond: #eef1f5;
+  --carte: #ffffff;
+  --filet: #d4dae2;
+  --hauteur-grille: 700px;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--fond);
+  color: var(--encre);
+  font: 15px/1.45 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+h1, h2, .heure-axe {
+  font-family: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+}
+header {
+  background: var(--bleu);
+  color: #fff;
+  padding: 1.4rem 1.25rem 1.1rem;
+  border-bottom: 4px solid var(--or);
+}
+.gabarit { max-width: 1400px; margin: 0 auto; }
+header p { margin: 0; color: #c8d3e6; }
+h1 { margin: 0.1rem 0 0; font-size: 1.6rem; font-weight: 600; }
+nav { padding: 0.8rem 1.25rem 0; }
+nav a { color: var(--bleu); font-weight: 600; }
+.legende {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 1.4rem;
+  padding: 0.7rem 1.25rem;
+  font-size: 0.85rem;
+  color: var(--gris);
+}
+.legende span { display: inline-flex; align-items: center; gap: 0.45rem; }
+.pastille { width: 13px; height: 13px; border-radius: 2px; flex: none; }
+.pastille.jeunes { background: var(--or); }
+.pastille.adultes { background: var(--bleu); }
+.pastille.tous { background: var(--vert); }
+.pastille.libre { background: none; border: 2px dashed var(--vert); }
+main { padding: 0 1.25rem 1.5rem; overflow-x: auto; }
+.grille { min-width: 1220px; }
+.entetes, .corps, .rangee-libre {
+  display: grid;
+  grid-template-columns: 58px repeat(7, 1fr);
+  column-gap: 6px;
+}
+.entetes h2 {
+  margin: 0;
+  padding: 0.5rem 0.3rem;
+  font-size: 1.05rem;
+  font-weight: 600;
+  text-align: center;
+  color: var(--bleu-fonce);
+  background: var(--carte);
+  border: 1px solid var(--filet);
+  border-bottom: none;
+  border-radius: 6px 6px 0 0;
+}
+.axe { position: relative; }
+.heure-axe {
+  position: absolute;
+  right: 8px;
+  transform: translateY(-55%);
+  font-size: 0.82rem;
+  color: var(--gris);
+}
+.colonne {
+  position: relative;
+  height: var(--hauteur-grille);
+  background:
+    repeating-linear-gradient(
+      to bottom,
+      var(--filet) 0 1px,
+      transparent 1px calc(100% / {{ nb_heures }})
+    )
+    var(--carte);
+  border: 1px solid var(--filet);
+  border-top: none;
+}
+.bloc {
+  position: absolute;
+  overflow: hidden;
+  padding: 4px 6px;
+  border-radius: 3px;
+  border-left: 3px solid;
+  color: #fff;
+  font-size: 0.78rem;
+  line-height: 1.3;
+  overflow-wrap: break-word;
+  hyphens: auto;
+}
+.bloc time { white-space: nowrap; }
+.bloc.compact {
+  padding: 3px 4px;
+  border-left-width: 2px;
+  font-size: 0.66rem;
+  line-height: 1.22;
+}
+.bloc.compact h3 { font-size: 0.68rem; margin: 1px 0; }
+.bloc.compact p { font-size: 0.62rem; }
+.bloc.jeunes { background: var(--or); border-color: #7c5c12; }
+.bloc.adultes { background: var(--bleu); border-color: var(--bleu-fonce); }
+.bloc.tous { background: var(--vert); border-color: #1f4a30; }
+.bloc time { font-weight: 700; }
+.bloc h3 { margin: 1px 0 2px; font-size: 0.8rem; font-weight: 600; }
+.bloc p { margin: 0; opacity: 0.88; font-size: 0.72rem; }
+.rangee-libre { margin-top: 6px; }
+.libre {
+  border: 2px dashed var(--vert);
+  border-radius: 4px;
+  padding: 0.35rem 0.5rem;
+  font-size: 0.76rem;
+  color: var(--vert);
+}
+footer {
+  padding: 0rem 1.25rem;
+  font-size: 0.85rem;
+  color: var(--gris);
+}
+footer p { font-size: 1.2rem; font-weight: 600; margin: 0.2rem 0; }
+a:focus-visible, :focus-visible { outline: 3px solid var(--or); outline-offset: 2px; }
+@media print {
+  @page { size: A4 landscape; margin: 8mm; }
+  :root { --hauteur-grille: 128mm; }
+  body { background: #fff; font-size: 11px; }
+  header { background: none; color: var(--encre); border-bottom-color: var(--encre); padding: 0 0 0.4rem; }
+  header p { color: var(--gris); }
+  nav { display: none; }
+  main { overflow: visible; padding: 0; }
+  .grille { min-width: 0; }
+  .bloc { print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+  .colonne { print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+}
+</style>
+</head>
+<body>
+<header>
+  <div class="gabarit">
+    <p>{{ club }}</p>
+    <h1>Planning de la semaine — saison {{ saison }}</h1>
+  </div>
+</header>
+<nav class="gabarit"><a href="index.html">Version liste, adaptée au téléphone</a></nav>
+<div class="legende gabarit" aria-hidden="true">
+  <span><i class="pastille jeunes"></i>Jeunes</span>
+  <span><i class="pastille adultes"></i>Adultes</span>
+  <span><i class="pastille tous"></i>Tous publics</span>
+  <span><i class="pastille libre"></i>Tir libre</span>
+</div>
+<main class="gabarit">
+  <div class="grille">
+    <div class="entetes">
+      <span></span>
+      {% for jour in jours_complets %}
+      <h2>{{ jour.nom | capitalize }}</h2>
+      {% endfor %}
+    </div>
+    <div class="corps">
+      <div class="axe">
+        {% for h in heures %}
+        <span class="heure-axe" style="top: {{ h.haut }}%">{{ h.label }}</span>
+        {% endfor %}
+      </div>
+      {% for jour in jours_complets %}
+      <div class="colonne">
+        {% for b in jour.blocs %}
+        <article
+          class="bloc {{ b.public }}{% if b.compact %} compact{% endif %}"
+          style="top: {{ b.haut }}%; height: {{ b.hauteur }}%; left: {{ b.gauche }}%; width: {{ b.largeur }}%;"
+          title="{{ b.debut | heure_fr }} – {{ b.fin | heure_fr }} : {{ b.intitule }}{% if b.get('detail') %} ({{ b['detail'] }}){% endif %}{% if b.encadrants %} — {{ b.encadrants | join(', ') }}{% endif %}">
+          <time datetime="{{ b.debut }}">{{ b.debut | heure_fr }}</time>
+          – <time datetime="{{ b.fin }}">{{ b.fin | heure_fr }}</time>
+          <h3>{{ b.intitule }}</h3>
+          {% if b.get('detail') %}<p>{{ b['detail'] }}</p>{% endif %}
+          {% if b.encadrants %}<p>{{ b.encadrants | join(', ') }}</p>{% endif %}
+        </article>
+        {% endfor %}
+      </div>
+      {% endfor %}
+    </div>
+    <div class="rangee-libre">
+      <span></span>
+      {% for jour in jours_complets %}
+      <p class="libre">
+        {% if jour.tir_libre %}<strong>Tir libre</strong><br />
+        {{ jour.tir_libre }}{% endif %}
+      </p>
+      {% endfor %}
+    </div>
+  </div>
+</main>
+<footer class="gabarit">
+  <p>{{ note_globale }}</p>
+  <span>Mis à jour le {{ date_generation }} — <a href="https://arcpontoise.fr/">arcpontoise.fr</a></span>
+</footer>
+</body>
+</html>
