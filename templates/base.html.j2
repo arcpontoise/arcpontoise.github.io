@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{% block titre %}{% endblock %} — {{ club }}</title>
 <meta name="description" content="{% block description %}{% endblock %}">
+{% if logo_existe %}<link rel="icon" href="{{ prefixe }}static/img/logo.jpg">{% endif %}
 <style>
 /* Charte graphique du club (palette des publications Instagram) */
 @font-face {
@@ -13,19 +14,7 @@
   font-weight: 400 700;
   font-display: swap;
 }
-:root {
-  --accent: #3f60aa;      /* bleu clair : mise en avant, contraste */
-  --bleu: #1b2b5a;        /* bleu foncé : bandeaux, éléments forts */
-  --bleu-moyen: #475b8b;
-  --bleu-fonce: #09132d;  /* texte */
-  --encre: #09132d;
-  --fond: #f3ebe7;        /* blanc cassé */
-  --carte: #fffdfb;
-  --gris: #3b3f50;        /* texte secondaire */
-  --gris-doux: #767e98;   /* éléments non textuels */
-  --filet: #acafc1;
-  --rouge: #c00;
-}
+{% include "_palette.css" %}
 * { box-sizing: border-box; }
 body {
   margin: 0;
@@ -43,6 +32,8 @@ h1, h2 {
   text-transform: none;
   letter-spacing: 0;
 }
+.entete-flex { display: flex; align-items: center; gap: 1rem; }
+.logo { height: 64px; width: auto; border-radius: 4px; flex: none; }
 header {
   background: var(--bleu);
   color: var(--fond);
@@ -68,10 +59,13 @@ a:focus-visible, :focus-visible { outline: 3px solid var(--accent); outline-offs
 </head>
 <body>
 <header>
-  <div class="gabarit">
+  <div class="gabarit entete-flex">
+    {% if logo_existe %}<img class="logo" src="{{ prefixe }}static/img/logo.jpg" alt="">{% endif %}
+    <div>
     <p class="manuscrit">{{ club }}</p>
     <h1>{% block entete %}{{ self.titre() }}{% endblock %}</h1>
     {% block sous_entete %}{% endblock %}
+    </div>
   </div>
 </header>
 <nav class="site gabarit">

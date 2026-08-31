@@ -29,6 +29,7 @@ PAGES = {
     "accueil.html.j2": "index.html",
     "planning/liste.html.j2": "planning/index.html",
     "planning/paysage.html.j2": "planning/paysage.html",
+    "planning/embarque.html.j2": "planning/embarque.html",
     "tarifs/tableau.html.j2": "tarifs/index.html",
     "tarifs/calculateur.html.j2": "calculateur/index.html",
 }
@@ -339,6 +340,7 @@ def principal() -> int:
         **contexte_planning(planning),
         **contexte_tarifs(tarifs),
         "date_generation": date.today().strftime("%d/%m/%Y"),
+        "logo_existe": (RACINE / "static" / "img" / "logo.jpg").is_file(),
     }
 
     for template, sortie in PAGES.items():

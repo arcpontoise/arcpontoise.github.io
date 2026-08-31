@@ -1,0 +1,47 @@
+<div class="legende" aria-hidden="true">
+  <span><i class="pastille jeunes"></i>Jeunes</span>
+  <span><i class="pastille adultes"></i>Adultes</span>
+  <span><i class="pastille tous"></i>Tous publics</span>
+  <span><i class="pastille libre"></i>Tir libre</span>
+</div>
+<div class="grille">
+  <div class="entetes">
+    <span></span>
+    {% for jour in jours_complets %}
+    <h2>{{ jour.nom | capitalize }}</h2>
+    {% endfor %}
+  </div>
+  <div class="corps">
+    <div class="axe">
+      {% for h in heures %}
+      <span class="heure-axe" style="top: {{ h.haut }}%">{{ h.label }}</span>
+      {% endfor %}
+    </div>
+    {% for jour in jours_complets %}
+    <div class="colonne">
+      {% for b in jour.blocs %}
+      <article
+        class="bloc {{ b.public }}{% if b.compact %} compact{% endif %}"
+        style="top: {{ b.haut }}%; height: {{ b.hauteur }}%; left: {{ b.gauche }}%; width: {{ b.largeur }}%;"
+        title="{{ b.debut | heure_fr }} – {{ b.fin | heure_fr }} : {{ b.intitule }}{% if b.get('detail') %} ({{ b['detail'] }}){% endif %}{% if b.encadrants %} — {{ b.encadrants | join(', ') }}{% endif %}">
+        <time datetime="{{ b.debut }}">{{ b.debut | heure_fr }}</time>
+        – <time datetime="{{ b.fin }}">{{ b.fin | heure_fr }}</time>
+        <h3>{{ b.intitule }}</h3>
+        {% if b.get('detail') %}<p>{{ b['detail'] }}</p>{% endif %}
+        {% if b.encadrants %}<p>{{ b.encadrants | join(', ') }}</p>{% endif %}
+      </article>
+      {% endfor %}
+    </div>
+    {% endfor %}
+  </div>
+  <div class="rangee-libre">
+    <span></span>
+    {% for jour in jours_complets %}
+    <p class="libre">
+      {% if jour.tir_libre %}<strong>Tir libre</strong><br />
+      {{ jour.tir_libre }}{% endif %}
+    </p>
+    {% endfor %}
+  </div>
+</div>
+<p class="note">{{ note_globale }}</p>

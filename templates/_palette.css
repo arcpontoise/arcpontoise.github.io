@@ -1,0 +1,13 @@
+:root {
+  --accent: #3f60aa;      /* bleu clair : mise en avant, contraste */
+  --bleu: #1b2b5a;        /* bleu foncé : bandeaux, éléments forts */
+  --bleu-moyen: #475b8b;
+  --bleu-fonce: #09132d;  /* texte */
+  --encre: #09132d;
+  --fond: #f3ebe7;        /* blanc cassé */
+  --carte: #fffdfb;
+  --gris: #3b3f50;        /* texte secondaire */
+  --gris-doux: #767e98;   /* éléments non textuels */
+  --filet: #acafc1;
+  --rouge: #c00;
+}
