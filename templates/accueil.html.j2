@@ -1,0 +1,35 @@
+{% extends "base.html.j2" %}
+{% block titre %}Informations pratiques{% endblock %}
+{% block description %}Planning des créneaux, tarifs des licences et calculateur — saison {{ saison }}.{% endblock %}
+{% block entete %}Saison {{ saison }}{% endblock %}
+{% block styles %}
+.sections { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1rem; }
+.section {
+  display: block;
+  background: var(--carte);
+  border: 1px solid var(--filet);
+  border-left: 4px solid var(--or);
+  border-radius: 6px;
+  padding: 1.1rem 1.2rem;
+  color: inherit;
+  text-decoration: none;
+}
+.section h2 { margin: 0 0 0.35rem; font-size: 1.2rem; color: var(--bleu-fonce); }
+.section p { margin: 0; color: var(--gris); font-size: 0.92rem; }
+{% endblock %}
+{% block contenu %}
+<div class="sections">
+  <a class="section" href="planning/">
+    <h2>Planning des créneaux</h2>
+    <p>Les entraînements et le tir libre, jour par jour — en liste ou en grille semaine.</p>
+  </a>
+  <a class="section" href="tarifs/">
+    <h2>Tarifs des licences {{ saison_tarifs }}</h2>
+    <p>Le détail des licences par catégorie et les remises famille.</p>
+  </a>
+  <a class="section" href="calculateur/">
+    <h2>Calculateur de licences</h2>
+    <p>Estimez le coût total pour votre famille, remises comprises.</p>
+  </a>
+</div>
+{% endblock %}

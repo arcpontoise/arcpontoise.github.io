@@ -37,8 +37,8 @@ header {
 .gabarit { max-width: 1400px; margin: 0 auto; }
 header p { margin: 0; color: #c8d3e6; }
 h1 { margin: 0.1rem 0 0; font-size: 1.6rem; font-weight: 600; }
-nav { padding: 0.8rem 1.25rem 0; }
-nav a { color: var(--bleu); font-weight: 600; }
+nav.site { display: flex; flex-wrap: wrap; gap: 0.4rem 1.4rem; padding: 0.8rem 1.25rem 0; }
+nav.site a { color: var(--bleu); font-weight: 600; }
 .legende {
   display: flex;
   flex-wrap: wrap;
@@ -141,7 +141,7 @@ a:focus-visible, :focus-visible { outline: 3px solid var(--or); outline-offset: 
   body { background: #fff; font-size: 11px; }
   header { background: none; color: var(--encre); border-bottom-color: var(--encre); padding: 0 0 0.4rem; }
   header p { color: var(--gris); }
-  nav { display: none; }
+  nav.site { display: none; }
   main { overflow: visible; padding: 0; }
   .grille { min-width: 0; }
   .bloc { print-color-adjust: exact; -webkit-print-color-adjust: exact; }
@@ -156,7 +156,12 @@ a:focus-visible, :focus-visible { outline: 3px solid var(--or); outline-offset: 
     <h1>Planning de la semaine — saison {{ saison }}</h1>
   </div>
 </header>
-<nav class="gabarit"><a href="index.html">Version liste, adaptée au téléphone</a></nav>
+<nav class="site gabarit">
+  <a href="{ prefixe }.">Accueil</a>
+  <a href="./">Vue liste</a>
+  <a href="{ prefixe }tarifs/">Tarifs</a>
+  <a href="{ prefixe }calculateur/">Calculateur</a>
+</nav>
 <div class="legende gabarit" aria-hidden="true">
   <span><i class="pastille jeunes"></i>Jeunes</span>
   <span><i class="pastille adultes"></i>Adultes</span>

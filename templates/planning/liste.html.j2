@@ -27,8 +27,8 @@ body {
 h1, h2, .heure {
   font-family: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
 }
-nav { padding: 0.8rem 1.25rem 0; }
-nav a { color: var(--bleu); font-weight: 600; }
+nav.site { display: flex; flex-wrap: wrap; gap: 0.4rem 1.4rem; padding: 0.8rem 1.25rem 0; }
+nav.site a { color: var(--bleu); font-weight: 600; }
 header {
   background: var(--bleu);
   color: #fff;
@@ -116,7 +116,12 @@ a:focus-visible, :focus-visible { outline: 3px solid var(--or); outline-offset: 
     <p>Salle d'armes et terrain, 1 rue Pierre de Coubertin, Pontoise</p>
   </div>
 </header>
-<nav class="gabarit"><a href="paysage.html">Version semaine, en grille paysage</a></nav>
+<nav class="site gabarit">
+  <a href="{ prefixe }.">Accueil</a>
+  <a href="paysage.html">Vue semaine</a>
+  <a href="{ prefixe }tarifs/">Tarifs</a>
+  <a href="{ prefixe }calculateur/">Calculateur</a>
+</nav>
 <div class="legende gabarit" aria-hidden="true">
   <span><i class="pastille jeunes"></i>Jeunes</span>
   <span><i class="pastille adultes"></i>Adultes</span>

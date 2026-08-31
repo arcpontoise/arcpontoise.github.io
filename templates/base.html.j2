@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{% block titre %}{% endblock %} — {{ club }}</title>
+<meta name="description" content="{% block description %}{% endblock %}">
+<style>
+:root {
+  --bleu: #24406e;
+  --bleu-fonce: #182c4e;
+  --or: #a97e1c;
+  --vert: #2f6b46;
+  --encre: #1d2733;
+  --gris: #5b6572;
+  --fond: #eef1f5;
+  --carte: #ffffff;
+  --filet: #d4dae2;
+  --rouge: #c00;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--fond);
+  color: var(--encre);
+  font: 16px/1.55 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+h1, h2 { font-family: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif; }
+header {
+  background: var(--bleu);
+  color: #fff;
+  padding: 1.6rem 1.25rem 1.2rem;
+  border-bottom: 4px solid var(--or);
+}
+.gabarit { max-width: 1240px; margin: 0 auto; }
+header p { margin: 0; color: #c8d3e6; }
+h1 { margin: 0.15rem 0 0; font-size: 1.7rem; font-weight: 600; }
+nav.site {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 1.4rem;
+  padding: 0.8rem 1.25rem 0;
+}
+nav.site a { color: var(--bleu); font-weight: 600; }
+nav.site a[aria-current] { color: var(--encre); text-decoration: none; }
+main { padding: 1.25rem; }
+footer { padding: 0 1.25rem 1.5rem; font-size: 0.88rem; color: var(--gris); }
+a:focus-visible, :focus-visible { outline: 3px solid var(--or); outline-offset: 2px; }
+{% block styles %}{% endblock %}
+</style>
+</head>
+<body>
+<header>
+  <div class="gabarit">
+    <p>{{ club }}</p>
+    <h1>{% block entete %}{{ self.titre() }}{% endblock %}</h1>
+  </div>
+</header>
+<nav class="site gabarit">
+  <a href="{{ prefixe }}."{% if page == 'accueil' %} aria-current="page"{% endif %}>Accueil</a>
+  <a href="{{ prefixe }}planning/"{% if page == 'planning' %} aria-current="page"{% endif %}>Planning</a>
+  <a href="{{ prefixe }}tarifs/"{% if page == 'tarifs' %} aria-current="page"{% endif %}>Tarifs</a>
+  <a href="{{ prefixe }}calculateur/"{% if page == 'calculateur' %} aria-current="page"{% endif %}>Calculateur</a>
+</nav>
+<main class="gabarit">
+{% block contenu %}{% endblock %}
+</main>
+<footer class="gabarit">
+  <p>Mis à jour le {{ date_generation }} — <a href="https://arcpontoise.fr/">arcpontoise.fr</a></p>
+</footer>
+</body>
+</html>

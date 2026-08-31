@@ -1,0 +1,169 @@
+{% extends "base.html.j2" %}
+{% block titre %}Calculateur de licences {{ saison_tarifs }}{% endblock %}
+{% block description %}Estimez le coût des licences {{ saison_tarifs }} pour votre famille, remises comprises.{% endblock %}
+{% block styles %}
+.intro { max-width: 70ch; color: var(--gris); margin: 0 0 1rem; }
+.archer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem 1.2rem;
+  align-items: center;
+  background: var(--carte);
+  border: 1px solid var(--filet);
+  border-left: 4px solid var(--bleu);
+  border-radius: 6px;
+  padding: 0.8rem 1rem;
+  margin-bottom: 0.7rem;
+}
+.archer .rang { font-weight: 700; color: var(--bleu-fonce); min-width: 6.5rem; }
+.archer select { font: inherit; padding: 0.35rem 0.5rem; border: 1px solid var(--filet); border-radius: 4px; }
+.archer label.case { display: inline-flex; align-items: center; gap: 0.35rem; font-size: 0.9rem; }
+.archer .sous-total { margin-left: auto; font-weight: 700; }
+.archer .retirer {
+  background: none;
+  border: 1px solid var(--filet);
+  border-radius: 4px;
+  color: var(--gris);
+  padding: 0.3rem 0.6rem;
+  cursor: pointer;
+}
+.actions { margin: 0.8rem 0 1.2rem; }
+.actions button {
+  font: inherit;
+  font-weight: 600;
+  background: var(--bleu);
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 0.55rem 1rem;
+  cursor: pointer;
+}
+.total {
+  background: var(--carte);
+  border: 1px solid var(--filet);
+  border-left: 4px solid var(--or);
+  border-radius: 6px;
+  padding: 1rem 1.2rem;
+  font-size: 1.05rem;
+}
+.total strong { font-size: 1.35rem; color: var(--bleu-fonce); }
+.mentions { margin-top: 1rem; max-width: 75ch; font-size: 0.88rem; color: var(--gris); }
+{% endblock %}
+{% block contenu %}
+<p class="intro">
+  Ajoutez les archers de votre foyer : la remise famille se calcule
+  automatiquement sur la part compagnie ({{ part_compagnie_fmt }} €)
+  selon le rang de chacun.
+</p>
+<div id="archers"></div>
+<div class="actions">
+  <button type="button" id="ajouter">Ajouter un archer</button>
+</div>
+<div class="total" aria-live="polite">
+  Total famille : <strong id="montant-total">0,00 €</strong>
+  <span id="detail-remises"></span>
+</div>
+<p class="mentions">
+  Montants indicatifs, calculés à partir de la grille officielle {{ saison_tarifs }}.
+  Au-delà du 4<sup>e</sup> archer, la remise de {{ remise_max }} % est reconduite.
+  Le règlement s'effectue auprès du secrétariat, qui reste la référence en cas d'écart.
+</p>
+<script>
+"use strict";
+
+const TARIFS = {{ donnees_calculateur | safe }};
+
+const EUROS = new Intl.NumberFormat("fr-FR", { style: "currency", currency: "EUR" });
+const listeArchers = document.getElementById("archers");
+const boutonAjouter = document.getElementById("ajouter");
+const montantTotal = document.getElementById("montant-total");
+const detailRemises = document.getElementById("detail-remises");
+
+function remisePourRang(rang) {
+  const definis = Object.keys(TARIFS.remises).map(Number);
+  const applicable = Math.min(rang, Math.max(...definis));
+  return TARIFS.remises[String(applicable)] || 0;
+}
+
+function creerArcher() {
+  const bloc = document.createElement("div");
+  bloc.className = "archer";
+
+  const rang = document.createElement("span");
+  rang.className = "rang";
+
+  const categorie = document.createElement("select");
+  categorie.setAttribute("aria-label", "Catégorie de licence");
+  for (const c of TARIFS.categories) {
+    const option = document.createElement("option");
+    option.value = c.id;
+    option.textContent = c.libelle;
+    categorie.appendChild(option);
+  }
+
+  const options = document.createElement("span");
+  for (const s of TARIFS.supplements) {
+    const label = document.createElement("label");
+    label.className = "case";
+    const case_ = document.createElement("input");
+    case_.type = "checkbox";
+    case_.dataset.supplement = s.id;
+    label.append(case_, ` ${s.libelle_court} (+${EUROS.format(s.montant / 100)})`);
+    options.appendChild(label);
+  }
+
+  const sousTotal = document.createElement("span");
+  sousTotal.className = "sous-total";
+
+  const retirer = document.createElement("button");
+  retirer.type = "button";
+  retirer.className = "retirer";
+  retirer.textContent = "Retirer";
+  retirer.addEventListener("click", () => {
+    bloc.remove();
+    recalculer();
+  });
+
+  bloc.append(rang, categorie, options, sousTotal, retirer);
+  bloc.addEventListener("change", recalculer);
+  listeArchers.appendChild(bloc);
+  recalculer();
+}
+
+function recalculer() {
+  const blocs = [...listeArchers.querySelectorAll(".archer")];
+  let total = 0;
+  let totalRemises = 0;
+
+  blocs.forEach((bloc, index) => {
+    const rang = index + 1;
+    const pct = rang === 1 ? 0 : remisePourRang(rang);
+    const categorie = TARIFS.categories.find(
+      (c) => c.id === bloc.querySelector("select").value
+    );
+    const remise = Math.round((TARIFS.part_compagnie * pct) / 100);
+    let montant = categorie.hors_compagnie + TARIFS.part_compagnie - remise;
+    for (const case_ of bloc.querySelectorAll("input:checked")) {
+      const supplement = TARIFS.supplements.find(
+        (s) => s.id === case_.dataset.supplement
+      );
+      montant += supplement.montant;
+    }
+    bloc.querySelector(".rang").textContent =
+      rang === 1 ? "1er archer" : `${rang}e archer`;
+    bloc.querySelector(".sous-total").textContent =
+      EUROS.format(montant / 100) + (pct ? ` (−${pct} %)` : "");
+    total += montant;
+    totalRemises += remise;
+  });
+
+  montantTotal.textContent = EUROS.format(total / 100);
+  detailRemises.textContent = totalRemises
+    ? ` dont ${EUROS.format(totalRemises / 100)} de remise famille`
+    : "";
+}
+
+boutonAjouter.addEventListener("click", creerArcher);
+creerArcher();
+</script>
+{% endblock %}

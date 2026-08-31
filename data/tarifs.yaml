@@ -1,0 +1,62 @@
+---
+# Source de vérité des tarifs. Les totaux (archer seul, remises famille)
+# ne sont JAMAIS saisis ici : ils sont calculés par scripts/build.py.
+# Montants en euros.
+
+saison_tarifs: "2027"
+
+# Part identique pour toutes les catégories.
+part_compagnie: 82.00
+
+# Remises famille, en pourcentage, appliquées uniquement sur la part
+# compagnie, selon le rang de l'archer dans la famille.
+remises_famille:
+  2: 20
+  3: 30
+  4: 40
+
+categories:
+  - id: adulte-competition
+    libelle: Adultes — pratique en compétition
+    ffta: 46.00
+    evenement_exceptionnel: 2.00
+    ligue: 20.00
+    departement: 15.00
+
+  - id: adulte-club
+    libelle: Adultes — pratique en club
+    ffta: 38.00
+    evenement_exceptionnel: 2.00
+    ligue: 16.00
+    departement: 12.00
+
+  - id: adulte-sans-pratique
+    libelle: Adultes — sans pratique
+    ffta: 29.00
+    evenement_exceptionnel: 2.00
+    ligue: 5.00
+    departement: 1.00
+
+  - id: jeune
+    libelle: Jeunes U13 à U21
+    naissance: né(e) entre le 01.01.2007 et le 31.12.2016
+    ffta: 28.00
+    evenement_exceptionnel: 2.00
+    ligue: 16.00
+    departement: 13.00
+
+  - id: poussin
+    libelle: Poussins U11
+    naissance: né(e) après le 01.01.2017
+    ffta: 19.00
+    evenement_exceptionnel: 2.00
+    ligue: 7.00
+    departement: 5.00
+
+supplements:
+  - id: kit-robin
+    titre: Kit matériel
+    libelle: >-
+      à régler en plus de la licence pour les petits robins 1ère année
+      de la saison 2026 qui se réinscrivent
+    montant: 90.00

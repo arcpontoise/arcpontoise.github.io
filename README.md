@@ -1,11 +1,14 @@
-# Planning — Compagnie d'archers de Pontoise
+# Site d'informations — Compagnie d'archers de Pontoise
 
 Génération du planning hebdomadaire des créneaux à partir d'une source unique
 en YAML, publiée sur GitHub Pages à chaque poussée sur `main`.
 
 ## Principe
 
-- `data/planning.yaml` est la **seule source de vérité**. Le document transmis
+- `data/planning.yaml` et `data/tarifs.yaml` sont les **seules sources
+  de vérité**. Aucun total tarifaire n'y est saisi : `build.py` les
+  calcule (en centimes) à partir du détail des parts et des remises,
+  ce qui rend les erreurs d'addition impossibles. Le document transmis
   chaque saison par le capitaine est transcrit ici, puis tout le reste est
   généré.
 - `scripts/build.py` valide la structure (jours, horaires, publics) puis génère

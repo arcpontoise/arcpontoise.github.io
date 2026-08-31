@@ -1,0 +1,63 @@
+{% extends "base.html.j2" %}
+{% block titre %}Tarifs des licences {{ saison_tarifs }}{% endblock %}
+{% block description %}Prix des licences {{ saison_tarifs }} par catégorie, avec les remises famille.{% endblock %}
+{% block styles %}
+.defilement { overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; min-width: 900px; background: var(--carte); font-size: 0.92rem; }
+caption { text-align: left; padding: 0 0 0.6rem; color: var(--gris); }
+th, td { border: 1px solid var(--filet); padding: 0.5rem 0.65rem; text-align: right; }
+th[scope="col"] { background: var(--bleu); color: #fff; font-weight: 600; }
+th[scope="row"] { text-align: left; font-weight: 600; color: var(--bleu-fonce); background: #f6f8fb; }
+th[scope="row"] small { display: block; font-weight: 400; color: var(--gris); }
+td.total { font-weight: 700; background: #f3ede0; }
+.notes { margin-top: 1rem; }
+.notes p { margin: 0.4rem 0; font-size: 1.2rem; font-weight: bold; }
+.notes p span { color: var(--rouge); }
+{% endblock %}
+{% block contenu %}
+<div class="defilement">
+  <table>
+    <caption>Montants en euros. Les totaux sont calculés automatiquement à partir du détail des parts.</caption>
+    <thead>
+      <tr>
+        <th scope="col" style="text-align:left">Catégorie</th>
+        <th scope="col">Licence FFTA</th>
+        <th scope="col">Évènement exceptionnel</th>
+        <th scope="col">Ligue</th>
+        <th scope="col">Département</th>
+        <th scope="col">Part compagnie</th>
+        <th scope="col">Archer seul</th>
+        {% for rang, pct in remises_famille.items() %}
+        <th scope="col">{{ rang }}<sup>e</sup> archer famille (−{{ pct }} %)</th>
+        {% endfor %}
+      </tr>
+    </thead>
+    <tbody>
+      {% for ligne in lignes_tarifs %}
+      <tr>
+        <th scope="row">{{ ligne.libelle }}{% if ligne.get('naissance') %}<small>{{ ligne['naissance'] }}</small>{% endif %}</th>
+        <td>{{ ligne.ffta }}</td>
+        <td>{{ ligne.evenement }}</td>
+        <td>{{ ligne.ligue }}</td>
+        <td>{{ ligne.departement }}</td>
+        <td>{{ ligne.part_compagnie }}</td>
+        <td class="total">{{ ligne.seul }}</td>
+        {% for montant in ligne.rangs %}
+        <td class="total">{{ montant }}</td>
+        {% endfor %}
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+<div class="notes">
+  <span>Les remises de {{ remises_famille.values() | join(', ') }} % s'appliquent uniquement sur la part compagnie.</span>
+  {% for s in supplements %}
+  <p>
+    {{ s.titre }} :
+    <span>{{ s.montant_fmt }} €</span>
+    {{ s.libelle }}
+  </p>
+  {% endfor %}
+</div>
+{% endblock %}

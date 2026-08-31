@@ -1,11 +1,15 @@
-"""Génère le planning HTML à partir de data/planning.yaml.
+"""Génère le site statique (planning, tarifs, calculateur) depuis data/.
 
 Usage : python scripts/build.py [--check]
   --check : valide les données sans générer de sortie.
+
+Les montants sont manipulés en centimes (entiers) : aucun total n'est
+saisi dans les données, tout est calculé ici.
 """
 
 from __future__ import annotations
 
+import json
 import re
 import sys
 from datetime import date
@@ -16,23 +20,59 @@ import yaml
 from jinja2 import Environment, FileSystemLoader, StrictUndefined
 
 RACINE = Path(__file__).resolve().parent.parent
-DONNEES = RACINE / "data" / "planning.yaml"
 TEMPLATES = RACINE / "templates"
 DIST = RACINE / "dist"
-PAGES = {"liste.html.j2": "index.html", "paysage.html.j2": "paysage.html"}
+
+# template -> chemin de sortie dans dist/
+PAGES = {
+    "accueil.html.j2": "index.html",
+    "planning/liste.html.j2": "planning/index.html",
+    "planning/paysage.html.j2": "planning/paysage.html",
+    "tarifs/tableau.html.j2": "tarifs/index.html",
+    "tarifs/calculateur.html.j2": "calculateur/index.html",
+}
 
 JOURS = ["lundi", "mardi", "mercredi", "jeudi", "vendredi", "samedi", "dimanche"]
 PUBLICS = {"jeunes", "adultes", "tous"}
 HEURE = re.compile(r"^([01]\d|2[0-3]):[0-5]\d$")
+PARTS = ("ffta", "evenement_exceptionnel", "ligue", "departement")
 
 
-def valider(donnees: dict[str, Any]) -> list[str]:
-    """Retourne la liste des erreurs de structure du fichier de données."""
+# ---------------------------------------------------------------- utilitaires
+
+
+def heure_fr(valeur: str) -> str:
+    """Formate « 19:30 » en « 19 h 30 » et « 14:00 » en « 14 h »."""
+    heures, minutes = valeur.split(":")
+    suffixe = f" h {minutes}" if minutes != "00" else " h"
+    return f"{int(heures)}{suffixe}"
+
+
+def en_minutes(valeur: str) -> int:
+    """Convertit « HH:MM » en minutes depuis minuit."""
+    heures, minutes = valeur.split(":")
+    return int(heures) * 60 + int(minutes)
+
+
+def en_centimes(valeur: Any) -> int:
+    """Convertit un montant YAML en euros vers des centimes entiers."""
+    return round(float(valeur) * 100)
+
+
+def euros_fr(centimes: int) -> str:
+    """Formate 14860 centimes en « 148,60 »."""
+    return f"{centimes // 100},{centimes % 100:02d}"
+
+
+# ------------------------------------------------------------------- planning
+
+
+def valider_planning(donnees: dict[str, Any]) -> list[str]:
+    """Retourne la liste des erreurs de structure du planning."""
     erreurs: list[str] = []
-
     for cle in ("saison", "club", "note_globale", "creneaux", "tir_libre"):
         if cle not in donnees:
-            erreurs.append(f"clé racine manquante : {cle}")
+            erreurs.append(f"planning : clé racine manquante : {cle}")
     if erreurs:
         return erreurs
 
@@ -56,21 +96,7 @@ def valider(donnees: dict[str, Any]) -> list[str]:
     for jour in donnees["tir_libre"]:
         if jour not in JOURS:
             erreurs.append(f"tir_libre : jour invalide « {jour} »")
-
     return erreurs
-
-
-def heure_fr(valeur: str) -> str:
-    """Formate « 19:30 » en « 19 h 30 » et « 14:00 » en « 14 h »."""
-    heures, minutes = valeur.split(":")
-    suffixe = f" h {minutes}" if minutes != "00" else " h"
-    return f"{int(heures)}{suffixe}"
-
-
-def en_minutes(valeur: str) -> int:
-    """Convertit « HH:MM » en minutes depuis minuit."""
-    heures, minutes = valeur.split(":")
-    return int(heures) * 60 + int(minutes)
 
 
 def repartir_couloirs(creneaux: list[dict[str, Any]]) -> list[tuple[int, int]]:
@@ -80,13 +106,13 @@ def repartir_couloirs(creneaux: list[dict[str, Any]]) -> list[tuple[int, int]]:
     côte à côte ; retourne pour chacun (index_couloir, nb_couloirs).
     """
     positions: list[tuple[int, int]] = []
-    groupe: list[int] = []  # indices du groupe de chevauchement courant
-    couloirs: list[int] = []  # minute de fin de chaque couloir du groupe
+    groupe: list[int] = []
+    couloirs: list[int] = []
     fin_groupe = -1
 
     for i, c in enumerate(creneaux):
         debut, fin = en_minutes(c["debut"]), en_minutes(c["fin"])
-        if debut >= fin_groupe:  # nouveau groupe : figer la largeur du précédent
+        if debut >= fin_groupe:
             for j in groupe:
                 positions[j] = (positions[j][0], len(couloirs))
             groupe, couloirs = [], []
@@ -126,7 +152,7 @@ def calculer_blocs(
     return blocs
 
 
-def construire_contexte(donnees: dict[str, Any]) -> dict[str, Any]:
+def contexte_planning(donnees: dict[str, Any]) -> dict[str, Any]:
     """Regroupe et trie les créneaux par jour pour les templates."""
     debut_grille = min(en_minutes(c["debut"]) for c in donnees["creneaux"]) // 60 * 60
     fin_grille = -(-max(en_minutes(c["fin"]) for c in donnees["creneaux"]) // 60) * 60
@@ -138,13 +164,12 @@ def construire_contexte(donnees: dict[str, Any]) -> dict[str, Any]:
             (c for c in donnees["creneaux"] if c["jour"] == nom),
             key=lambda c: (c["debut"], c["fin"]),
         )
-        tir_libre = donnees["tir_libre"].get(nom)
         jours.append(
             {
                 "nom": nom,
                 "creneaux": creneaux,
                 "blocs": calculer_blocs(creneaux, debut_grille, duree_grille),
-                "tir_libre": tir_libre,
+                "tir_libre": donnees["tir_libre"].get(nom),
             }
         )
 
@@ -164,21 +189,134 @@ def construire_contexte(donnees: dict[str, Any]) -> dict[str, Any]:
         "jours_complets": jours,
         "heures": heures,
         "nb_heures": duree_grille // 60,
-        "date_generation": date.today().strftime("%d/%m/%Y"),
     }
 
 
+# --------------------------------------------------------------------- tarifs
+
+
+def valider_tarifs(donnees: dict[str, Any]) -> list[str]:
+    """Retourne la liste des erreurs de structure des tarifs."""
+    erreurs: list[str] = []
+    for cle in ("saison_tarifs", "part_compagnie", "remises_famille", "categories", "supplements"):
+        if cle not in donnees:
+            erreurs.append(f"tarifs : clé racine manquante : {cle}")
+    if erreurs:
+        return erreurs
+
+    identifiants = [c.get("id") for c in donnees["categories"]]
+    if len(identifiants) != len(set(identifiants)):
+        erreurs.append("tarifs : identifiants de catégories non uniques")
+
+    for c in donnees["categories"]:
+        ref = f"catégorie {c.get('id', '?')}"
+        for part in PARTS:
+            try:
+                if en_centimes(c.get(part)) < 0:
+                    erreurs.append(f"{ref} : {part} négatif")
+            except (TypeError, ValueError):
+                erreurs.append(f"{ref} : {part} manquant ou non numérique")
+
+    for rang, pct in donnees["remises_famille"].items():
+        if not (isinstance(rang, int) and rang >= 2 and 0 < pct < 100):
+            erreurs.append(f"tarifs : remise invalide pour le rang « {rang} » ({pct})")
+
+    for s in donnees["supplements"]:
+        try:
+            if en_centimes(s.get("montant")) < 0:
+                erreurs.append(f"supplément {s.get('id', '?')} : montant négatif")
+        except (TypeError, ValueError):
+            erreurs.append(f"supplément {s.get('id', '?')} : montant manquant ou non numérique")
+    return erreurs
+
+
+def contexte_tarifs(donnees: dict[str, Any]) -> dict[str, Any]:
+    """Calcule les totaux et remises, en centimes, pour le tableau et le calculateur."""
+    part_compagnie = en_centimes(donnees["part_compagnie"])
+    remises = dict(sorted(donnees["remises_famille"].items()))
+
+    lignes = []
+    categories_js = []
+    for c in donnees["categories"]:
+        parts = {p: en_centimes(c[p]) for p in PARTS}
+        hors_compagnie = sum(parts.values())
+        seul = hors_compagnie + part_compagnie
+        rangs = [
+            euros_fr(hors_compagnie + part_compagnie - part_compagnie * pct // 100)
+            for pct in remises.values()
+        ]
+        lignes.append(
+            {
+                **c,
+                "ffta": euros_fr(parts["ffta"]),
+                "evenement": euros_fr(parts["evenement_exceptionnel"]),
+                "ligue": euros_fr(parts["ligue"]),
+                "departement": euros_fr(parts["departement"]),
+                "part_compagnie": euros_fr(part_compagnie),
+                "seul": euros_fr(seul),
+                "rangs": rangs,
+            }
+        )
+        categories_js.append(
+            {"id": c["id"], "libelle": c["libelle"], "hors_compagnie": hors_compagnie}
+        )
+
+    supplements = [
+        {
+            **s,
+            "montant_fmt": euros_fr(en_centimes(s["montant"])),
+        }
+        for s in donnees["supplements"]
+    ]
+    supplements_js = [
+        {
+            "id": s["id"],
+            "libelle_court": s["libelle"].split("—")[0].strip(),
+            "montant": en_centimes(s["montant"]),
+        }
+        for s in donnees["supplements"]
+    ]
+
+    donnees_calculateur = json.dumps(
+        {
+            "part_compagnie": part_compagnie,
+            "remises": {str(rang): pct for rang, pct in remises.items()},
+            "categories": categories_js,
+            "supplements": supplements_js,
+        },
+        ensure_ascii=False,
+    ).replace("</", "<\\/")
+
+    return {
+        "saison_tarifs": donnees["saison_tarifs"],
+        "part_compagnie_fmt": euros_fr(part_compagnie),
+        "remises_famille": remises,
+        "remise_max": max(remises.values()),
+        "lignes_tarifs": lignes,
+        "supplements": supplements,
+        "donnees_calculateur": donnees_calculateur,
+    }
+
+
+# ---------------------------------------------------------------------- build
+
+
 def principal() -> int:
-    """Point d'entrée : valide, puis génère les pages dans dist/."""
-    donnees = yaml.safe_load(DONNEES.read_text(encoding="utf-8"))
-    erreurs = valider(donnees)
+    """Point d'entrée : valide les deux sources, puis génère dist/."""
+    planning = yaml.safe_load((RACINE / "data" / "planning.yaml").read_text(encoding="utf-8"))
+    tarifs = yaml.safe_load((RACINE / "data" / "tarifs.yaml").read_text(encoding="utf-8"))
+
+    erreurs = valider_planning(planning) + valider_tarifs(tarifs)
     if erreurs:
         for erreur in erreurs:
             print(f"ERREUR : {erreur}", file=sys.stderr)
         return 1
 
     if "--check" in sys.argv:
-        print(f"OK : {len(donnees['creneaux'])} créneaux valides")
+        print(
+            f"OK : {len(planning['creneaux'])} créneaux, "
+            f"{len(tarifs['categories'])} catégories tarifaires"
+        )
         return 0
 
     env = Environment(
@@ -189,13 +327,26 @@ def principal() -> int:
         lstrip_blocks=True,
     )
     env.filters["heure_fr"] = heure_fr
-    contexte = construire_contexte(donnees)
 
-    DIST.mkdir(parents=True, exist_ok=True)
+    commun = {
+        **contexte_planning(planning),
+        **contexte_tarifs(tarifs),
+        "date_generation": date.today().strftime("%d/%m/%Y"),
+    }
+
     for template, sortie in PAGES.items():
-        html = env.get_template(template).render(contexte)
-        (DIST / sortie).write_text(html, encoding="utf-8")
-        print(f"Généré : {(DIST / sortie).relative_to(RACINE)}")
+        profondeur = sortie.count("/")
+        contexte = {
+            **commun,
+            "prefixe": "../" * profondeur,
+            "page": sortie.split("/")[0].removesuffix(".html") or "accueil",
+        }
+        if contexte["page"] == "index":
+            contexte["page"] = "accueil"
+        destination = DIST / sortie
+        destination.parent.mkdir(parents=True, exist_ok=True)
+        destination.write_text(env.get_template(template).render(contexte), encoding="utf-8")
+        print(f"Généré : {destination.relative_to(RACINE)}")
     return 0
 
 
