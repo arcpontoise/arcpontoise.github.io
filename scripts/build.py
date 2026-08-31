@@ -11,6 +11,7 @@ from __future__ import annotations
 
 import json
 import re
+import shutil
 import sys
 from datetime import date
 from pathlib import Path
@@ -222,6 +223,9 @@ def valider_tarifs(donnees: dict[str, Any]) -> list[str]:
             erreurs.append(f"tarifs : remise invalide pour le rang « {rang} » ({pct})")
 
     for s in donnees["supplements"]:
+        for champ in ("titre", "libelle"):
+            if not s.get(champ):
+                erreurs.append(f"supplément {s.get('id', '?')} : {champ} manquant")
         try:
             if en_centimes(s.get("montant")) < 0:
                 erreurs.append(f"supplément {s.get('id', '?')} : montant négatif")
@@ -271,7 +275,7 @@ def contexte_tarifs(donnees: dict[str, Any]) -> dict[str, Any]:
     supplements_js = [
         {
             "id": s["id"],
-            "libelle_court": s["libelle"].split("—")[0].strip(),
+            "libelle_court": s.get("titre") or s["libelle"].split("—")[0].strip(),
             "montant": en_centimes(s["montant"]),
         }
         for s in donnees["supplements"]
@@ -327,6 +331,9 @@ def principal() -> int:
         lstrip_blocks=True,
     )
     env.filters["heure_fr"] = heure_fr
+
+    if (RACINE / "static").is_dir():
+        shutil.copytree(RACINE / "static", DIST / "static", dirs_exist_ok=True)
 
     commun = {
         **contexte_planning(planning),

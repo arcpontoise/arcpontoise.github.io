@@ -6,16 +6,24 @@
 <title>{% block titre %}{% endblock %} — {{ club }}</title>
 <meta name="description" content="{% block description %}{% endblock %}">
 <style>
+/* Charte graphique du club (palette des publications Instagram) */
+@font-face {
+  font-family: "Caveat";
+  src: url("{{ prefixe }}static/fonts/caveat.woff2") format("woff2");
+  font-weight: 400 700;
+  font-display: swap;
+}
 :root {
-  --bleu: #24406e;
-  --bleu-fonce: #182c4e;
-  --or: #a97e1c;
-  --vert: #2f6b46;
-  --encre: #1d2733;
-  --gris: #5b6572;
-  --fond: #eef1f5;
-  --carte: #ffffff;
-  --filet: #d4dae2;
+  --accent: #3f60aa;      /* bleu clair : mise en avant, contraste */
+  --bleu: #1b2b5a;        /* bleu foncé : bandeaux, éléments forts */
+  --bleu-moyen: #475b8b;
+  --bleu-fonce: #09132d;  /* texte */
+  --encre: #09132d;
+  --fond: #f3ebe7;        /* blanc cassé */
+  --carte: #fffdfb;
+  --gris: #3b3f50;        /* texte secondaire */
+  --gris-doux: #767e98;   /* éléments non textuels */
+  --filet: #acafc1;
   --rouge: #c00;
 }
 * { box-sizing: border-box; }
@@ -25,35 +33,45 @@ body {
   color: var(--encre);
   font: 16px/1.55 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
 }
-h1, h2 { font-family: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif; }
+h1, h2 {
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+.manuscrit {
+  font-family: "Caveat", "Segoe Script", "Bradley Hand", cursive;
+  text-transform: none;
+  letter-spacing: 0;
+}
 header {
   background: var(--bleu);
-  color: #fff;
-  padding: 1.6rem 1.25rem 1.2rem;
-  border-bottom: 4px solid var(--or);
+  color: var(--fond);
+  padding: 1.4rem 1.25rem 1.1rem;
+  border-bottom: 4px solid var(--accent);
 }
 .gabarit { max-width: 1240px; margin: 0 auto; }
-header p { margin: 0; color: #c8d3e6; }
-h1 { margin: 0.15rem 0 0; font-size: 1.7rem; font-weight: 600; }
+header .manuscrit { margin: 0; font-size: 1.55rem; line-height: 1.1; color: #ccd4ea; }
+h1 { margin: 0.15rem 0 0; font-size: 1.55rem; }
 nav.site {
   display: flex;
   flex-wrap: wrap;
   gap: 0.4rem 1.4rem;
   padding: 0.8rem 1.25rem 0;
 }
-nav.site a { color: var(--bleu); font-weight: 600; }
+nav.site a { color: var(--accent); font-weight: 600; }
 nav.site a[aria-current] { color: var(--encre); text-decoration: none; }
-main { padding: 1.25rem; }
+main { padding: 1.25rem 1.25rem 1.5rem; }
 footer { padding: 0 1.25rem 1.5rem; font-size: 0.88rem; color: var(--gris); }
-a:focus-visible, :focus-visible { outline: 3px solid var(--or); outline-offset: 2px; }
+a:focus-visible, :focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
 {% block styles %}{% endblock %}
 </style>
 </head>
 <body>
 <header>
   <div class="gabarit">
-    <p>{{ club }}</p>
+    <p class="manuscrit">{{ club }}</p>
     <h1>{% block entete %}{{ self.titre() }}{% endblock %}</h1>
+    {% block sous_entete %}{% endblock %}
   </div>
 </header>
 <nav class="site gabarit">

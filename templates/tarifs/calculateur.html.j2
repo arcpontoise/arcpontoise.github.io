@@ -41,13 +41,14 @@
 .total {
   background: var(--carte);
   border: 1px solid var(--filet);
-  border-left: 4px solid var(--or);
+  border-left: 4px solid var(--accent);
   border-radius: 6px;
   padding: 1rem 1.2rem;
   font-size: 1.05rem;
 }
 .total strong { font-size: 1.35rem; color: var(--bleu-fonce); }
-.mentions { margin-top: 1rem; max-width: 75ch; font-size: 0.88rem; color: var(--gris); }
+.mentions { margin-top: 1rem; font-size: 0.88rem; color: var(--gris); }
+.actions button:disabled { background: var(--gris-doux); cursor: not-allowed; }
 {% endblock %}
 {% block contenu %}
 <p class="intro">
@@ -65,8 +66,9 @@
 </div>
 <p class="mentions">
   Montants indicatifs, calculés à partir de la grille officielle {{ saison_tarifs }}.
-  Au-delà du 4<sup>e</sup> archer, la remise de {{ remise_max }} % est reconduite.
-  Le règlement s'effectue auprès du secrétariat, qui reste la référence en cas d'écart.
+  Le règlement s'effectue auprès du secrétariat, qui reste la référence en cas d'écart.<br />
+  Au-delà du 4<sup>e</sup> archer, merci de se rapprocher du secrétariat pour bénéficier de la remise famille.
+
 </p>
 <script>
 "use strict";
@@ -78,6 +80,7 @@ const listeArchers = document.getElementById("archers");
 const boutonAjouter = document.getElementById("ajouter");
 const montantTotal = document.getElementById("montant-total");
 const detailRemises = document.getElementById("detail-remises");
+const MAX_ARCHERS = Math.max(...Object.keys(TARIFS.remises).map(Number));
 
 function remisePourRang(rang) {
   const definis = Object.keys(TARIFS.remises).map(Number);
@@ -86,6 +89,9 @@ function remisePourRang(rang) {
 }
 
 function creerArcher() {
+  if (listeArchers.children.length >= MAX_ARCHERS) {
+    return;
+  }
   const bloc = document.createElement("div");
   bloc.className = "archer";
 
@@ -161,6 +167,11 @@ function recalculer() {
   detailRemises.textContent = totalRemises
     ? ` dont ${EUROS.format(totalRemises / 100)} de remise famille`
     : "";
+  const complet = blocs.length >= MAX_ARCHERS;
+  boutonAjouter.disabled = complet;
+  boutonAjouter.textContent = complet
+    ? `Maximum atteint (${MAX_ARCHERS} archers)`
+    : "Ajouter un archer";
 }
 
 boutonAjouter.addEventListener("click", creerArcher);
