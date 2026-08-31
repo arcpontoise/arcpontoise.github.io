@@ -78,8 +78,9 @@ groupes:
     places: 8
     description: >-
       Apprentissage sous forme ludique des gestes fondamentaux du tir à
-      l'arc, encadré par deux encadrants dont un certifié. L'arc est mis
-      à disposition sous conditions.
+      l'arc, encadré par deux encadrants dont un certifié.
+
+      L'arc est mis à disposition sous conditions.
     formation: 60.00
     licences:
       - categorie: jeune
@@ -97,8 +98,9 @@ groupes:
     places: 12
     description: >-
       Formation première année encadrée par un entraîneur et deux
-      encadrants dont un certifié. L'arc est mis à disposition sous
-      conditions.
+      encadrants dont un certifié.
+
+      L'arc est mis à disposition sous conditions.
     formation: 156.00
     licences:
       - categorie: jeune
@@ -112,8 +114,10 @@ groupes:
     public: 2ᵉ année et plus, U13 à U21
     description: >-
       Encadré par deux entraîneurs et un encadrant. Gymnase en hiver,
-      terrain d'avril à fin juin. Possibilité de location d'arc avec
-      caution, selon le niveau acquis.
+      terrain d'avril à fin juin.
+
+      Possibilité de location d'arc avec caution, selon le niveau
+      acquis.
     licences:
       - categorie: jeune
         libelle: licence FFTA

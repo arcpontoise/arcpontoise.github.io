@@ -51,11 +51,27 @@
 }
 .planche { display: contents; }
 .volet {
+  position: relative;
+  overflow: hidden;
   background: var(--carte);
   border: 1px solid var(--filet);
   border-radius: 6px;
   padding: 1.1rem 1.2rem;
 }
+.decor {
+  position: absolute;
+  right: -14%;
+  bottom: -6%;
+  width: 62%;
+  height: auto;
+  opacity: 0.38;
+  z-index: 0;
+}
+.volet > *:not(.decor) { position: relative; z-index: 1; }
+.affiliation { margin-top: auto; padding-top: 1rem; text-align: center; }
+.affiliation img { width: 46mm; max-width: 70%; height: auto; }
+.affiliation p { font-size: 0.8rem; color: var(--gris); margin: 0.3rem 0 0; }
+.couverture .affiliation p { color: #ccd4ea; }
 .volet h2 {
   margin: 0 0 0.7rem;
   font-size: 1.05rem;
@@ -117,12 +133,14 @@
 .securite { font-weight: 700; }
 @media print {
   @page { size: A4 landscape; margin: 0; }
-  body { background: #fff; font-size: 12px; }
+  body { background: #fff; font-size: 13.5px; }
   header, nav.site, footer, .telecharger { display: none; }
   main { padding: 0; max-width: none; }
   .plaquette { display: block; }
   .planche { display: flex; width: 297mm; height: 210mm; page-break-after: always; }
   .volet {
+    display: flex;
+    flex-direction: column;
     width: 99mm;
     height: 210mm;
     padding: 10mm 8mm;
@@ -132,19 +150,29 @@
   }
   .volet + .volet { border-left: 0.3mm dashed var(--filet); }
   .couverture { border: none; print-color-adjust: exact; -webkit-print-color-adjust: exact; }
-  .volet h2 { font-size: 17px; margin: 0 0 3mm; padding-bottom: 1.5mm; }
-  .volet p, .groupe p { font-size: 12px; line-height: 1.5; margin: 1.2mm 0; }
-  .groupe h3 { font-size: 14px; }
-  .groupe .cout span { font-size: 10.5px; }
-  .contact .role { font-size: 10.5px; }
-  .contact .qui { font-size: 13.5px; }
-  .couverture .manuscrit { font-size: 26px; }
-  .couverture h2 { font-size: 19px; }
+  .volet h2 { font-size: 19px; margin: 0 0 3mm; padding-bottom: 1.5mm; }
+  .volet p, .groupe p { font-size: 13.5px; line-height: 1.5; margin: 1.3mm 0; }
+  .groupe h3 { font-size: 15.5px; }
+  .groupe .cout span { font-size: 11.5px; }
+  .contact .role { font-size: 11.5px; }
+  .contact .qui { font-size: 15px; }
+  .couverture .manuscrit { font-size: 28px; }
+  .couverture h2 { font-size: 21px; }
   .couverture .logo-couv { height: 46mm; }
-  .label-image { max-width: 66mm; margin-top: 8mm; }
+  .label-image { max-width: 62mm; margin-top: 7mm; }
   .reseau svg { width: 6mm; height: 6mm; }
   .groupe { margin-bottom: 4mm; padding-left: 3mm; }
   .qr-liste { gap: 6mm; margin-top: 3mm; }
+  .volet > .affiliation {
+    position: absolute;
+    left: 8mm;
+    right: 8mm;
+    bottom: 9mm;
+    margin: 0;
+    padding: 0;
+  }
+  .affiliation img { width: 40mm; }
+  .affiliation p { font-size: 10.5px; }
   .qr svg { width: 28mm; height: 28mm; }
   .qr figcaption { font-size: 10px; max-width: 28mm; }
 }
@@ -158,6 +186,7 @@
 <div class="plaquette">
   <div class="planche">
     <section class="volet couverture">
+      {% if decor_existe %}<img class="decor" src="{{ prefixe }}static/img/arc-decor.png" alt="">{% endif %}
       {% if logo_existe %}<img class="logo-couv" src="{{ prefixe }}static/img/logo.jpg" alt="Blason de la Compagnie d'archers de Pontoise">{% endif %}
       <p class="manuscrit">{{ club }}</p>
       <h2>{{ plaquette.accroche }}</h2>
@@ -166,8 +195,15 @@
       <img class="label-image" src="{{ prefixe }}static/img/label-ambition.png"
            alt="{{ plaquette.label.intitule }} — {{ plaquette.label.validite }}">
       {% endif %}
+      {% if ffta_existe %}
+      <div class="affiliation">
+        <img src="{{ prefixe }}static/img/ffta-bandeau-blanc.png" alt="Fédération Française de Tir à l'Arc">
+        <p>Club affilié à la Fédération Française de Tir à l'Arc</p>
+      </div>
+      {% endif %}
     </section>
     <section class="volet">
+      {% if decor_existe %}<img class="decor" src="{{ prefixe }}static/img/arc-decor.png" alt="">{% endif %}
       <h2>La compagnie</h2>
       {{ plaquette.presentation | texte_riche }}
       <h2>Lieux de pratique</h2>
@@ -202,16 +238,23 @@
         </figure>
         {% endfor %}
       </div>
+      {% if ffta_existe %}
+      <div class="affiliation">
+        <img src="{{ prefixe }}static/img/ffta-bandeau.png" alt="Fédération Française de Tir à l'Arc">
+      </div>
+      {% endif %}
     </section>
   </div>
   <div class="planche">
     <section class="volet">
+      {% if decor_existe %}<img class="decor" src="{{ prefixe }}static/img/arc-decor.png" alt="">{% endif %}
       <h2>Les jeunes débutants</h2>
       <p class="securite">{{ plaquette.securite_jeunes }}</p>
       {{ carte_groupe("petits-robins-debutants") }}
       {{ carte_groupe("jeunes-debutants") }}
     </section>
     <section class="volet">
+      {% if decor_existe %}<img class="decor" src="{{ prefixe }}static/img/arc-decor.png" alt="">{% endif %}
       <h2>Jeunes confirmés</h2>
       {{ carte_groupe("jeunes-confirmes") }}
       <h2>Parcours et tir traditionnel</h2>
@@ -219,6 +262,7 @@
       {{ carte_groupe("arc-sans-viseur") }}
     </section>
     <section class="volet">
+      {% if decor_existe %}<img class="decor" src="{{ prefixe }}static/img/arc-decor.png" alt="">{% endif %}
       <h2>Les adultes</h2>
       {{ carte_groupe("adultes-debutants") }}
       {{ carte_groupe("adultes-confirmes") }}

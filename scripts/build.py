@@ -496,6 +496,8 @@ def principal() -> int:
         "pdf_planning": f"planning-{planning['saison']}.pdf",
         "pdf_plaquette": f"plaquette-{planning['saison']}.pdf",
         "label_existe": (RACINE / "static" / "img" / "label-ambition.png").is_file(),
+        "ffta_existe": (RACINE / "static" / "img" / "ffta-bandeau.png").is_file(),
+        "decor_existe": (RACINE / "static" / "img" / "arc-decor.png").is_file(),
         "pdf_disponible": importlib.util.find_spec("weasyprint") is not None,
     }
 
