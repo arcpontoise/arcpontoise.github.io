@@ -34,6 +34,7 @@ PAGES = {
     "planning/embarque.html.j2": "planning/embarque.html",
     "tarifs/tableau.html.j2": "tarifs/index.html",
     "plaquette/page.html.j2": "plaquette/index.html",
+    "plaquette/affiche.html.j2": "affiche/index.html",
     "tarifs/calculateur.html.j2": "calculateur/index.html",
 }
 
@@ -79,6 +80,33 @@ def qr_svg(lien: str) -> Markup:
             dark="#1b2b5a", border=1, svgclass=None, omitsize=True
         )
     )
+
+
+def qr_avec_logo(lien: str, sortie: Path) -> None:
+    """Écrit un QR code PNG avec le blason du club en son centre.
+
+    La correction d'erreur maximale (niveau H) autorise l'occultation
+    d'environ 30 % des modules : le logo en couvre nettement moins.
+    """
+    import segno
+    from PIL import Image
+
+    tampon = sortie.with_suffix(".tmp.png")
+    segno.make(lien, error="h").save(
+        str(tampon), scale=14, border=2, dark="#09132d", light="#ffffff"
+    )
+    qr = Image.open(tampon).convert("RGBA")
+    blason = RACINE / "static" / "img" / "logo.jpg"
+    if blason.is_file():
+        cote = qr.width // 5
+        logo = Image.open(blason).convert("RGBA")
+        logo.thumbnail((cote, cote), Image.LANCZOS)
+        fond = Image.new("RGBA", (logo.width + 16, logo.height + 16), (255, 255, 255, 255))
+        fond.paste(logo, (8, 8), logo)
+        qr.paste(fond, ((qr.width - fond.width) // 2, (qr.height - fond.height) // 2))
+    qr.save(sortie, optimize=True)
+    tampon.unlink()
+    print(f"Généré : {sortie.relative_to(RACINE)}")
 
 
 def en_centimes(valeur: Any) -> int:
@@ -391,7 +419,16 @@ def valider_plaquette(
 ) -> list[str]:
     """Vérifie les références croisées de la plaquette vers planning et tarifs."""
     erreurs: list[str] = []
-    for cle in ("accroche", "qu_est_ce", "presentation", "contacts", "reseaux", "groupes"):
+    for cle in (
+        "accroche",
+        "base_url",
+        "qu_est_ce",
+        "presentation",
+        "contacts",
+        "reseaux",
+        "groupes",
+        "affiche",
+    ):
         if cle not in plq:
             erreurs.append(f"plaquette : clé racine manquante : {cle}")
     if erreurs:
@@ -495,6 +532,8 @@ def principal() -> int:
         "logo_existe": (RACINE / "static" / "img" / "logo.jpg").is_file(),
         "pdf_planning": f"planning-{planning['saison']}.pdf",
         "pdf_plaquette": f"plaquette-{planning['saison']}.pdf",
+        "pdf_affiche": f"affiche-{planning['saison']}.pdf",
+        "lien_plaquette": (f"{plq['base_url']}/plaquette/plaquette-{planning['saison']}.pdf"),
         "label_existe": (RACINE / "static" / "img" / "label-ambition.png").is_file(),
         "ffta_existe": (RACINE / "static" / "img" / "ffta-bandeau.png").is_file(),
         "decor_existe": (RACINE / "static" / "img" / "arc-decor.png").is_file(),
@@ -521,6 +560,8 @@ def principal() -> int:
         destination.write_text(html, encoding="utf-8")
         print(f"Généré : {destination.relative_to(RACINE)}")
 
+    qr_avec_logo(commun["lien_plaquette"], DIST / "static" / "img" / "qr-plaquette.png")
+
     if commun["pdf_disponible"]:
         generer_pdf(
             DIST / "planning" / "paysage.html",
@@ -529,6 +570,10 @@ def principal() -> int:
         generer_pdf(
             DIST / "plaquette" / "index.html",
             DIST / "plaquette" / commun["pdf_plaquette"],
+        )
+        generer_pdf(
+            DIST / "affiche" / "index.html",
+            DIST / "affiche" / commun["pdf_affiche"],
         )
     return 0
 

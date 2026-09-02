@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Affiche forum — {{ club }}</title>
+<meta name="robots" content="noindex">
+<style>
+@font-face {
+  font-family: "Caveat";
+  src: url("../static/fonts/caveat.woff2") format("woff2");
+  font-weight: 400 700;
+  font-display: swap;
+}
+{% include "_palette.css" %}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--fond);
+  color: var(--encre);
+  font: 16px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+.affiche {
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+  width: 210mm;
+  height: 297mm;
+  margin: 1rem auto;
+  padding: 12mm 14mm 8mm;
+  background: var(--carte);
+  box-shadow: 0 2px 14px rgba(9, 19, 45, 0.14);
+}
+.decor {
+  position: absolute;
+  right: -10mm;
+  top: 42mm;
+  height: 150mm;
+  width: auto;
+  opacity: 0.2;
+  z-index: 0;
+}
+.affiche > *:not(.decor) { position: relative; z-index: 1; }
+.blason { height: 27mm; width: auto; }
+.club {
+  font-family: "Caveat", "Segoe Script", cursive;
+  font-size: 10mm;
+  line-height: 1.05;
+  color: var(--bleu);
+  margin: 3mm 0 0;
+}
+h1 {
+  font-size: 13.5mm;
+  line-height: 1.1;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--bleu);
+  margin: 4mm 0 4mm;
+}
+.arguments {
+  list-style: none;
+  display: inline-block;
+  text-align: left;
+  margin: 0 0 6mm;
+  padding: 0;
+  font-size: 4.6mm;
+  line-height: 1.55;
+}
+.arguments li { margin: 1.2mm 0; }
+.arguments li::before {
+  content: "";
+  display: inline-block;
+  width: 2.2mm;
+  height: 2.2mm;
+  margin-right: 2.5mm;
+  border-radius: 50%;
+  background: var(--accent);
+}
+.appel {
+  background: var(--bleu);
+  color: var(--fond);
+  border-radius: 4mm;
+  padding: 6mm 8mm 5mm;
+}
+.appel .invitation {
+  font-size: 7.5mm;
+  font-weight: 700;
+  text-transform: uppercase;
+  margin: 0 0 1mm;
+}
+.appel .precision { font-size: 4.4mm; color: #ccd4ea; margin: 0 0 4mm; }
+.appel img.qr {
+  width: 60mm;
+  height: 60mm;
+  background: #fff;
+  border-radius: 2.5mm;
+  padding: 2.5mm;
+  display: block;
+  margin: 0 auto;
+}
+.appel .url { font-size: 4.2mm; color: #ccd4ea; margin: 3.5mm 0 0; }
+.pied { font-size: 5mm; font-weight: 600; color: var(--bleu); margin: 5mm 0 0; }
+.infos { margin: 2mm 0 0; font-size: 4.3mm; color: var(--gris); }
+.infos p { margin: 0.8mm 0; }
+.logos { margin-top: 5mm; }
+.logos img { height: 13mm; width: auto; vertical-align: middle; margin: 0 6mm; }
+.logos .label { height: 16mm; }
+@media print {
+  @page { size: A4 portrait; margin: 0; }
+  body { background: #fff; }
+  .affiche {
+    margin: 0;
+    height: 296mm;
+    overflow: hidden;
+    box-shadow: none;
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+  }
+}
+</style>
+</head>
+<body>
+<div class="affiche">
+  {% if decor_existe %}<img class="decor" src="../static/img/arc-decor.png" alt="">{% endif %}
+  {% if logo_existe %}<img class="blason" src="../static/img/logo.jpg" alt="">{% endif %}
+  <p class="club">{{ club }}</p>
+  <h1>{{ plaquette.affiche.titre }}</h1>
+  <ul class="arguments">
+    {% for argument in plaquette.affiche.arguments %}
+    <li>{{ argument }}</li>
+    {% endfor %}
+  </ul>
+  <div class="appel">
+    <p class="invitation">{{ plaquette.affiche.invitation }}</p>
+    <p class="precision">{{ plaquette.affiche.precision }}</p>
+    <img class="qr" src="../static/img/qr-plaquette.png"
+         alt="QR code vers la plaquette de la saison {{ saison }}">
+    <p class="url">{{ plaquette.base_url }}</p>
+  </div>
+  <p class="pied">{{ plaquette.affiche.pied }}</p>
+  <div class="infos">
+    {% for lieu in plaquette.lieux[:1] %}
+    <p>{{ lieu.nom }} — {{ lieu.detail.splitlines()[0] }}</p>
+    {% endfor %}
+    <p>{% for c in plaquette.contacts %}{{ c.courriel }}{{ " · " if not loop.last }}{% endfor %}</p>
+  </div>
+  <div class="logos">
+    {% if label_existe %}<img class="label" src="../static/img/label-ambition.png" alt="Label Club FFTA Ambition">{% endif %}
+    {% if ffta_existe %}<img src="../static/img/ffta-bandeau.png" alt="Fédération Française de Tir à l'Arc">{% endif %}
+  </div>
+</div>
+</body>
+</html>

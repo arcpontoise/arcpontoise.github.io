@@ -11,6 +11,25 @@
 
 accroche: La passion du tir à l'arc depuis 1903
 
+# Racine publique du site, utilisée pour construire le lien encodé
+# dans le QR code de l'affiche.
+base_url: https://infos.arcpontoise.fr
+
+# Affiche A4 à poser sur la table du forum des associations.
+affiche:
+  titre: Envie de tirer à l'arc ?
+  invitation: Scannez pour tout savoir
+  precision: >-
+    Créneaux, groupes, tarifs et calculateur de licence.
+
+  arguments:
+    - Un sport de concentration et de précision, dès 8 ans
+    - Débutants encadrés par des entraîneurs diplômés FFTA
+    - Arc prêté la première année, sous conditions
+    - Salle et terrain à Pontoise, toute l'année
+  pied: >-
+    Venez nous rencontrer, nous répondons à toutes vos questions.
+
 qu_est_ce: >-
   Le tir à l'arc est un sport de compétition et de détente.
   Il développe la concentration, la précision et l'esprit d'équipe.
