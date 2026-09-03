@@ -14,6 +14,7 @@ remises_famille:
   2: 20
   3: 30
   4: 40
+  5: 50
 
 categories:
   - id: adulte-competition
