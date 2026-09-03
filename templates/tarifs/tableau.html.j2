@@ -16,15 +16,20 @@ td.total { font-weight: 700; background: #e8edf7; }
 .telecharger { margin: 0 0 1rem; }
 .telecharger a { color: var(--accent); font-weight: 600; }
 @media print {
-  @page { size: A4 landscape; margin: 10mm; }
-  body { background: #fff; font-size: 12px; }
-  nav.site, .telecharger { display: none; }
-  header { background: none; color: var(--encre); border-bottom-color: var(--encre); padding: 0 0 0.4rem; }
-  header .manuscrit { color: var(--gris); }
-  .logo { height: 34px; }
+  @page { size: A4 landscape; margin: 8mm; }
+  body { background: #fff; font-size: 11px; }
+  nav.site, .telecharger, footer { display: none; }
+  header { background: none; color: var(--encre); border-bottom-color: var(--encre); padding: 0 0 0.3rem; }
+  header .manuscrit { display: none; }
+  h1 { font-size: 1.1rem; margin: 0; }
+  .logo { height: 30px; }
   main { padding: 0; }
   .defilement { overflow: visible; }
-  table { min-width: 0; }
+  table { min-width: 0; font-size: 10.5px; }
+  caption { font-size: 9.5px; padding-bottom: 0.2rem; }
+  th, td { padding: 3px 6px; }
+  .notes { margin-top: 0.4rem; }
+  .notes p, .notes span { font-size: 10px; font-weight: normal; margin: 2px 0; }
 }
 {% endblock %}
 {% block contenu %}
@@ -35,7 +40,7 @@ td.total { font-weight: 700; background: #e8edf7; }
 {% endif %}
 <div class="defilement">
   <table>
-    <caption>Montants en euros. Les totaux sont calculés automatiquement à partir du détail des parts.</caption>
+    <caption>Montants en euros.</caption>
     <thead>
       <tr>
         <th scope="col" style="text-align:left">Catégorie</th>
