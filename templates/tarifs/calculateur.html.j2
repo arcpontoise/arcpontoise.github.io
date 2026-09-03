@@ -150,7 +150,11 @@ function creerArcher() {
   });
 
   bloc.append(rang, categorie, options, sousTotal, retirer);
-  bloc.addEventListener("change", recalculer);
+  // Différé au tick suivant : recalculer() modifie le DOM (cases à cocher
+  // affichées/masquées) et le faire de façon synchrone dans le gestionnaire
+  // "change" du <select> referme prématurément son menu déroulant sur
+  // certains navigateurs.
+  bloc.addEventListener("change", () => setTimeout(recalculer, 0));
   listeArchers.appendChild(bloc);
   recalculer();
 }

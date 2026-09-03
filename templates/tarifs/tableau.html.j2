@@ -6,7 +6,7 @@
 table { border-collapse: collapse; width: 100%; min-width: 900px; background: var(--carte); font-size: 0.92rem; }
 caption { text-align: left; padding: 0 0 0.6rem; color: var(--gris); }
 th, td { border: 1px solid var(--filet); padding: 0.5rem 0.65rem; text-align: right; }
-th[scope="col"] { background: var(--bleu); color: #fff; font-weight: 600; }
+th[scope="col"] { background: var(--bleu); color: #fff; font-weight: 600; text-align: center; }
 th[scope="row"] { text-align: left; font-weight: 600; color: var(--bleu-fonce); background: #eef1f8; }
 th[scope="row"] small { display: block; font-weight: 400; color: var(--gris); }
 td.total { font-weight: 700; background: #e8edf7; }
@@ -26,8 +26,17 @@ td.total { font-weight: 700; background: #e8edf7; }
   main { padding: 0.5rem 0 0; }
   .defilement { overflow: visible; }
   table { min-width: 0; width: 100%; table-layout: fixed; font-size: 15px; }
-  th[scope="col"] { white-space: normal; line-height: 1.2; overflow-wrap: break-word; hyphens: auto; }
-  th[scope="col"]:first-child { width: 17%; }
+  th[scope="col"] { white-space: normal; line-height: 1.2; }
+  th[scope="col"]:nth-child(1) { width: 17%; }
+  th[scope="col"]:nth-child(2) { width: 8%; }
+  th[scope="col"]:nth-child(3) { width: 12%; }
+  th[scope="col"]:nth-child(4) { width: 6%; }
+  th[scope="col"]:nth-child(5) { width: 6%; }
+  th[scope="col"]:nth-child(6) { width: 9%; }
+  th[scope="col"]:nth-child(7) { width: 8%; }
+  th[scope="col"]:nth-child(8) { width: 11%; }
+  th[scope="col"]:nth-child(9) { width: 11%; }
+  th[scope="col"]:nth-child(10) { width: 12%; }
   caption { font-size: 14px; padding-bottom: 0.5rem; }
   th, td { padding: 0.55rem 0.6rem; }
   .notes { margin-top: 1rem; }
@@ -49,7 +58,7 @@ td.total { font-weight: 700; background: #e8edf7; }
         <th scope="col">Licence FFTA</th>
         <th scope="col">Évènement exceptionnel</th>
         <th scope="col">Ligue</th>
-        <th scope="col">Département</th>
+        <th scope="col">Dépt.</th>
         <th scope="col">Part compagnie</th>
         <th scope="col">Archer seul</th>
         {% for rang, pct in remises_famille.items() %}
