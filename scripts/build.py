@@ -290,9 +290,13 @@ def valider_tarifs(donnees: dict[str, Any]) -> list[str]:
     if erreurs:
         return erreurs
 
-    identifiants = [c.get("id") for c in donnees["categories"]]
+    identifiants = []
+    for c in donnees["categories"]:
+        identifiants.append(c.get("id"))
+        identifiants.extend(v.get("id") for v in c.get("variantes") or [])
     if len(identifiants) != len(set(identifiants)):
         erreurs.append("tarifs : identifiants de catégories non uniques")
+    connus = set(identifiants)
 
     for c in donnees["categories"]:
         ref = f"catégorie {c.get('id', '?')}"
@@ -311,6 +315,11 @@ def valider_tarifs(donnees: dict[str, Any]) -> list[str]:
         for champ in ("titre", "libelle"):
             if not s.get(champ):
                 erreurs.append(f"supplément {s.get('id', '?')} : {champ} manquant")
+        for cible in s.get("categories") or []:
+            if cible not in connus:
+                erreurs.append(
+                    f"supplément {s.get('id', '?')} : catégorie ciblée inconnue « {cible} »"
+                )
         try:
             if en_centimes(s.get("montant")) < 0:
                 erreurs.append(f"supplément {s.get('id', '?')} : montant négatif")
@@ -346,9 +355,14 @@ def contexte_tarifs(donnees: dict[str, Any]) -> dict[str, Any]:
                 "rangs": rangs,
             }
         )
-        categories_js.append(
-            {"id": c["id"], "libelle": c["libelle"], "hors_compagnie": hors_compagnie}
-        )
+        for variante in c.get("variantes") or [c]:
+            categories_js.append(
+                {
+                    "id": variante["id"],
+                    "libelle": variante["libelle"],
+                    "hors_compagnie": hors_compagnie,
+                }
+            )
 
     supplements = [
         {
@@ -362,6 +376,8 @@ def contexte_tarifs(donnees: dict[str, Any]) -> dict[str, Any]:
             "id": s["id"],
             "libelle_court": s.get("titre") or s["libelle"].split("—")[0].strip(),
             "montant": en_centimes(s["montant"]),
+            "categories": s.get("categories"),
+            "exclusif": s.get("exclusif"),
         }
         for s in donnees["supplements"]
     ]
@@ -377,9 +393,13 @@ def contexte_tarifs(donnees: dict[str, Any]) -> dict[str, Any]:
     ).replace("</", "<\\/")
 
     return {
+        "montants_supplements": {
+            s["id"]: en_centimes(s["montant"]) for s in donnees["supplements"]
+        },
         "totaux_categories": {
-            c["id"]: sum(en_centimes(c[p]) for p in PARTS) + part_compagnie
+            identifiant: sum(en_centimes(c[p]) for p in PARTS) + part_compagnie
             for c in donnees["categories"]
+            for identifiant in [c["id"], *(v["id"] for v in c.get("variantes") or [])]
         },
         "saison_tarifs": donnees["saison_tarifs"],
         "part_compagnie_fmt": euros_fr(part_compagnie),
@@ -450,19 +470,30 @@ def valider_plaquette(
                 erreurs.append(
                     f"{ref} : catégorie tarifaire inconnue « {licence.get('categorie')} »"
                 )
+        if "formation" in g and "formation_ref" in g:
+            erreurs.append(f"{ref} : formation et formation_ref sont exclusifs")
         if "formation" in g and en_centimes(g["formation"]) < 0:
             erreurs.append(f"{ref} : formation négative")
+        reference = g.get("formation_ref")
+        if reference and reference not in {s["id"] for s in tarifs["supplements"]}:
+            erreurs.append(f"{ref} : supplément de formation inconnu « {reference} »")
     return erreurs
 
 
 def contexte_plaquette(
-    plq: dict[str, Any], planning: dict[str, Any], totaux: dict[str, int]
+    plq: dict[str, Any],
+    planning: dict[str, Any],
+    totaux: dict[str, int],
+    supplements: dict[str, int],
 ) -> dict[str, Any]:
     """Résout les références des groupes vers les créneaux et les coûts."""
     par_cle = {(c["jour"], c["debut"]): c for c in planning["creneaux"]}
     groupes = []
     for g in plq["groupes"]:
-        formation = en_centimes(g.get("formation", 0))
+        if g.get("formation_ref"):
+            formation = supplements[g["formation_ref"]]
+        else:
+            formation = en_centimes(g.get("formation", 0))
         couts = [
             {
                 "libelle": licence["libelle"],
@@ -527,7 +558,12 @@ def principal() -> int:
     commun = {
         **contexte_planning(planning),
         **contexte_t,
-        **contexte_plaquette(plq, planning, contexte_t["totaux_categories"]),
+        **contexte_plaquette(
+            plq,
+            planning,
+            contexte_t["totaux_categories"],
+            contexte_t["montants_supplements"],
+        ),
         "date_generation": date.today().strftime("%d/%m/%Y"),
         "logo_existe": (RACINE / "static" / "img" / "logo.jpg").is_file(),
         "pdf_planning": f"planning-{planning['saison']}.pdf",

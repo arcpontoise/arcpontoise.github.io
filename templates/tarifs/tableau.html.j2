@@ -28,7 +28,7 @@ td.total { font-weight: 700; background: #e8edf7; }
         <th scope="col">Part compagnie</th>
         <th scope="col">Archer seul</th>
         {% for rang, pct in remises_famille.items() %}
-        <th scope="col">{{ rang }}<sup>e</sup> archer famille (−{{ pct }} %)</th>
+        <th scope="col">{{ rang }}<sup>ème</sup> archer famille (−{{ pct }} %)</th>
         {% endfor %}
       </tr>
     </thead>

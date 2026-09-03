@@ -100,7 +100,7 @@ groupes:
       l'arc, encadré par deux encadrants dont un certifié.
 
       L'arc est mis à disposition sous conditions.
-    formation: 60.00
+    formation_ref: formation-robin
     licences:
       - categorie: jeune
         libelle: U13

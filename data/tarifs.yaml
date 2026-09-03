@@ -53,10 +53,28 @@ categories:
     ligue: 7.00
     departement: 5.00
 
+# « categories » restreint l'affichage du supplément dans le
+# calculateur ; « exclusif » regroupe les suppléments qui ne peuvent pas
+# être cochés ensemble.
 supplements:
+  - id: formation-robin
+    titre: Petit Robin 1ère année
+    libelle: >-
+      à régler en plus de la licence pour les petits Robins qui
+      débutent (formation et encadrement)
+    montant: 60.00
+    categories:
+      - poussin
+      - jeune
+    exclusif: petits-robins
+
   - id: kit-robin
     titre: Kit matériel
     libelle: >-
       à régler en plus de la licence pour les petits robins 1ère année
       de la saison 2026 qui se réinscrivent
     montant: 90.00
+    categories:
+      - poussin
+      - jeune
+    exclusif: petits-robins

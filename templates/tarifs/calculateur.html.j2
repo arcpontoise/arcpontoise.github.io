@@ -17,7 +17,9 @@
 }
 .archer .rang { font-weight: 700; color: var(--bleu-fonce); min-width: 6.5rem; }
 .archer select { font: inherit; padding: 0.35rem 0.5rem; border: 1px solid var(--filet); border-radius: 4px; }
+.archer .options { display: inline-flex; flex-wrap: wrap; gap: 0.3rem 1rem; }
 .archer label.case { display: inline-flex; align-items: center; gap: 0.35rem; font-size: 0.9rem; }
+.archer label.case[hidden] { display: none; }
 .archer .sous-total { margin-left: auto; font-weight: 700; }
 .archer .retirer {
   background: none;
@@ -108,12 +110,29 @@ function creerArcher() {
   }
 
   const options = document.createElement("span");
+  options.className = "options";
   for (const s of TARIFS.supplements) {
     const label = document.createElement("label");
     label.className = "case";
+    label.dataset.supplement = s.id;
     const case_ = document.createElement("input");
     case_.type = "checkbox";
     case_.dataset.supplement = s.id;
+    if (s.exclusif) {
+      case_.dataset.exclusif = s.exclusif;
+    }
+    case_.addEventListener("change", () => {
+      if (!case_.checked || !s.exclusif) {
+        return;
+      }
+      // Un seul supplément coché par groupe exclusif.
+      const meme = `input[data-exclusif="${s.exclusif}"]`;
+      for (const autre of options.querySelectorAll(meme)) {
+        if (autre !== case_) {
+          autre.checked = false;
+        }
+      }
+    });
     label.append(case_, ` ${s.libelle_court} (+${EUROS.format(s.montant / 100)})`);
     options.appendChild(label);
   }
@@ -149,11 +168,18 @@ function recalculer() {
     );
     const remise = Math.round((TARIFS.part_compagnie * pct) / 100);
     let montant = categorie.hors_compagnie + TARIFS.part_compagnie - remise;
-    for (const case_ of bloc.querySelectorAll("input:checked")) {
-      const supplement = TARIFS.supplements.find(
-        (s) => s.id === case_.dataset.supplement
-      );
-      montant += supplement.montant;
+
+    // Chaque supplément n'est proposé que pour les catégories qu'il vise.
+    for (const s of TARIFS.supplements) {
+      const applicable = !s.categories || s.categories.includes(categorie.id);
+      const label = bloc.querySelector(`label[data-supplement="${s.id}"]`);
+      const case_ = label.querySelector("input");
+      label.hidden = !applicable;
+      if (!applicable) {
+        case_.checked = false;
+      } else if (case_.checked) {
+        montant += s.montant;
+      }
     }
     bloc.querySelector(".rang").textContent =
       rang === 1 ? "1er archer" : `${rang}e archer`;
