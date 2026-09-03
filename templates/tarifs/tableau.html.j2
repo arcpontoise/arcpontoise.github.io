@@ -55,14 +55,14 @@ td.total { font-weight: 700; background: #e8edf7; }
     <thead>
       <tr>
         <th scope="col" style="text-align:left">Catégorie</th>
-        <th scope="col">Licence FFTA</th>
-        <th scope="col">Évènement exceptionnel</th>
+        <th scope="col">Licence<br>FFTA</th>
+        <th scope="col">Évènement<br>exceptionnel</th>
         <th scope="col">Ligue</th>
         <th scope="col">Dépt.</th>
-        <th scope="col">Part compagnie</th>
-        <th scope="col">Archer seul</th>
+        <th scope="col">Part<br>compagnie</th>
+        <th scope="col">Archer<br>seul</th>
         {% for rang, pct in remises_famille.items() %}
-        <th scope="col">{{ rang }}<sup>ème</sup> archer famille (−{{ pct }} %)</th>
+        <th scope="col">{{ rang }}<sup>ème</sup><br>archer<br>famille<br>(−{{ pct }} %)</th>
         {% endfor %}
       </tr>
     </thead>
