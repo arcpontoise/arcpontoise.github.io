@@ -34,9 +34,11 @@ td.total { font-weight: 700; background: #e8edf7; }
   th[scope="col"]:nth-child(5) { width: 6%; }
   th[scope="col"]:nth-child(6) { width: 9%; }
   th[scope="col"]:nth-child(7) { width: 8%; }
-  th[scope="col"]:nth-child(8) { width: 11%; }
-  th[scope="col"]:nth-child(9) { width: 11%; }
-  th[scope="col"]:nth-child(10) { width: 12%; }
+  {# Les colonnes de remise famille (à partir de la 8ᵉ) se partagent
+     le reste de la largeur, quel que soit leur nombre. #}
+  {% for _ in remises_famille %}
+  th[scope="col"]:nth-child({{ 7 + loop.index }}) { width: {{ (34 / remises_famille | length) | round(2) }}%; }
+  {% endfor %}
   caption { font-size: 14px; padding-bottom: 0.5rem; }
   th, td { padding: 0.55rem 0.6rem; }
   .notes { margin-top: 1rem; }
