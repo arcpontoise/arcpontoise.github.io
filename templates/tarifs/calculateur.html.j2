@@ -51,6 +51,9 @@
 .total strong { font-size: 1.35rem; color: var(--bleu-fonce); }
 .mentions { margin-top: 1rem; font-size: 0.88rem; color: var(--gris); }
 .actions button:disabled { background: var(--gris-doux); cursor: not-allowed; }
+.notes { margin-top: 1rem; }
+.notes p { margin: 0.4rem 0; font-size: 1.2rem; font-weight: bold; }
+.notes p span { color: var(--rouge); }
 {% endblock %}
 {% block contenu %}
 <p class="intro">
@@ -65,6 +68,16 @@
 <div class="total" aria-live="polite">
   Total famille : <strong id="montant-total">0,00 €</strong>
   <span id="detail-remises"></span>
+</div>
+<div class="notes">
+  <span>Les remises de {{ remises_famille.values() | join(', ') }} % s'appliquent uniquement sur la part compagnie.</span>
+  {% for s in supplements %}
+  <p>
+    {{ s.titre }} :
+    <span>{{ s.montant_fmt }} €</span>
+    {{ s.libelle }}
+  </p>
+  {% endfor %}
 </div>
 <p class="mentions">
   Montants indicatifs, calculés à partir de la grille officielle {{ saison_tarifs }}.
