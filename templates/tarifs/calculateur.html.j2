@@ -51,6 +51,9 @@
 .total strong { font-size: 1.35rem; color: var(--bleu-fonce); }
 .mentions { margin-top: 1rem; font-size: 0.88rem; color: var(--gris); }
 .actions button:disabled { background: var(--gris-doux); cursor: not-allowed; }
+.notes { margin-top: 1rem; }
+.notes p { margin: 0.4rem 0; font-size: 1.2rem; font-weight: bold; }
+.notes p span { color: var(--rouge); }
 {% endblock %}
 {% block contenu %}
 <p class="intro">
@@ -66,10 +69,19 @@
   Total famille : <strong id="montant-total">0,00 €</strong>
   <span id="detail-remises"></span>
 </div>
+<div class="notes">
+  {% for s in supplements %}
+  <p>
+    {{ s.titre }} :
+    <span>{{ s.montant_fmt }} €</span>
+    {{ s.libelle }}
+  </p>
+  {% endfor %}
+</div>
 <p class="mentions">
   Montants indicatifs, calculés à partir de la grille officielle {{ saison_tarifs }}.
   Le règlement s'effectue auprès du secrétariat, qui reste la référence en cas d'écart.<br />
-  Au-delà du 4<sup>e</sup> archer, merci de se rapprocher du secrétariat pour bénéficier de la remise famille.
+  Merci de se rapprocher du secrétariat pour bénéficier de la remise famille au delà des limites du calculateur.
 
 </p>
 <script>
@@ -150,7 +162,11 @@ function creerArcher() {
   });
 
   bloc.append(rang, categorie, options, sousTotal, retirer);
-  bloc.addEventListener("change", recalculer);
+  // Différé au tick suivant : recalculer() modifie le DOM (cases à cocher
+  // affichées/masquées) et le faire de façon synchrone dans le gestionnaire
+  // "change" du <select> referme prématurément son menu déroulant sur
+  // certains navigateurs.
+  bloc.addEventListener("change", () => setTimeout(recalculer, 0));
   listeArchers.appendChild(bloc);
   recalculer();
 }
@@ -182,7 +198,7 @@ function recalculer() {
       }
     }
     bloc.querySelector(".rang").textContent =
-      rang === 1 ? "1er archer" : `${rang}e archer`;
+      rang === 1 ? "1er archer" : `${rang}ème archer`;
     bloc.querySelector(".sous-total").textContent =
       EUROS.format(montant / 100) + (pct ? ` (−${pct} %)` : "");
     total += montant;

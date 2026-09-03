@@ -14,6 +14,7 @@ remises_famille:
   2: 20
   3: 30
   4: 40
+  5: 50
 
 categories:
   - id: adulte-competition
@@ -57,24 +58,41 @@ categories:
 # calculateur ; « exclusif » regroupe les suppléments qui ne peuvent pas
 # être cochés ensemble.
 supplements:
-  - id: formation-robin
-    titre: Petit Robin 1ère année
-    libelle: >-
-      à régler en plus de la licence pour les petits Robins qui
-      débutent (formation et encadrement)
-    montant: 60.00
-    categories:
-      - poussin
-      - jeune
-    exclusif: petits-robins
-
   - id: kit-robin
     titre: Kit matériel
     libelle: >-
-      à régler en plus de la licence pour les petits robins 1ère année
+      en plus de la licence pour les petits robins 1ère année
       de la saison 2026 qui se réinscrivent
     montant: 90.00
     categories:
       - poussin
       - jeune
-    exclusif: petits-robins
+    exclusif: all
+
+  - id: formation-robin
+    titre: Petit Robin 1ère année
+    libelle: >-
+      en plus de la licence (formation et encadrement)
+    montant: 60.00
+    categories:
+      - poussin
+      - jeune
+    exclusif: all
+
+  - id: jeunes-para
+    titre: Jeunes débutant et para-archers
+    libelle: >-
+      en plus de la licence (formation et matériel)
+    montant: 156.00
+    categories:
+      - jeune
+    exclusif: all
+
+  - id: adultes
+    titre: Adultes débutant et U21
+    libelle: >-
+      en plus de la licence (formation et matériel)
+    montant: 162.00
+    categories:
+      - jeune
+    exclusif: all

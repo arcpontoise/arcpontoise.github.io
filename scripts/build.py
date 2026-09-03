@@ -569,6 +569,7 @@ def principal() -> int:
         "pdf_planning": f"planning-{planning['saison']}.pdf",
         "pdf_plaquette": f"plaquette-{planning['saison']}.pdf",
         "pdf_affiche": f"affiche-{planning['saison']}.pdf",
+        "pdf_tarifs": f"tarifs-{tarifs['saison_tarifs']}.pdf",
         "lien_plaquette": (f"{plq['base_url']}/plaquette/plaquette-{planning['saison']}.pdf"),
         "label_existe": (RACINE / "static" / "img" / "label-ambition.png").is_file(),
         "ffta_existe": (RACINE / "static" / "img" / "ffta-bandeau.png").is_file(),
@@ -610,6 +611,10 @@ def principal() -> int:
         generer_pdf(
             DIST / "affiche" / "index.html",
             DIST / "affiche" / commun["pdf_affiche"],
+        )
+        generer_pdf(
+            DIST / "tarifs" / "index.html",
+            DIST / "tarifs" / commun["pdf_tarifs"],
         )
     return 0
 
