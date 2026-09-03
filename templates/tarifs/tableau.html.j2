@@ -53,7 +53,7 @@ td.total { font-weight: 700; background: #e8edf7; }
 {% endif %}
 <div class="defilement">
   <table>
-    <caption>Montants en euros.</caption>
+    <caption>Montants en euros. Les remises de {{ remises_famille.values() | join(', ') }} % s'appliquent uniquement sur la part compagnie.</caption>
     <thead>
       <tr>
         <th scope="col" style="text-align:left">Catégorie</th>
@@ -87,7 +87,6 @@ td.total { font-weight: 700; background: #e8edf7; }
   </table>
 </div>
 <div class="notes">
-  <span>Les remises de {{ remises_famille.values() | join(', ') }} % s'appliquent uniquement sur la part compagnie.</span>
   {% for s in supplements %}
   <p>
     {{ s.titre }} :
