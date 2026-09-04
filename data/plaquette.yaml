@@ -135,8 +135,7 @@ groupes:
       Encadré par deux entraîneurs et un encadrant. Gymnase en hiver,
       terrain d'avril à fin juin.
 
-      Possibilité de location d'arc avec caution, selon le niveau
-      acquis.
+      Possibilité de location d'arc avec caution.
     licences:
       - categorie: jeune
         libelle: licence FFTA
@@ -146,14 +145,25 @@ groupes:
       - jour: samedi
         debut: "14:00"
 
+  - id: petits-robins-perfectionnements
+    titre: Petits robins perfectionnements
+    public: 2ᵉ année et plus, U11 et U13
+    description: " "
+    licences:
+      - categorie: jeune
+        libelle: U13
+      - categorie: poussin
+        libelle: U11
+    creneaux:
+      - jour: mercredi
+        debut: "16:30"
+
   - id: tir-de-parcours
     titre: Tir de parcours
     public: Nature, campagne et 3D
     description: >-
       Sortir du pas de tir : distances inconnues, terrain naturel,
       cibles animalières ou blasons en extérieur.
-
-      Ouvert à tous les archers autonomes, quel que soit le type d'arc.
     creneaux:
       - jour: samedi
         debut: "17:00"

@@ -95,4 +95,6 @@ supplements:
     montant: 162.00
     categories:
       - jeune
+      - adulte-competition
+      - adulte-club
     exclusif: all
