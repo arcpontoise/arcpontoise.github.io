@@ -48,7 +48,7 @@ lieux:
       Toute l'année
   - nom: Gymnase Marie Laurencin
     detail: >-
-      D'octobre à fin mars, pour les jeunes du mercredi soir.
+      D'octobre à fin mars (jeunes du mercredi soir)
 tir_libre_autonomie: >-
   Pas de restriction d'horaire ni de jour, après autorisation de la
   Capitaine-Présidente ou des entraîneurs, et pour les majeurs.
@@ -132,8 +132,7 @@ groupes:
     titre: Jeunes confirmés et compétiteurs
     public: 2ᵉ année et plus, U13 à U21
     description: >-
-      Encadré par deux entraîneurs et un encadrant. Gymnase en hiver,
-      terrain d'avril à fin juin.
+      Encadré par deux entraîneurs et un encadrant. Gymnase d'octobre à fin mars.
 
       Possibilité de location d'arc avec caution.
     licences:
