@@ -1,0 +1,13 @@
+{% extends "page.html.j2" %}
+{% block apres %}
+<div class="faq">
+{% for entree in faq %}
+  <details class="carte" id="{{ entree.ancre }}">
+    <summary>{{ entree.question }}</summary>
+    <div class="texte">
+    {{ entree.html }}
+    </div>
+  </details>
+{% endfor %}
+</div>
+{% endblock %}

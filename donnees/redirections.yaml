@@ -1,0 +1,56 @@
+---
+# Anciennes adresses du site WordPress -> nouvelles adresses.
+# Chaque ancienne adresse reçoit une page de redirection immédiate.
+
+# Articles : /<slug>/ -> /articles/<slug>/
+/nous-sommes-de-retour/: /articles/nous-sommes-de-retour/
+/concours-salle-2023/: /articles/concours-salle-2023/
+/retour-sur-le-concours-salle-2023/: /articles/retour-sur-le-concours-salle-2023/
+/jeux-de-noel/: /articles/jeux-de-noel/
+/les-jeunes-ont-fete-paques-2024/: /articles/les-jeunes-ont-fete-paques-2024/
+/ecouen-2024/: /articles/ecouen-2024/
+/les-distinctions/: /articles/les-distinctions/
+/tous-avec-les-bleus-a-paris/: /articles/tous-avec-les-bleus-a-paris/
+/fort-de-montbre-2024/: /articles/fort-de-montbre-2024/
+/complet/: /articles/complet/
+/appel-aux-benevoles-2025/: /articles/
+/tir-du-roy-de-france-2025/: /articles/tir-du-roy-de-france-2025/
+/2025-initiation-parcours/: /articles/2025-initiation-parcours/
+/les-petits-robins-entrent-en-action/: /articles/les-petits-robins-entrent-en-action/
+/retour-sur-le-concours-salle-2025/: /articles/retour-sur-le-concours-salle-2025/
+/2026-laventure-parcours-continue/: /articles/2026-laventure-parcours-continue/
+
+# Pages supprimées ou reprises ailleurs
+/pratiquer/tir-en-salle/salle-darmes/: /pratiquer/tir-en-salle/
+/politique-de-confidentialite/: /mentions-legales/
+/calendrier/: https://infos.arcpontoise.fr/planning/
+/infos/: https://infos.arcpontoise.fr/
+/palmares-national/: https://arcpontoise.github.io/palmares/national.html
+/newsletter/: /
+/plan-du-site/: /
+/2025-sondage-fevrier/: /
+/evenements/: /
+/evenements/emplacements/: /
+/evenements/categories/: /
+/evenements/etiquettes/: /
+/evenements/mes-reservations/: /
+/faq/faq/: /foire-aux-questions/
+
+# Fiches individuelles des encadrants -> page des encadrants
+/team/alain-moreau/: /team/
+/team/catherine-francois/: /team/
+/team/christian-peronnet/: /team/
+/team/emmanuel-thon/: /team/
+/team/francois-ladague/: /team/
+/team/guillaume-barre/: /team/
+/team/herve-ferrand/: /team/
+/team/julien-moreau/: /team/
+/team/laurence-fontaine/: /team/
+/team/laurent-dufour/: /team/
+/team/laurent-fontaine/: /team/
+/team/monique-de-france/: /team/
+/team/samy-bensalem/: /team/
+/team/sandrine-keerstock/: /team/
+/team/sylvie-moreau/: /team/
+/team/thierry-de-france/: /team/
+/team/yolande-maffray/: /team/

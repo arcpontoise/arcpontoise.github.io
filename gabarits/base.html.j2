@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+{# No inline script or style: everything comes from this site, the charte or the galleries host #}
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' {{ charte }}; style-src 'self' {{ charte }}; font-src {{ charte }}; img-src 'self' {{ charte }} {{ galeries }}; connect-src {{ galeries }}; base-uri 'none'; form-action 'none'">
+<title>{% block titre %}{% endblock %} - Compagnie d'archers de Pontoise</title>
+<meta name="description" content="{% block description %}{% endblock %}">
+<link rel="canonical" href="{{ site_url }}{{ url }}">
+<link rel="icon" href="{{ charte }}/img/logo.png">
+<link rel="alternate" type="application/atom+xml" title="Actualités de la compagnie" href="/articles/flux.xml">
+<link rel="stylesheet" href="{{ charte }}/css/tokens.css">
+<link rel="stylesheet" href="{{ charte }}/css/charte.css">
+<link rel="stylesheet" href="/css/vitrine.css">
+<script src="{{ charte }}/js/menu.js" defer></script>
+{% block scripts %}{% endblock %}
+</head>
+<body>
+<header class="site">
+  <div class="gabarit entete-flex">
+    <a class="marque" href="/">
+      <img class="logo" src="{{ charte }}/img/logo.png" alt="">
+      <div>
+        <p class="manuscrit">La passion du tir à l'arc depuis 1903</p>
+        <p class="titre">Archers de Pontoise</p>
+      </div>
+    </a>
+    <arc-menu actuel="{% block menu %}accueil{% endblock %}">
+      <a href="/">Accueil</a>
+      <a href="https://contact.arcpontoise.fr/">Contact</a>
+    </arc-menu>
+  </div>
+</header>
+<main class="gabarit{% block largeur %} etroit{% endblock %}">
+{% block contenu %}{% endblock %}
+</main>
+<footer class="site gabarit">
+  <p>
+    Compagnie d'archers de Pontoise - 1 rue Pierre de Coubertin, 95300 Pontoise -
+    <a href="https://contact.arcpontoise.fr/">Nous contacter</a> -
+    <a href="/mentions-legales/">Mentions légales</a> -
+    <a href="/articles/flux.xml">Flux des actualités</a>
+  </p>
+</footer>
+</body>
+</html>

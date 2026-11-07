@@ -1,0 +1,13 @@
+{% extends "page.html.j2" %}
+{% block apres %}
+{% for annee, groupe in articles | groupby("date.year") | reverse %}
+<section aria-labelledby="annee-{{ annee }}">
+  <h2 id="annee-{{ annee }}">{{ annee }}</h2>
+  <div class="cartes-articles">
+  {% for article in groupe | sort(attribute="date", reverse=true) %}
+    {% include "_carte_article.html.j2" %}
+  {% endfor %}
+  </div>
+</section>
+{% endfor %}
+{% endblock %}

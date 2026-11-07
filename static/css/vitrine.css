@@ -1,0 +1,184 @@
+/*
+ * Site vitrine - styles propres au site.
+ * Couleurs, polices, en-tête, menu, cartes et tableaux viennent de la
+ * charte (https://charte.arcpontoise.fr/), chargée avant ce fichier.
+ */
+
+/* Brand link in the header keeps the header colours */
+header.site .marque {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  color: inherit;
+  text-decoration: none;
+}
+
+/* Long-form text: readable line length, images and tables that fit */
+.texte img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin: 1rem auto;
+  border-radius: var(--radius, 6px);
+}
+
+.texte table {
+  display: block;
+  overflow-x: auto;
+}
+
+.texte blockquote {
+  margin: 1rem 0;
+  padding: 0.5rem 1rem;
+  border-left: 4px solid var(--accent);
+  background: var(--card);
+}
+
+.illustration {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin: 1rem 0;
+}
+
+/* Article cards */
+.cartes-articles {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr));
+  gap: 1rem;
+  margin: 1rem 0 1.5rem;
+}
+
+.carte-article h3 {
+  margin: 0.2rem 0 0.5rem;
+  font-size: 1.1rem;
+}
+
+.carte-article p {
+  margin: 0;
+}
+
+.carte-article .discret {
+  margin-bottom: 0.2rem;
+}
+
+/* Encadrants */
+.equipe {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(18rem, 1fr));
+  gap: 1rem;
+}
+
+.equipe h2 {
+  margin-top: 0;
+  font-size: 1.15rem;
+}
+
+.equipe ul {
+  margin: 0;
+  padding-left: 1.2rem;
+}
+
+/* Questions fréquentes */
+.faq details {
+  margin-bottom: 0.75rem;
+}
+
+.faq summary {
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.faq details[open] summary {
+  margin-bottom: 0.75rem;
+}
+
+/* Photo galleries (js/arc-galerie.js) */
+.galerie-grille {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(10rem, 1fr));
+  gap: 0.5rem;
+  margin: 1.5rem 0;
+}
+
+.galerie-grille button {
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: zoom-in;
+}
+
+.galerie-grille img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+  border-radius: 4px;
+}
+
+.galerie-liste {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr));
+  gap: 1rem;
+  margin: 1.5rem 0;
+}
+
+.galerie-liste a {
+  display: block;
+  color: inherit;
+  text-decoration: none;
+}
+
+.galerie-liste img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+  border-radius: 4px;
+}
+
+.galerie-liste h2 {
+  margin: 0.5rem 0 0.2rem;
+  font-size: 1.1rem;
+}
+
+.galerie-visionneuse {
+  max-width: 96vw;
+  max-height: 96vh;
+  padding: 0;
+  border: 0;
+  background: #000;
+}
+
+.galerie-visionneuse::backdrop {
+  background: rgb(0 0 0 / 85%);
+}
+
+.galerie-visionneuse img {
+  display: block;
+  max-width: 96vw;
+  max-height: calc(96vh - 3rem);
+  margin: 0 auto;
+}
+
+.galerie-commandes {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: #fff;
+  gap: 0.5rem;
+  padding: 0.4rem;
+}
+
+.galerie-commandes button {
+  min-height: 2.5rem;
+  padding: 0 0.9rem;
+  border: 1px solid rgb(255 255 255 / 40%);
+  border-radius: 4px;
+  background: transparent;
+  color: #fff;
+  font: inherit;
+  cursor: pointer;
+}

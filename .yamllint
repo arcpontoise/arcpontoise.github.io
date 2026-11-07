@@ -1,0 +1,16 @@
+---
+extends: default
+
+rules:
+  line-length:
+    max: 120
+    # Prose in the content data (FAQ answers, presentations) is not wrapped
+    ignore: |
+      donnees/
+  truthy:
+    check-keys: false
+
+ignore: |
+  dist/
+  node_modules/
+  .venv/
