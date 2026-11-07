@@ -1,0 +1,10 @@
+{% extends "page.html.j2" %}
+{% block largeur %}{% endblock %}
+{% block scripts %}
+<script src="/js/arc-galerie.js" defer></script>
+{% endblock %}
+{% block apres %}
+<arc-galeries source="{{ galeries }}">
+  <p class="discret">La liste des galeries s'affiche avec JavaScript.</p>
+</arc-galeries>
+{% endblock %}

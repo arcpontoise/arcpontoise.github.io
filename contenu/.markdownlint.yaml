@@ -1,0 +1,11 @@
+---
+# Site content: one paragraph per line, headings that follow the page
+# structure rather than the file (the page title is the h1)
+extends: ../.markdownlint.yaml
+MD013: false
+MD041: false
+# Same sub-headings under different sections (e.g. "Le principe")
+MD024:
+  siblings_only: true
+# Tables converted from the former site keep their alignment
+MD060: false

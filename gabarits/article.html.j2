@@ -1,0 +1,27 @@
+{% extends "base.html.j2" %}
+{% block titre %}{{ article.titre }}{% endblock %}
+{% block description %}{{ article.resume }}{% endblock %}
+{% block menu %}compagnie{% endblock %}
+{% block scripts %}
+{% if article.galerie %}
+<script src="/js/arc-galerie.js" defer></script>
+{% endif %}
+{% endblock %}
+{% block contenu %}
+<p class="fil"><a href="/">Accueil</a> › <a href="/articles/">Actualités</a></p>
+<article>
+  <h1>{{ article.titre }}</h1>
+  <p class="discret"><time datetime="{{ article.date.isoformat() }}">{{ article.date | date_fr }}</time></p>
+  {% if article.image %}
+  <img class="illustration" src="{{ article.image }}" alt="">
+  {% endif %}
+  <div class="texte">
+  {{ contenu }}
+  </div>
+  {% if article.galerie %}
+  <arc-galerie source="{{ galeries }}" galerie="{{ article.galerie }}">
+    <p class="discret">Les photos de cet événement s'affichent avec JavaScript.</p>
+  </arc-galerie>
+  {% endif %}
+</article>
+{% endblock %}

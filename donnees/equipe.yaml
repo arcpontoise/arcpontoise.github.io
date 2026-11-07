@@ -1,0 +1,76 @@
+---
+# Encadrants de la compagnie (page /team/), dans l'ordre d'affichage.
+# presentation : Markdown, une ligne par point.
+
+- nom: Alain MOREAU
+  presentation: |
+    Cours débutants et 1ere année compétition adultes.
+- nom: Catherine FRANÇOIS
+- nom: Christian PERONNET
+  presentation: |
+    Deux participations au championnat de France Beursault.
+    Entraîneur de l’équipe jeunes plusieurs fois médaillée en championnat de France dans plusieurs disciplines.
+- nom: Emmanuel THON
+  presentation: |
+    Neuf participations au championnat de France dont une 20eme place en 2005.
+    Archer depuis 1985.
+    Meilleure flèche au bouquet provincial de Noyon en 2007.
+    Multi-médaillé au niveau régional et départemental.
+- nom: François LADAGUE
+- nom: Guillaume BARRÉ
+  presentation: |
+    13ème au championnat de France 3D à Marchaux-Chaudefontaine en 2024.
+    Vice champion régional 3D 2022 et 2023.
+    Champion régional 3D en 2024 et 2025.
+    Champion départemental 3D 2022, 2023 et 2025.
+    Encadre les petits robins débutants et les jeunes confirmés.
+- nom: Hervé FERRAND
+- nom: Julien MOREAU
+  presentation: |
+    Membre de l'équipe poulie DR Honneur.
+    Plusieurs fois médaillé départemental en TAE.
+- nom: Laurence FONTAINE
+- nom: Laurent DUFOURT
+  presentation: |
+    Plusieurs fois médaillé au départemental 3D.
+    Vice-Champion régional de tir 3D - 2017 - Écouen.
+    Champion régional de tir 3D - 2022 - Bois d'Arcy.
+    Vice-Champion régional de tir 3D - 2023 - Pécy.
+    20ème au championnat de France 3D à Blanquefort en 2022.
+    21ème au championnat de France 3D à Bourg-Saint-Maurice en 2023.
+    23ème au championnat de France 3D à Boigny-Sur-Bionne en 2025.
+    Entraîne les jeunes de poussins à junior, débutants et confirmés.
+- nom: Laurent FONTAINE
+- nom: Monique DE FRANCE
+  presentation: |
+    Vice-championne de FRANCE de tir à 70M, arc à poulies, super-vétéran dames,  Moliets - 2005
+    Membres de l'équipe féminine arc à poulies de division nationale 1 pendant plusieurs années
+    Coordonnatrice de l'école de tir - entraîne les jeunes de poussins à Juniors
+    Médaille d'argent FFTA des entraîneurs
+- nom: Samy BENSALEM
+  presentation: |
+    Photographe officiel de la compagnie.
+- nom: Sandrine KEERSTOCK
+  presentation: |
+    Plusieurs fois médaillée aux départementaux 3D, Campagne et salle.
+    Vice championne régionale 3D 2022.
+    10ème au championnat de France 3D 2022.
+    Entraîne les jeunes débutants et confirmés.
+- nom: Sylvie MOREAU
+  presentation: |
+    Cours débutants et 1ere année compétition adultes.
+    Membre de l'équipe féminine arc à poulies de division nationale 1 pendant plusieurs années.
+    Coach de l'équipe homme arc classique division régionale excellence pendant plusieurs années.
+    Plusieurs qualifications en Championnat de France.
+- nom: Thierry DE FRANCE
+  presentation: |
+    Médaille de bronze, Championnat de France de tir en salle, arc classique, Vétéran - Auxerre 2001.
+    Nombreuses qualifications en championnats de France.
+    Six fois médaillé en championnats régionaux Île de France (Salle, Fédéral, Beursault).
+    Coach de l'équipe féminine arc à poulies de Division nationale 1 (plusieurs fois championne de France).
+    Entraîneur des adultes compétiteurs.
+    Médaille d’argent des arbitres.
+    Médaille GRAND OR de la FFTA.
+- nom: Yolande MAFFRAY
+  presentation: |
+    Membre pendant plusieurs années de l'équipe féminine qui a accédé à la Division nationale 1

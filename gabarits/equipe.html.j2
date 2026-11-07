@@ -1,0 +1,17 @@
+{% extends "page.html.j2" %}
+{% block apres %}
+<div class="equipe">
+{% for membre in equipe %}
+  <section class="carte" id="{{ membre.ancre }}">
+    <h2>{{ membre.nom }}</h2>
+    {% if membre.points %}
+    <ul>
+      {% for point in membre.points %}
+      <li>{{ point }}</li>
+      {% endfor %}
+    </ul>
+    {% endif %}
+  </section>
+{% endfor %}
+</div>
+{% endblock %}

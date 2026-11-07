@@ -1,0 +1,5 @@
+<article class="carte carte-article">
+  <p class="discret"><time datetime="{{ article.date.isoformat() }}">{{ article.date | date_fr }}</time></p>
+  <h3><a href="{{ article.url }}">{{ article.titre }}</a></h3>
+  <p>{{ article.resume }}</p>
+</article>

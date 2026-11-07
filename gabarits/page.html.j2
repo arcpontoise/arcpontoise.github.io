@@ -1,0 +1,14 @@
+{% extends "base.html.j2" %}
+{% block titre %}{{ page.titre }}{% endblock %}
+{% block description %}{{ page.description }}{% endblock %}
+{% block menu %}{{ page.menu }}{% endblock %}
+{% block contenu %}
+{% if fil %}
+<p class="fil"><a href="/">Accueil</a>{% for lien, titre in fil %} › <a href="{{ lien }}">{{ titre }}</a>{% endfor %}</p>
+{% endif %}
+<h1>{{ page.titre }}</h1>
+<div class="texte">
+{{ contenu }}
+</div>
+{% block apres %}{% endblock %}
+{% endblock %}

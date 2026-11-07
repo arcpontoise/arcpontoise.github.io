@@ -1,0 +1,12 @@
+{% extends "page.html.j2" %}
+{% block apres %}
+<section class="dernieres" aria-labelledby="dernieres-titre">
+  <h2 id="dernieres-titre">Dernières actualités</h2>
+  <div class="cartes-articles">
+  {% for article in articles[:3] %}
+    {% include "_carte_article.html.j2" %}
+  {% endfor %}
+  </div>
+  <p><a href="/articles/">Toutes les actualités</a> - <a href="/galeries/">Galeries photo</a></p>
+</section>
+{% endblock %}

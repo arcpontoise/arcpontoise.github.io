@@ -4,34 +4,88 @@ name: Déploiement vitrine
 on:
   push:
     branches: [main]
+  pull_request:
   workflow_dispatch:
 
 permissions:
   contents: read
-  pages: write
-  id-token: write
 
+# A new push to a pull request cancels its previous run; main runs always finish
 concurrency:
-  group: pages
-  cancel-in-progress: true
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
-  build:
+  # Required status check of the main branch ruleset
+  lint:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
-      - uses: actions/configure-pages@v6
-      # Temporary: publish the static placeholder as-is until the site generator lands
-      - uses: actions/upload-pages-artifact@v5
         with:
-          path: .
+          persist-credentials: false
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+      - name: Dépendances
+        run: pip install -r requirements.txt
+      - name: Lint YAML
+        run: yamllint .
+      - name: Lint Python
+        run: |
+          ruff check scripts
+          ruff format --check scripts
+      - name: Validation du contenu
+        run: python scripts/build.py --check
+      - uses: actions/setup-node@v7
+        with:
+          node-version: "24"
+      - name: Outils de lint JavaScript, CSS et Markdown
+        run: npm ci
+      - name: Lint CSS
+        run: npm run lint:css
+      - name: Lint JavaScript
+        run: npm run lint:js
+      - name: Lint Markdown
+        run: npm run lint:md
+
+  build:
+    needs: lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+      - name: Dépendances
+        run: pip install -r requirements.txt
+      - name: Génération
+        env:
+          # Public address of the site (canonical links, feed, sitemap).
+          # Switch to https://arcpontoise.fr when the domain moves here.
+          SITE_URL: https://arcpontoise.github.io
+        run: python scripts/build.py
+      - if: github.event_name != 'pull_request'
+        uses: actions/upload-pages-artifact@v5
+        with:
+          path: dist
 
   deploy:
     needs: build
+    if: github.event_name != 'pull_request'
     runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    # Never interrupt a deployment in progress
+    concurrency:
+      group: pages
+      cancel-in-progress: false
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
+      - uses: actions/configure-pages@v6
       - id: deployment
         uses: actions/deploy-pages@v5
