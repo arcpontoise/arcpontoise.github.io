@@ -138,7 +138,9 @@ npm ci && npm run lint:css && npm run lint:js && npm run lint:md
 ## Bascule de `arcpontoise.fr`
 
 Le site est d'abord publié sur `https://arcpontoise.github.io/`, à côté du
-WordPress. Le jour de la bascule (étapes 2 et 3 au même moment : dès que le
+WordPress. Les liens du menu commun vers `arcpontoise.fr` y restent sur
+`arcpontoise.github.io` : le gabarit passe `SITE_URL` au menu (attribut
+`site`, voir le README de la charte). Le jour de la bascule (étapes 2 et 3 au même moment : dès que le
 domaine est déclaré, `arcpontoise.github.io` redirige vers `arcpontoise.fr`) :
 
 1. Remplacer `SITE_URL` par `https://arcpontoise.fr` dans
