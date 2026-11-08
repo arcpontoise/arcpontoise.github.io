@@ -85,6 +85,8 @@ listes, tableaux, notes de bas de page `[^1]`).
   affichées sous l'article avec le champ `galerie`. Un dépôt Git public garde
   tout fichier dans son historique : une photo ne pourrait plus en être
   retirée à la demande d'une personne photographiée.
+- **Seule exception** : des archers vus de dos, de loin, sans visage
+  reconnaissable (photos d'ambiance de `static/images/`).
 - **Illustrations sans personne** (plan, affiche, schéma, logo) : dans le
   dossier de l'article, en JPEG, PNG ou WebP de taille raisonnable (moins
   de 300 Ko), sans métadonnées. Les insérer avec `![description](fichier.jpg)`.
@@ -95,9 +97,26 @@ listes, tableaux, notes de bas de page `[^1]`).
 
 - Une page de `contenu/pages/` déclare son adresse (`url`), l'entrée du menu
   commun mise en évidence (`menu` : `accueil`, `compagnie`, `pratiquer`...)
-  et, si besoin, un `gabarit` particulier (`accueil`, `equipe`, `faq`,
-  `articles`, `galeries`).
-- Les encadrants et les questions fréquentes se modifient dans `donnees/`.
+  et, si besoin, un `gabarit` particulier :
+
+  | Gabarit | Rôle |
+  | --- | --- |
+  | `rubrique` | Le texte, puis une carte par sous-page (adresse directement en dessous) |
+  | `frise` | Les `##` (périodes) et `###` (étapes datées) dessinés en frise |
+  | `acces` | Lieux avec une carte OpenStreetMap, décrits dans le champ `cartes` |
+  | `roys`, `equipe`, `faq` | Pages lues dans `donnees/` |
+  | `accueil`, `articles`, `galeries` | Pages propres à ces rubriques |
+
+- Champs facultatifs d'une sous-page de rubrique : `ordre` (position de sa
+  carte, nombre entier) et son illustration, soit `image` (fichier de
+  `static/images/`, par exemple `/images/jeu-arc-allee-tir.webp`), soit
+  `galerie` (adresse d'une galerie de drop dont la couverture illustre la
+  carte). `image` l'emporte si les deux sont donnés.
+- Les encadrants, les Roy et le bureau (`roys.yaml`, une entrée par année ou
+  par événement) et les questions fréquentes se modifient dans `donnees/`.
+- Portraits des encadrants : galerie `encadrants` de drop, publiée sans être
+  listée, où la description de chaque photo est le nom exact de la personne
+  dans `donnees/equipe.yaml`. Sans portrait, la page affiche les initiales.
 - Supprimer ou renommer une page impose d'ajouter son ancienne adresse dans
   `donnees/redirections.yaml`.
 

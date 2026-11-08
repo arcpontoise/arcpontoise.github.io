@@ -1,0 +1,23 @@
+{% extends "page.html.j2" %}
+{# Places with an OpenStreetMap map (« cartes » field of the page), see js/arc-carte.js #}
+{% block scripts %}
+<link rel="stylesheet" href="/vendor/leaflet/leaflet.css">
+<script src="/vendor/leaflet/leaflet.js" defer></script>
+<script src="/js/arc-carte.js" defer></script>
+{% endblock %}
+{% block apres %}
+{% for carte in page.cartes %}
+<section class="lieu" aria-labelledby="lieu-{{ loop.index }}">
+  <div class="lieu-texte">
+    <h2 id="lieu-{{ loop.index }}">{{ carte.titre }}</h2>
+    {% if carte.adresse %}<p class="lieu-adresse">{{ carte.adresse }}</p>{% endif %}
+    {{ carte.html }}
+    <p><a target="_blank" rel="noopener" href="https://www.openstreetmap.org/?mlat={{ carte.latitude }}&amp;mlon={{ carte.longitude }}#map=17/{{ carte.latitude }}/{{ carte.longitude }}">Agrandir la carte (nouvel onglet)</a></p>
+  </div>
+  <div class="lieu-carte" role="region" aria-label="Carte : {{ carte.titre }}"
+    data-latitude="{{ carte.latitude }}" data-longitude="{{ carte.longitude }}" data-titre="{{ carte.titre }}">
+    <p>Carte : <a target="_blank" rel="noopener" href="https://www.openstreetmap.org/?mlat={{ carte.latitude }}&amp;mlon={{ carte.longitude }}#map=17/{{ carte.latitude }}/{{ carte.longitude }}">voir sur OpenStreetMap</a></p>
+  </div>
+</section>
+{% endfor %}
+{% endblock %}

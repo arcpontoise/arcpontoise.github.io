@@ -1,17 +1,32 @@
 {% extends "page.html.j2" %}
+{#
+  The coaches: a card each, with the portrait read live from the unlisted
+  « encadrants » gallery of drop (photo description = name, see
+  js/arc-galerie.js, <arc-portraits>) and initials until it is there.
+  The presentation unfolds on click, without JavaScript (<details>).
+#}
+{% block largeur %}{% endblock %}
+{% block scripts %}
+<script src="/js/arc-galerie.js" defer></script>
+{% endblock %}
 {% block apres %}
-<div class="equipe">
+<arc-portraits class="equipe" source="{{ galeries }}" galerie="encadrants">
 {% for membre in equipe %}
-  <section class="carte" id="{{ membre.ancre }}">
-    <h2>{{ membre.nom }}</h2>
+  <details class="encadrant" id="{{ membre.ancre }}"{% if not membre.points %} data-vide=""{% endif %}>
+    <summary class="encadrant-tete">
+      <span class="portrait" data-nom="{{ membre.nom }}" aria-hidden="true">{{ membre.initiales }}</span>
+      <span class="encadrant-nom">{{ membre.nom }}</span>
+    </summary>
     {% if membre.points %}
     <ul>
       {% for point in membre.points %}
       <li>{{ point }}</li>
       {% endfor %}
     </ul>
+    {% else %}
+    <p class="discret">Encadrant diplômé de la Fédération française de tir à l'arc.</p>
     {% endif %}
-  </section>
+  </details>
 {% endfor %}
-</div>
+</arc-portraits>
 {% endblock %}

@@ -2,10 +2,16 @@
 titre: Le tir en extérieur
 url: /pratiquer/tir-exterieur/
 menu: pratiquer
+ordre: 2
+galerie: 2026-initiation-parcours
+description: "De mars-avril à fin septembre, sur le terrain de la compagnie derrière le Hall Omnisports Philippe Hémet."
 ---
 
 Le Tir en extérieur se pratique **de mars-avril à fin septembre**(selon l'évolution climatique).
 La Compagnie dispose d'un terrain extérieur situé derrière le Hall Omnisports Philippe Hémet, 1,Rue Pierre de Coubertin à Pontoise.
+
+![Le terrain extérieur de la compagnie et ses cibles](/images/terrain-exterieur.webp)
+
 Sur ce terrain les archers disposent :
 
 - d'un mur "école de tir" permettant de tirer jusqu'à 20 mètres,
@@ -16,10 +22,14 @@ Sur ce terrain les archers disposent :
   - 3 à 70 mètres
 - d'un jeu d'arc "Beursault" avec deux allées à 50 mètres et une allée centrale couverte.
 
+![Les cibles du terrain, de 15 à 70 mètres](/images/terrain-cibles.webp)
+
 Toutes les installations ont été construites par les archers.
 Chaque année, une ou deux journées rassemblent les archers pour procéder à l'entretien de ces installations.
 
 La municipalité met le terrain gratuitement à la disposition de la Compagnie, et assure la tonte du terrain et la taille des haies.
+
+![Trois archers sur le pas de tir du terrain, au coucher du soleil](/images/terrain-crepuscule.webp)
 
 ## Accès
 
@@ -43,10 +53,28 @@ Il est impératif de tirer sur les cibles adaptées.
 
 ## Protection des cibles
 
+![Les buttes de tir protégées par leurs bâches](/images/terrain-baches.webp)
+
 - Les cibles sont protégées des intempéries par des bâches, elles doivent :
   - être roulées avec précaution à l'ouverture, puis passées roulées au dessus de la butte et être disposées derrière la butte de tir sur les supports prévus.
     **Ne pas les "jeter" par dessus la butte.**
   - recouvertes de leurs bâches à la fin du tir et être correctement fixées (voir mode d'emploi ci-dessous)
 - En cas de changement de blason : ne pas les laisser traîner sur le terrain. Il existe des poubelles.
 
-![Mode d'emploi des bâches : les rouler et les placer au-dessus des buttes pendant le tir, puis les fixer à l'aide des sandows](/images/mode-emploi-baches.jpg)
+### Mode d'emploi des bâches
+
+- Les rouler et **les placer au-dessus des buttes pendant le tir**.
+- Ouvrir les buttes voisines quand on n'est pas sûr de la précision de son tir,
+  pour éviter de faire des trous dedans !
+- Les fixer à l'aide des sandows après le tir, comme indiqué sur le schéma :
+
+![Butte bâchée vue de côté : la bâche couvre la butte et le sandow passe sous la butte, d'un bord de la bâche à l'autre](/images/baches-sandows.svg)
+
+Autres recommandations :
+
+- n'utiliser que les clous plats, pour ne pas déchirer les bâches ;
+- ne pas superposer les blasons.
+
+> Vous entretenez bénévolement le matériel, merci d'en prendre soin.
+>
+> Le Capitaine

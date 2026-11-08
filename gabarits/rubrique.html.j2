@@ -1,0 +1,28 @@
+{% extends "page.html.j2" %}
+{#
+  A section page: its text, then a card for each direct sub-page (order: « ordre »
+  field), illustrated by its « image » or else by the cover of its « galerie ».
+  An <arc-couverture> that already holds an <img> is left as is by the component.
+#}
+{% block scripts %}
+<script src="/js/arc-galerie.js" defer></script>
+{% endblock %}
+{% block apres %}
+<div class="rubrique-cartes">
+{% for enfant in enfants %}
+  <a class="rubrique-carte" href="{{ enfant.url }}">
+    {% if enfant.image %}
+    <arc-couverture><img src="{{ enfant.image }}" alt="" loading="lazy" decoding="async"></arc-couverture>
+    {% elif enfant.galerie %}
+    <arc-couverture source="{{ galeries }}" galerie="{{ enfant.galerie }}"></arc-couverture>
+    {% else %}
+    <span class="rubrique-sans-photo" aria-hidden="true"></span>
+    {% endif %}
+    <span class="rubrique-texte">
+      <b>{{ enfant.titre }}</b>
+      <span>{{ enfant.description }}</span>
+    </span>
+  </a>
+{% endfor %}
+</div>
+{% endblock %}

@@ -10,9 +10,9 @@ galerie: 2026-initiation-parcours
 
 Pour cette deuxième édition, un tout nouveau parcours de **12 cibles** a été spécialement aménagé sur notre terrain. Les archers ont pu s'essayer à la diversité de nos disciplines de prédilection :
 
-- [Le tir Nature](/pratiquer/parcours/#le-parcours-nature), au cœur de l'école de tir
-- [Le tir en Campagne](/pratiquer/parcours/#le-tir-en-campagne), dans le jeu d'arc
-- [Le tir 3D](/pratiquer/parcours/#le-tir-3d), sur l'ensemble du terrain
+- [Le tir Nature](/pratiquer/parcours/tir-nature/), au cœur de l'école de tir
+- [Le tir en Campagne](/pratiquer/parcours/tir-campagne/), dans le jeu d'arc
+- [Le tir 3D](/pratiquer/parcours/tir-3d/), sur l'ensemble du terrain
 
 ## Esprit de peloton et bonne humeur
 

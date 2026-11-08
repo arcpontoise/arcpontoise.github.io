@@ -2,6 +2,9 @@
 titre: Le tir Beursault
 url: /pratiquer/tir-beursault/
 menu: pratiquer
+ordre: 3
+image: /images/jeu-arc-allee-tir.webp
+description: "Le « noble jeu de l'arc », pratiqué depuis plus de sept siècles dans les jardins d'arc, en aller-retour."
 ---
 
 Le tir beursault, également appelé de nos jours "beursault", "jeu beursault" ou encore "noble jeu de l'arc", se pratique en France depuis plus de sept siècles dans les jardins d’arc. Plusieurs enluminures du XIVème siècle attestent déjà la pratique de ce tir particulier en aller-retour.
@@ -17,6 +20,8 @@ Pratiqué sur un terrain spécifique nommé "jeu d’arc", "jardin d’arc" mais
 - Les prix de Compagnie, de Roy, de Chevalier, de Connétable, ...
 - Tous ces prix seront tirés sur des cartes décorées pour l’occasion.
 
+![Une carte décorée pour la Saint-Sébastien](/images/carte-saint-sebastien.webp)
+
 Ensuite, viennent les concours avec :
 
 - Les Prix Généraux
@@ -29,9 +34,15 @@ C’est le seul tir où l’on compte d’abord les honneurs (nombre de flèches
 
 Aujourd'hui, le concours beursault consiste à tirer une seule flèche en aller-retour dans un jeu d’arc et cela 40 fois de suite, soit 20 haltes précédées de 2 haltes d’essai. Outre son côté traditionnel, le tir beursault est, au niveau sportif, un tir très éducatif et d’une grande difficulté. Devoir tirer une fois dans un sens, une fois dans l’autre (avec ce que cela implique pour le vent ou le soleil), une seule flèche à la fois, sans possibilité d’erreur, demande une grande concentration. Si, sur une volée de trois flèches, il est possible d’en avoir une moins bonne, cela n’est pas permis au Beursault. Un 7 sur un blason de 122 cm à 50 m équivaut à une flèche hors carte (hors de l’honneur) sur une carte Beursault. Obtenir un "marmot" supplémentaire dans les badges fédéraux, ou mieux, sa qualification pour les Championnats de France, n’est pas plus facile que dans les autres disciplines et est toujours une grande satisfaction pour les archers.
 
-Dans les concours beursault, sont admis l'arc classique, l'arc à poulies et l'arc droit.
+![Une allée de tir du jeu d'arc, vers la butte et sa carte](/images/jeu-arc-allee-tir.webp)
+
+![Une butte et sa carte Beursault](/images/jeu-arc-butte.webp)
+
+Dans les concours beursault, sont admis l'arc classique, l'arc nu, l'arc à poulies et l'arc droit.
 
 ### La sécurité au jeu d'arc
+
+![L'allée couverte du jeu d'arc de la compagnie](/images/jeu-arc-allee-couverte.webp)
 
 La vigilance dans un jeu d’arc est primordiale pour assurer la sécurité de tous. Pour cela, le peloton sera précédé par le marqueur qui ouvrira le pas de tir lorsque toutes les flèches du peloton (5 tireurs) seront arrivées en cible. Il pourra être assisté d’un "garde-panton" à chaque butte pour empêcher toute entrée inopinée sur le pas de tir. Le dernier archer du peloton (ou le garde-panton) fermera l’entrée du pas de tir avec une chaîne après son passage.
 

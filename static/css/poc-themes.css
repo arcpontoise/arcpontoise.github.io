@@ -138,7 +138,7 @@ arc-couverture img,
 .calques img {
   position: absolute;
   inset: 0;
-  object-position: 30% 60%;
+  object-position: 50% 72%;
 }
 
 .actions {
@@ -192,15 +192,9 @@ arc-couverture img,
       animation-timeline: view();
     }
 
-    /* Hestia-like depth: the background drifts more than the archer */
+    /* Hestia-like depth: the photo drifts slower than the page */
     .a-hero .calque-fond {
       animation: poc-hero-fond linear both;
-      animation-range: 0 100vh;
-      animation-timeline: scroll(root);
-    }
-
-    .a-hero .calque-archere {
-      animation: poc-hero-archere linear both;
       animation-range: 0 100vh;
       animation-timeline: scroll(root);
     }
@@ -226,10 +220,6 @@ arc-couverture img,
 
 @keyframes poc-hero-fond {
   to { transform: translateY(30%) scale(1.08); }
-}
-
-@keyframes poc-hero-archere {
-  to { transform: translateY(8%); }
 }
 
 /* --- Narrow screens ------------------------------------------------------ */
@@ -261,4 +251,9 @@ arc-couverture img,
     border-radius: 10px;
     font-size: 0.8rem;
   }
+}
+
+/* The back-to-top button stays above the version switcher */
+.retour-haut {
+  bottom: 5.5rem;
 }

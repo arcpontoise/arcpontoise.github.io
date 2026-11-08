@@ -4,7 +4,7 @@ Sources :
 - contenu/pages/*.md : pages fixes (en-tête YAML : titre, url, menu, gabarit...) ;
 - contenu/articles/AAAA-MM-JJ-slug/index.md : articles, avec leurs fichiers
   (images, PDF) dans le même dossier ;
-- donnees/*.yaml : encadrants, foire aux questions, redirections ;
+- donnees/*.yaml : encadrants, foire aux questions, Roy et bureau, redirections ;
 - static/ : feuille de style et scripts propres au site.
 
 La charte graphique (CSS, polices, menu commun) est chargée en direct depuis
@@ -50,11 +50,19 @@ CHARTE = os.environ.get("CHARTE_URL", "https://charte.arcpontoise.fr").rstrip("/
 GALERIES = os.environ.get("GALERIES_URL", "https://photos.arcpontoise.fr").rstrip("/")
 
 MENU_IDS = {"accueil", "compagnie", "pratiquer", "inscrire", "competitions", "archers", "contact"}
-GABARITS_PAGE = {"page", "accueil", "equipe", "faq", "articles", "galeries"}
+GABARITS_PAGE = {
+    "page", "accueil", "equipe", "faq", "articles", "galeries",
+    "rubrique", "frise", "roys", "acces",
+}  # fmt: skip
 DOSSIER_ARTICLE = re.compile(r"^(\d{4}-\d{2}-\d{2})-([a-z0-9][a-z0-9-]*)$")
 SLUG_GALERIE = re.compile(r"^[a-z0-9][a-z0-9-]{0,79}$")
 URL_PAGE = re.compile(r"^/(?:[a-z0-9][a-z0-9-]*/)*$")
-CHAMPS_PAGE = {"titre", "url", "menu", "description", "gabarit"}
+IMAGE_PAGE = re.compile(r"^/images/[a-z0-9][a-z0-9-]*\.(?:webp|jpg|png|svg)$")
+CHAMPS_PAGE = {
+    "titre", "url", "menu", "description", "gabarit", "ordre", "galerie", "image", "cartes",
+}  # fmt: skip
+ROLES_BUREAU = ("capitaine", "secretaire", "tresorier", "porte_drapeau")
+CHAMPS_CARTE = {"titre", "latitude", "longitude", "adresse", "texte"}
 CHAMPS_ARTICLE = {"titre", "date", "resume", "image", "galerie", "brouillon"}
 TAILLE_RESUME = 220
 
@@ -133,6 +141,10 @@ class Page:
     gabarit: str
     description: str
     corps: str
+    ordre: int = 100
+    galerie: str | None = None
+    image: str | None = None
+    cartes: list[dict] = field(default_factory=list)
 
 
 @dataclass
@@ -173,12 +185,64 @@ def lire_pages() -> list[Page]:
             raise ErreurContenu(f"{chemin} : gabarit « {gabarit} » inconnu")
         titre = texte_requis(meta, "titre", chemin)
         description = str(meta.get("description") or "").strip() or resumer(corps)
-        pages.append(Page(chemin, titre, url, menu, gabarit, description, corps))
+        ordre = meta.get("ordre", 100)
+        if not isinstance(ordre, int):
+            raise ErreurContenu(f"{chemin} : « ordre » est un nombre entier")
+        galerie = meta.get("galerie")
+        if galerie is not None and not SLUG_GALERIE.match(str(galerie)):
+            raise ErreurContenu(f"{chemin} : galerie « {galerie} » invalide")
+        image = meta.get("image")
+        if image is not None:
+            image = str(image)
+            if not IMAGE_PAGE.match(image) or not (STATIC / image.lstrip("/")).is_file():
+                raise ErreurContenu(f"{chemin} : image « {image} » introuvable dans static/images/")
+        cartes = lire_cartes(meta.get("cartes") or [], chemin)
+        pages.append(
+            Page(
+                chemin,
+                titre,
+                url,
+                menu,
+                gabarit,
+                description,
+                corps,
+                ordre,
+                str(galerie) if galerie else None,
+                image,
+                cartes,
+            )  # fmt: skip
+        )
     urls = [p.url for p in pages]
     doublons = {u for u in urls if urls.count(u) > 1}
     if doublons:
         raise ErreurContenu(f"pages : plusieurs pages pour {sorted(doublons)}")
     return pages
+
+
+def lire_cartes(cartes: Any, chemin: Path) -> list[dict]:
+    """Places of a page (plan d'accès): title, coordinates, address and Markdown text."""
+    if not isinstance(cartes, list):
+        raise ErreurContenu(f"{chemin} : « cartes » est une liste")
+    for carte in cartes:
+        if not isinstance(carte, dict) or set(carte) - CHAMPS_CARTE:
+            raise ErreurContenu(f"{chemin} : carte invalide, champs {sorted(CHAMPS_CARTE)}")
+        texte_requis(carte, "titre", chemin)
+        for axe, limite in (("latitude", 90), ("longitude", 180)):
+            valeur = carte.get(axe)
+            if not isinstance(valeur, (int, float)) or not -limite <= valeur <= limite:
+                raise ErreurContenu(f"{chemin} : « {axe} » de la carte invalide")
+        carte["html"] = rendre(str(carte.get("texte") or ""))
+    return cartes
+
+
+def sous_pages(page: Page, pages: list[Page]) -> list[Page]:
+    """Direct children of a page, from their URL, in their « ordre »."""
+    enfants = [
+        p
+        for p in pages
+        if p.url.startswith(page.url) and p.url.count("/") == page.url.count("/") + 1
+    ]
+    return sorted(enfants, key=lambda p: (p.ordre, p.titre))
 
 
 def lire_articles() -> list[Article]:
@@ -252,6 +316,7 @@ def lire_equipe() -> list[dict]:
             rendre(ligne).removeprefix("<p>").removesuffix("</p>\n") for ligne in lignes
         ]
         membre["ancre"] = slugify(membre["nom"])
+        membre["initiales"] = "".join(mot[0] for mot in membre["nom"].split()[:2]).upper()
     return equipe
 
 
@@ -265,6 +330,44 @@ def lire_faq() -> list[dict]:
         entree["html"] = rendre(entree["reponse"])
         entree["ancre"] = slugify(entree["question"])
     return faq
+
+
+def lire_roys() -> list[dict]:
+    """Roy and bureau of the compagnie, grouped by decade (page /les-roy-et-le-bureau/).
+
+    The bureau of a year is flagged « inchange » when it is the same as the
+    previous year's, so the page only details the changes.
+    """
+    decennies: list[dict] = []
+    precedent = None
+    for entree in lire_yaml("roys.yaml") or []:
+        if not isinstance(entree, dict):
+            raise ErreurContenu("donnees/roys.yaml : chaque entrée est une liste de champs")
+        if "annee" in entree:
+            annee = entree["annee"]
+            for champ in ("date", "roy", "roitelet", "petit_prince", *ROLES_BUREAU):
+                entree.setdefault(champ, "")
+            bureau = tuple(entree[c] for c in ROLES_BUREAU)
+            entree["inchange"] = bureau == precedent
+            precedent = bureau
+        elif entree.get("evenement"):
+            trouve = re.search(r"\d{4}", str(entree["evenement"]))
+            if not trouve:
+                raise ErreurContenu(f"donnees/roys.yaml : année introuvable dans {entree}")
+            annee = int(trouve.group())
+            entree["lignes"] = str(entree.get("texte") or "").strip().splitlines()
+            entree["annee"] = None
+        else:
+            raise ErreurContenu(
+                "donnees/roys.yaml : chaque entrée a une « annee » ou un « evenement »"
+            )
+        if not isinstance(annee, int):
+            raise ErreurContenu(f"donnees/roys.yaml : année invalide {annee!r}")
+        titre = f"Années {annee // 10 * 10}"
+        if not decennies or decennies[-1]["titre"] != titre:
+            decennies.append({"titre": titre, "ancre": slugify(titre), "entrees": []})
+        decennies[-1]["entrees"].append(entree)
+    return decennies
 
 
 def lire_redirections(pages: list[Page], articles: list[Article]) -> dict[str, str]:
@@ -343,6 +446,7 @@ def generer() -> int:
     articles = lire_articles()
     publies = [a for a in articles if not a.brouillon]
     equipe = lire_equipe()
+    roys = lire_roys()
     faq = lire_faq()
     redirections = lire_redirections(pages, publies)
     if "--check" in sys.argv:
@@ -385,6 +489,8 @@ def generer() -> int:
             fil=fil_ariane(page.url, pages_par_url),
             articles=publies,
             equipe=equipe,
+            roys=roys,
+            enfants=sous_pages(page, pages),
             faq=faq,
         )
 

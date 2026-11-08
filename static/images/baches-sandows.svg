@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 460" width="480" height="460" role="img" aria-labelledby="titre">
+  <title id="titre">Butte bâchée vue de côté : la bâche couvre la butte, le sandow passe sous la butte, d'un bord de la bâche à l'autre</title>
+  <g font-family="sans-serif" font-size="20" fill="#1d2433">
+    <!-- Target butt covered by its tarpaulin -->
+    <rect x="38" y="18" width="258" height="270" fill="#111"/>
+    <rect x="38" y="288" width="258" height="9" fill="#fdf6e3" stroke="#555" stroke-width="1.5"/>
+    <!-- Stand legs -->
+    <g fill="#e8b48c" stroke="#555" stroke-width="1.5">
+      <rect x="72" y="297" width="31" height="45"/>
+      <rect x="228" y="297" width="32" height="45"/>
+      <rect x="108" y="297" width="35" height="135"/>
+      <rect x="190" y="297" width="35" height="135"/>
+    </g>
+    <!-- Bungee cord holding the tarpaulin -->
+    <polyline points="38,297 72,344 262,344 296,297" fill="none" stroke="#2f56b0" stroke-width="5" stroke-linejoin="round"/>
+    <!-- Labels -->
+    <g stroke="#1d2433" stroke-width="1.5">
+      <line x1="300" y1="120" x2="340" y2="120"/>
+      <line x1="270" y1="344" x2="340" y2="380"/>
+      <line x1="225" y1="410" x2="340" y2="430"/>
+    </g>
+    <text x="346" y="127">Bâche</text>
+    <text x="346" y="387" fill="#2f56b0" font-weight="bold">Sandow</text>
+    <text x="346" y="437">Support</text>
+  </g>
+</svg>

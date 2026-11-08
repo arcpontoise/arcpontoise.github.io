@@ -3,10 +3,10 @@ titre: "Bienvenue à la Compagnie d'archers de Pontoise"
 url: /
 menu: accueil
 gabarit: accueil
-description: "Compagnie d'archers de Pontoise, club de tir à l'arc depuis 1903 : tir en salle, en extérieur, Beursault et tirs de parcours, pour tous dès 8 ans."
+description: "Compagnie d'archers de Pontoise depuis 1903 : tir en salle, en extérieur, nature, 3D, campagne et Beursault, pour tous dès 8 ans."
 ---
 
-![Label Ambition, club labellisé par la Fédération française de tir à l'arc pour 2025-2026](/images/label-ambition.png)
+![Label Ambition, compagnie labellisée par la Fédération française de tir à l'arc pour 2025-2026](/images/label-ambition.png)
 
 ## Le mot du Capitaine
 
