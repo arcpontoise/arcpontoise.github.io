@@ -1,0 +1,348 @@
+/*
+ * POC - version B, Sport et énergie (html[data-theme]), see css/poc-themes.css.
+ */
+
+/* ===== B. Sport et énergie =============================================== */
+
+:root[data-theme="b"] {
+  --bg: #0d1838;
+  --card: #1b2b5a;
+  --ink: #fffdfb;
+  --gray: #b9c6ea;
+  --gray-soft: #b9c6ea;
+  --pale: #24376d;
+  --hover: #24376d;
+  --border: #2f437c;
+  --accent: #f2c14e;
+  --accent-light: #f2c14e;
+  --blue-mid: #b9c6ea;
+  --highlight: #3a3a2a;
+  --radius: 24px;
+  --radius-sm: 12px;
+}
+
+:root[data-theme="b"] body {
+  font-family: Inter, system-ui, sans-serif;
+}
+
+:root[data-theme="b"] h1,
+:root[data-theme="b"] h2,
+:root[data-theme="b"] h3 {
+  color: #fffdfb;
+  font-family: "Space Grotesk", Inter, sans-serif;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  text-transform: none;
+}
+
+:root[data-theme="b"] header.site {
+  border-bottom: 0;
+  background: var(--bg);
+  color: #fffdfb;
+}
+
+:root[data-theme="b"] header.site .logo {
+  height: 52px;
+  padding: 4px;
+  border-radius: 12px;
+  background: #fffdfb;
+}
+
+:root[data-theme="b"] header.site .manuscrit {
+  color: var(--accent);
+}
+
+:root[data-theme="b"] header.site .titre {
+  font-family: "Space Grotesk", Inter, sans-serif;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+:root[data-theme="b"] .menu-actuel {
+  box-shadow: inset 0 -3px var(--accent);
+}
+
+:root[data-theme="b"] .menu-contact {
+  background: var(--accent);
+  color: #0d1838;
+}
+
+:root[data-theme="b"] .menu-panneau {
+  border-top-color: var(--accent);
+}
+
+:root[data-theme="b"] main:not(.poc-accueil) h1 {
+  font-size: clamp(2.2rem, 5vw, 3.25rem);
+}
+
+:root[data-theme="b"] .carte {
+  border: 0;
+}
+
+:root[data-theme="b"] footer.site {
+  border-top: 1px solid var(--border);
+  padding-top: 1.5rem;
+}
+
+/* B - home page */
+
+.b-hero {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
+  gap: 1rem;
+  padding-top: 1.5rem;
+}
+
+.b-hero-texte {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 2rem;
+  min-height: 28rem;
+  padding: 3rem 2.5rem;
+  border-radius: 28px;
+  background: var(--card);
+}
+
+.b-surtitre {
+  margin: 0;
+  color: var(--accent);
+  font-family: "Space Grotesk", Inter, sans-serif;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+:root[data-theme="b"] main .b-hero h1 {
+  margin: 0;
+  font-size: clamp(2.8rem, 6vw, 4.75rem);
+  line-height: 0.98;
+}
+
+.b-hero .calques {
+  min-height: 28rem;
+  border-radius: 28px;
+}
+
+.b-hero .bouton-plein,
+.b-appel .bouton-sombre {
+  border-radius: 12px;
+}
+
+.b-hero .bouton-plein {
+  background: var(--accent);
+  color: #0d1838;
+}
+
+.b-hero .bouton-contour {
+  border-radius: 12px;
+  background: rgb(255 253 251 / 10%);
+  color: #fffdfb;
+}
+
+.b-chiffres {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+  margin-bottom: 0;
+  list-style: none;
+}
+
+.b-chiffres li {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1.75rem;
+  border-radius: 24px;
+  background: var(--card);
+}
+
+.b-chiffres b {
+  font-family: "Space Grotesk", Inter, sans-serif;
+  font-size: 3.25rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.b-chiffres span {
+  color: var(--gray);
+  font-weight: 600;
+}
+
+.b-chiffres .b-chiffre-fort {
+  background: var(--accent);
+  color: #0d1838;
+}
+
+.b-chiffres .b-chiffre-clair {
+  justify-content: center;
+  background: #fffdfb;
+  color: #0d1838;
+}
+
+.b-chiffres .b-chiffre-fort span,
+.b-chiffres .b-chiffre-clair span {
+  color: #0d1838;
+}
+
+.b-chiffres .b-chiffre-clair b {
+  font-size: 2rem;
+}
+
+.b-section {
+  padding-top: 4.5rem;
+}
+
+:root[data-theme="b"] .b-section h2 {
+  margin-top: 0;
+  font-size: clamp(2.2rem, 4vw, 3rem);
+}
+
+.b-bento {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-auto-rows: 16rem;
+  gap: 1rem;
+}
+
+.b-tuile {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  border-radius: 24px;
+}
+
+.b-tuile-1 {
+  grid-column: span 2;
+}
+
+.b-tuile-4 {
+  grid-row: 1 / span 2;
+  grid-column: 3;
+}
+
+.b-tuile arc-couverture {
+  height: 100%;
+  transition: transform 0.4s ease;
+}
+
+.b-tuile:hover arc-couverture {
+  transform: scale(1.05);
+}
+
+.b-bento .b-tuile span {
+  position: absolute;
+  bottom: 1rem;
+  left: 1rem;
+  padding: 0.7rem 1.1rem;
+  border-radius: 14px;
+  background: #0d1838;
+  color: #fffdfb;
+  font-family: "Space Grotesk", Inter, sans-serif;
+  font-size: 1.35rem;
+  font-weight: 700;
+}
+
+.b-capitaine .texte {
+  padding: 2.5rem;
+  border-radius: 28px;
+  background: var(--card);
+}
+
+:root[data-theme="b"] .b-capitaine blockquote {
+  border-left-color: var(--accent);
+  background: var(--bg);
+}
+
+.b-actualites {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr));
+  gap: 1rem;
+}
+
+.b-actualite {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  overflow: hidden;
+  padding-bottom: 1.5rem;
+  border-radius: 24px;
+  background: var(--card);
+  color: #fffdfb;
+  text-decoration: none;
+}
+
+.b-actualites .b-actualite arc-couverture {
+  height: 12.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.b-actualites .b-actualite time,
+.b-actualites .b-actualite b {
+  padding: 0 1.5rem;
+}
+
+.b-actualites .b-actualite time {
+  color: var(--accent);
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.b-actualites .b-actualite b {
+  font-size: 1.3rem;
+  line-height: 1.3;
+}
+
+.b-appel {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  margin-top: 4.5rem;
+  margin-bottom: 2rem;
+  padding: 3rem 2.5rem;
+  border-radius: 28px;
+  background: var(--accent);
+  color: #0d1838;
+}
+
+:root[data-theme="b"] .b-appel h2 {
+  max-width: 18ch;
+  margin: 0;
+  color: #0d1838;
+  font-size: 2.5rem;
+  line-height: 1.05;
+}
+
+.b-appel .bouton-sombre {
+  background: #0d1838;
+  color: #fffdfb;
+}
+
+@media (width <= 760px) {
+  .b-bento {
+    grid-template-columns: 1fr;
+    grid-auto-rows: 13rem;
+  }
+
+  .b-tuile-1,
+  .b-tuile-4 {
+    grid-row: auto;
+    grid-column: auto;
+  }
+
+  .b-hero-texte {
+    min-height: 0;
+    padding: 2rem 1.5rem;
+  }
+
+  .b-hero .calques {
+    min-height: 18rem;
+  }
+
+  .b-capitaine .texte {
+    padding: 1.5rem;
+  }
+}

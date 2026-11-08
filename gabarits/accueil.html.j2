@@ -1,12 +1,237 @@
 {% extends "page.html.j2" %}
-{% block apres %}
-<section class="dernieres" aria-labelledby="dernieres-titre">
-  <h2 id="dernieres-titre">Dernières actualités</h2>
-  <div class="cartes-articles">
-  {% for article in articles[:3] %}
-    {% include "_carte_article.html.j2" %}
-  {% endfor %}
+{#
+  POC: the home page in its four versions. Only the one matching
+  <html data-theme> is shown (static/css/poc-themes.css). Photos of people
+  never enter this public repository: they are the covers of the galleries
+  published in drop, read live by <arc-couverture> (js/arc-galerie.js).
+#}
+{% set disciplines = [
+  ("Tir en salle", "/pratiquer/tir-en-salle/", "2025-concours-salle", "D'octobre à mars, au gymnase Marie Laurencin."),
+  ("Tir extérieur", "/pratiquer/tir-exterieur/", "2024-ecouen", "Sur le terrain du club, aux beaux jours."),
+  ("Tir Beursault", "/pratiquer/tir-beursault/", "2025-roy-france", "Le tir traditionnel des compagnies d'arc."),
+  ("Parcours", "/pratiquer/parcours/", "2026-initiation-parcours", "Cibles 3D et nature, en pleine forêt."),
+] %}
+{% macro couverture(galerie, alt="", classe="") -%}
+<arc-couverture source="{{ galeries }}" galerie="{{ galerie }}"{% if classe %} class="{{ classe }}"{% endif %} alt="{{ alt }}"></arc-couverture>
+{%- endmacro %}
+{% macro calques(classe) -%}
+<div class="calques {{ classe }}">
+  <img class="calque-fond" src="/images/accueil-fond.webp" alt="" width="2000" height="1333">
+  <img class="calque-archere" src="/images/accueil-archere.webp" alt="Une archère de la compagnie au tir, de dos, sur le terrain du club" width="2000" height="1333">
+</div>
+{%- endmacro %}
+{% block scripts %}
+<script src="/js/arc-galerie.js" defer></script>
+{% endblock %}
+{% block largeur %} poc-accueil{% endblock %}
+{% block contenu %}
+
+{# --- Current version -------------------------------------------------- #}
+<div class="poc-version poc-actuel">
+  <h1>{{ page.titre }}</h1>
+  <div class="texte">
+  {{ contenu }}
   </div>
-  <p><a href="/articles/">Toutes les actualités</a> - <a href="/galeries/">Galeries photo</a></p>
-</section>
+  <section class="dernieres" aria-labelledby="dernieres-titre">
+    <h2 id="dernieres-titre">Dernières actualités</h2>
+    <div class="cartes-articles">
+    {% for article in articles[:3] %}
+      {% include "_carte_article.html.j2" %}
+    {% endfor %}
+    </div>
+    <p><a href="/articles/">Toutes les actualités</a> - <a href="/galeries/">Galeries photo</a></p>
+  </section>
+</div>
+
+{# --- A. Héritage contemporain ------------------------------------------ #}
+<div class="poc-version poc-a">
+  <section class="a-hero pleine-largeur">
+    {{ calques("a-hero-image") }}
+    <div class="a-hero-texte">
+      <p class="manuscrit">La passion du tir à l'arc</p>
+      <h1>Tirer à l'arc à Pontoise depuis 1903</h1>
+      <p class="a-chapo">Salle, extérieur, Beursault et parcours en forêt : un club sportif moderne,
+        une compagnie fidèle à ses traditions. Pour tous, dès 8 ans.</p>
+      <p class="actions">
+        <a class="bouton-plein" href="https://infos.arcpontoise.fr/tarifs/">S'inscrire pour la saison</a>
+        <a class="bouton-contour" href="https://infos.arcpontoise.fr/planning/">Voir le planning</a>
+      </p>
+    </div>
+  </section>
+
+  <section class="a-chiffres pleine-largeur">
+    <ul class="contenu-large">
+      <li><b>1903</b><span>année de fondation</span></li>
+      <li><b>4</b><span>disciplines pratiquées</span></li>
+      <li><b>8 ans</b><span>pour commencer</span></li>
+      <li><b>Label Ambition</b><span>FFTA 2025-2026</span></li>
+    </ul>
+  </section>
+
+  <section class="contenu-large a-section apparition">
+    <div class="a-titre-section">
+      <h2>Quatre façons de tirer</h2>
+      <a href="/pratiquer/">Toutes les pratiques</a>
+    </div>
+    <div class="a-disciplines">
+    {% for titre, lien, photo, texte in disciplines %}
+      <a class="a-discipline" href="{{ lien }}">
+        {{ couverture(photo) }}
+        <span class="a-discipline-texte"><b>{{ titre }}</b><span>{{ texte }}</span></span>
+      </a>
+    {% endfor %}
+    </div>
+  </section>
+
+  <section class="a-parallaxe pleine-largeur">
+    {{ couverture("2025-roy-france") }}
+    <div class="a-parallaxe-texte">
+      <p class="manuscrit">Comme le veut la tradition</p>
+      <p class="a-salut">« Mesdames, Messieurs, je vous salue »</p>
+    </div>
+  </section>
+
+  <section class="contenu-large a-capitaine apparition">
+    <div class="texte">
+    {{ contenu }}
+    </div>
+  </section>
+
+  <section class="contenu-large a-section apparition">
+    <div class="a-titre-section">
+      <h2>Actualités</h2>
+      <a href="/articles/">Toutes les actualités</a>
+    </div>
+    <div class="a-actualites">
+    {% for article in articles[:3] %}
+      <a class="a-actualite" href="{{ article.url }}">
+        {{ couverture(article.galerie) }}
+        <time datetime="{{ article.date.isoformat() }}">{{ article.date | date_fr }}</time>
+        <b>{{ article.titre }}</b>
+      </a>
+    {% endfor %}
+    </div>
+  </section>
+
+  <section class="contenu-large a-mosaique apparition">
+    {{ couverture("2024-fort-de-montbre", classe="a-mosaique-haute") }}
+    {{ couverture("2025-initiation-parcours") }}
+    {{ couverture("2023-concours-salle") }}
+    <a class="a-mosaique-lien" href="/galeries/"><b>Les galeries photo</b><span>Parcourir les galeries</span></a>
+  </section>
+</div>
+
+{# --- B. Sport et énergie ----------------------------------------------- #}
+<div class="poc-version poc-b">
+  <section class="contenu-large b-hero">
+    <div class="b-hero-texte">
+      <p class="b-surtitre">Club de tir à l'arc · Pontoise</p>
+      <h1>Vise juste.<br>Depuis 1903.</h1>
+      <p class="actions">
+        <a class="bouton-plein" href="https://infos.arcpontoise.fr/tarifs/">S'inscrire</a>
+        <a class="bouton-contour" href="https://infos.arcpontoise.fr/planning/">Planning et tarifs</a>
+      </p>
+    </div>
+    {{ calques("b-hero-image") }}
+  </section>
+
+  <ul class="contenu-large b-chiffres">
+    <li class="b-chiffre-fort"><b>1903</b><span>Une compagnie plus que centenaire</span></li>
+    <li><b>4</b><span>disciplines, de la salle à la forêt</span></li>
+    <li><b>8 ans</b><span>pour commencer</span></li>
+    <li class="b-chiffre-clair"><span>Label Ambition FFTA</span><b>2025-2026</b></li>
+  </ul>
+
+  <section class="contenu-large b-section">
+    <h2>Choisis ton terrain</h2>
+    <div class="b-bento">
+    {% for titre, lien, photo, texte in disciplines %}
+      <a class="b-tuile b-tuile-{{ loop.index }}" href="{{ lien }}">
+        {{ couverture(photo) }}
+        <span>{{ titre }}</span>
+      </a>
+    {% endfor %}
+    </div>
+  </section>
+
+  <section class="contenu-large b-section b-capitaine">
+    <div class="texte">
+    {{ contenu }}
+    </div>
+  </section>
+
+  <section class="contenu-large b-section">
+    <div class="a-titre-section">
+      <h2>Dernières nouvelles</h2>
+      <a href="/articles/">Toutes les actualités</a>
+    </div>
+    <div class="b-actualites">
+    {% for article in articles[:3] %}
+      <a class="b-actualite" href="{{ article.url }}">
+        {{ couverture(article.galerie) }}
+        <time datetime="{{ article.date.isoformat() }}">{{ article.date | date_fr }}</time>
+        <b>{{ article.titre }}</b>
+      </a>
+    {% endfor %}
+    </div>
+  </section>
+
+  <section class="contenu-large b-appel">
+    <h2>Une séance d'essai avant de t'engager ?</h2>
+    <a class="bouton-sombre" href="https://contact.arcpontoise.fr/">Nous écrire</a>
+  </section>
+</div>
+
+{# --- C. Éditorial épuré ------------------------------------------------ #}
+<div class="poc-version poc-c">
+  <section class="contenu-large c-hero">
+    <p class="c-surtitre">Pontoise · Val-d'Oise · depuis 1903</p>
+    <h1>Le tir à l'arc, sérieusement et amicalement.</h1>
+    <div class="c-hero-bas">
+      <p>Salle, extérieur, Beursault, parcours. Une compagnie de tradition, un club sportif
+        d'aujourd'hui, ouvert à tous dès 8 ans.</p>
+      <p class="actions">
+        <a class="bouton-plein" href="https://infos.arcpontoise.fr/tarifs/">S'inscrire</a>
+        <a class="bouton-contour" href="https://infos.arcpontoise.fr/planning/">Le planning</a>
+      </p>
+    </div>
+  </section>
+
+  <figure class="contenu-large c-photo apparition">
+    {{ couverture("2024-fort-de-montbre", "Archers en ligne de tir au fort de Montbré") }}
+    <figcaption>Tir au fort de Montbré, 2024.</figcaption>
+  </figure>
+
+  <section class="contenu-large c-disciplines">
+  {% for titre, lien, photo, texte in disciplines %}
+    <a href="{{ lien }}"><span>0{{ loop.index }}</span><b>{{ titre }}</b><span>{{ texte }}</span></a>
+  {% endfor %}
+  </section>
+
+  <section class="contenu-large c-journal apparition">
+    <div class="a-titre-section">
+      <h2>Le journal de la compagnie</h2>
+      <a href="/articles/">Toutes les actualités</a>
+    </div>
+    <div class="c-journal-grille">
+    {% set une = articles[0] %}
+      <a class="c-une" href="{{ une.url }}">
+        {{ couverture(une.galerie) }}
+        <time datetime="{{ une.date.isoformat() }}">{{ une.date | date_fr }}</time>
+        <b>{{ une.titre }}</b>
+      </a>
+      <ul class="c-liste">
+      {% for article in articles[1:5] %}
+        <li><a href="{{ article.url }}"><time datetime="{{ article.date.isoformat() }}">{{ article.date | date_fr }}</time><b>{{ article.titre }}</b></a></li>
+      {% endfor %}
+      </ul>
+    </div>
+  </section>
+
+  <section class="c-capitaine pleine-largeur">
+    <div class="contenu-large texte apparition">
+    {{ contenu }}
+    </div>
+  </section>
+</div>
 {% endblock %}
