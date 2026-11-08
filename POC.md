@@ -19,10 +19,11 @@ page à l'autre. Un lien peut imposer une version, par exemple
 
 ## Photos
 
-Aucune photo de personne n'entre dans ce dépôt public :
+Aucune photo de personne reconnaissable n'entre dans ce dépôt public :
 
-- la photo d'accueil est celle du WordPress actuel (une archère de dos), en
-  deux calques comme dans le thème Hestia : `static/images/accueil-*.webp` ;
+- les photos d'archers de dos au crépuscule, sans visage reconnaissable,
+  sont dans `static/images/` (`accueil-crepuscule.webp`,
+  `terrain-crepuscule.webp`) ;
 - toutes les autres sont les **couvertures des galeries publiées dans drop**,
   lues en direct par le composant `<arc-couverture>`
   (`static/js/arc-galerie.js`). La couverture est la première photo de la
@@ -44,11 +45,11 @@ voir le README de la charte).
 
 ## Effets au défilement
 
-Version A : les deux calques de la photo d'accueil glissent à des vitesses
-différentes, la bande « Mesdames, Messieurs, je vous salue » défile en
-parallaxe et les sections apparaissent en fondu (aussi en version C). Tout est
-en CSS, sans JavaScript : un navigateur qui ne gère pas ces effets, ou un
-visiteur qui a demandé moins d'animations, voit la page immobile.
+Version A : la photo d'accueil glisse moins vite que la page, la bande
+« Mesdames, Messieurs, je vous salue » défile en parallaxe et les sections
+apparaissent en fondu (aussi en version C). Tout est en CSS, sans
+JavaScript : un navigateur qui ne gère pas ces effets, ou un visiteur qui a
+demandé moins d'animations, voit la page immobile.
 
 ## Retirer la maquette
 

@@ -14,17 +14,44 @@ header.site .marque {
 }
 
 /* Long-form text: readable line length, images and tables that fit */
+.texte .zoom {
+  display: block;
+  width: fit-content;
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: zoom-in;
+}
+
 .texte img {
   display: block;
+  width: auto;
   max-width: 100%;
   height: auto;
+  max-height: 32rem;
   margin: 1rem auto;
   border-radius: var(--radius, 6px);
 }
 
+/* Drawings (SVG) are made for a light background, whatever the theme */
+.texte img[src$=".svg"] {
+  box-sizing: border-box;
+  padding: 1rem;
+  background: #fff;
+}
+
+/* Tables may be wider than the text column, up to the page width: centred
+   on the column, scrolling only when the screen is really too narrow */
 .texte table {
   display: block;
+  width: max-content;
+  max-width: min(64rem, 100vw - 2rem);
+  margin: 1rem 0;
+  margin-left: 50%;
   overflow-x: auto;
+  transform: translateX(-50%);
 }
 
 .texte blockquote {
@@ -60,23 +87,6 @@ header.site .marque {
 
 .carte-article .discret {
   margin-bottom: 0.2rem;
-}
-
-/* Encadrants */
-.equipe {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(18rem, 1fr));
-  gap: 1rem;
-}
-
-.equipe h2 {
-  margin-top: 0;
-  font-size: 1.15rem;
-}
-
-.equipe ul {
-  margin: 0;
-  padding-left: 1.2rem;
 }
 
 /* Questions fréquentes */
@@ -181,4 +191,422 @@ header.site .marque {
   color: #fff;
   font: inherit;
   cursor: pointer;
+}
+
+/* --- Coaches (gabarit equipe) --------------------------------------------- */
+
+.equipe {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(14rem, 1fr));
+  grid-auto-flow: dense;
+  align-items: start;
+  gap: 1rem;
+  margin: 1.5rem 0;
+}
+
+.encadrant {
+  border: 1px solid var(--border);
+  border-radius: var(--radius, 6px);
+  background: var(--card);
+  transition: box-shadow 0.2s ease;
+}
+
+.encadrant:hover,
+.encadrant[open] {
+  box-shadow: 0 8px 24px rgb(9 19 45 / 12%);
+}
+
+.encadrant-tete {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1.25rem 1rem;
+  cursor: pointer;
+  list-style: none;
+  text-align: center;
+}
+
+.encadrant-tete::-webkit-details-marker {
+  display: none;
+}
+
+.portrait {
+  display: grid;
+  place-items: center;
+  width: 7rem;
+  height: 7rem;
+  overflow: hidden;
+  border-radius: 50%;
+  background: var(--blue);
+  color: #fff;
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.portrait img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.encadrant-nom {
+  font-weight: 700;
+}
+
+.encadrant ul,
+.encadrant p {
+  margin: 0;
+  padding: 0 1.25rem 1.25rem 2.25rem;
+  font-size: 0.95rem;
+}
+
+.encadrant p {
+  padding-left: 1.25rem;
+}
+
+/* An opened card takes two columns: portrait next to the name, text below */
+.encadrant[open] {
+  grid-column: span 2;
+}
+
+.encadrant[open] .encadrant-tete {
+  flex-direction: row;
+  justify-content: flex-start;
+  gap: 1.25rem;
+  text-align: left;
+}
+
+.encadrant[open] .encadrant-nom {
+  font-size: 1.25rem;
+}
+
+/* Phones: two coaches per row, smaller portraits */
+@media (width <= 600px) {
+  .equipe {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.6rem;
+  }
+
+  .encadrant-tete {
+    padding: 0.9rem 0.5rem;
+  }
+
+  .portrait {
+    width: 4.5rem;
+    height: 4.5rem;
+    font-size: 1.4rem;
+  }
+
+  .encadrant ul,
+  .encadrant p {
+    padding: 0 0.75rem 1rem 1.6rem;
+  }
+}
+
+/* --- Section pages: a card per sub-page (gabarit rubrique) --------------- */
+
+.rubrique-cartes {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+  gap: 1rem;
+  margin: 1.5rem 0;
+}
+
+.rubrique-carte {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: var(--radius, 6px);
+  background: var(--card);
+  color: var(--ink);
+  text-decoration: none;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.rubrique-carte:hover {
+  box-shadow: 0 8px 24px rgb(9 19 45 / 12%);
+  transform: translateY(-3px);
+}
+
+.rubrique-carte arc-couverture,
+.rubrique-sans-photo {
+  display: block;
+  height: 10rem;
+  background: var(--pale);
+}
+
+.rubrique-carte arc-couverture img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.rubrique-sans-photo {
+  background: linear-gradient(135deg, var(--blue), var(--accent));
+}
+
+.rubrique-texte {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  padding: 1rem 1.1rem 1.2rem;
+}
+
+.rubrique-texte b {
+  font-size: 1.15rem;
+}
+
+.rubrique-texte span {
+  color: var(--gray);
+  font-size: 0.95rem;
+}
+
+/* --- Timeline (gabarit frise): periods and dated steps ------------------- */
+
+.frise h2 {
+  margin-top: 2.5rem;
+}
+
+.frise h3 {
+  position: relative;
+  margin: 2rem 0 0.5rem;
+  padding-left: 1.75rem;
+  color: var(--blue);
+}
+
+.frise h3::before {
+  position: absolute;
+  top: 0.3em;
+  left: 0;
+  width: 0.9rem;
+  height: 0.9rem;
+  border: 3px solid var(--accent);
+  border-radius: 50%;
+  background: var(--bg);
+  content: "";
+}
+
+.frise h3 ~ p,
+.frise h3 ~ blockquote {
+  margin-left: 0.6rem;
+  padding-left: 1.15rem;
+  border-left: 2px solid var(--border);
+}
+
+/* --- Roy and bureau, by decade (gabarit roys) ---------------------------- */
+
+.decennies {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 1.5rem 0;
+}
+
+.decennies a {
+  padding: 0.4rem 0.9rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  color: var(--ink);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.decennies a:hover {
+  background: var(--hover);
+}
+
+.decennie {
+  scroll-margin-top: 5rem;
+}
+
+.annees {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+  gap: 0.75rem;
+  margin: 0 0 2rem;
+  padding: 0;
+  list-style: none;
+}
+
+.annee,
+.evenement {
+  padding: 0.9rem 1rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius, 6px);
+  background: var(--card);
+}
+
+.annee-titre,
+.annee-roy,
+.annee-jeunes,
+.annee-bureau,
+.annee-bureau-inchange {
+  margin: 0;
+}
+
+.annee-titre b {
+  color: var(--accent);
+  font-size: 1.4rem;
+}
+
+.annee-titre span,
+.annee-jeunes,
+.annee-bureau-inchange,
+.annee-bureau dt {
+  color: var(--gray);
+  font-size: 0.85rem;
+}
+
+.annee-roy {
+  margin: 0.3rem 0;
+  font-size: 1.05rem;
+  font-weight: 700;
+}
+
+.annee-roy span {
+  margin-right: 0.3rem;
+  padding: 0.05rem 0.45rem;
+  border-radius: 4px;
+  background: var(--accent);
+  color: var(--card);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  vertical-align: 0.15em;
+}
+
+.annee-bureau,
+.annee-bureau-inchange {
+  margin-top: 0.6rem;
+  padding-top: 0.6rem;
+  border-top: 1px solid var(--border);
+}
+
+.annee-bureau div {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+}
+
+.annee-bureau dd {
+  margin: 0;
+  text-align: right;
+}
+
+.evenement {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  border-color: var(--accent);
+  background: var(--pale);
+}
+
+.evenement b {
+  color: var(--accent);
+}
+
+/* --- Places with a map (gabarit acces) ----------------------------------- */
+
+.lieu {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+  align-items: start;
+  margin: 2rem 0;
+}
+
+.lieu-texte h2 {
+  margin-top: 0;
+}
+
+.lieu-adresse {
+  font-weight: 600;
+}
+
+.lieu-carte {
+  width: 100%;
+  height: 20rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius, 6px);
+}
+
+/* Wide screens: the text next to a larger map, beyond the text column */
+@media (width > 900px) {
+  .lieu {
+    grid-template-columns: 1fr 1.6fr;
+    width: min(64rem, 100vw - 2rem);
+    margin-left: 50%;
+    transform: translateX(-50%);
+  }
+}
+
+/* Image viewer of the text pages (js/arc-zoom.js) */
+.zoom-image {
+  background: #fff;
+}
+
+.zoom-image[src$=".svg"] {
+  width: min(92vw, 44rem);
+  height: auto;
+}
+
+.zoom-commandes {
+  justify-content: flex-end;
+}
+
+/* Back to top: fades in once the page is scrolled, where supported */
+html {
+  scroll-padding-top: 1rem;
+}
+
+.retour-haut {
+  position: fixed;
+  right: 1.25rem;
+  bottom: 1.25rem;
+  z-index: 50;
+  display: grid;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  background: var(--blue, #1d3b8b);
+  box-shadow: 0 4px 14px rgb(0 0 0 / 25%);
+  color: #fff;
+  font-size: 1.4rem;
+  place-items: center;
+  text-decoration: none;
+}
+
+.retour-haut:hover,
+.retour-haut:focus-visible {
+  background: var(--accent, #c8102e);
+  color: #fff;
+}
+
+@supports (animation-timeline: scroll()) {
+  .retour-haut {
+    animation: retour-haut linear both;
+    animation-range: 0 60vh;
+    animation-timeline: scroll(root);
+  }
+}
+
+@keyframes retour-haut {
+  from {
+    opacity: 0;
+    visibility: hidden;
+  }
+
+  to {
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
 }

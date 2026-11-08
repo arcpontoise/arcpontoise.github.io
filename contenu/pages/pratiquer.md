@@ -2,6 +2,7 @@
 titre: "La pratique du tir à l'arc"
 url: /pratiquer/
 menu: pratiquer
+gabarit: rubrique
 ---
 
 Le tir à l'arc se pratique :
@@ -24,11 +25,6 @@ Elle comprend :
 
 Le certificat médical de non contre-indication à la pratique sportive peut être obligatoire (selon les réponses fournies au questionnaire d'auto-évaluation de santé) et doit être présenté avec la demande de licence.
 
-## Les disciplines
-
-- [Tir en salle](/pratiquer/tir-en-salle/)
-- [Tir en extérieur](/pratiquer/tir-exterieur/)
-- [Tir Beursault](/pratiquer/tir-beursault/)
-- [Tir de parcours](/pratiquer/parcours/)
-
 [Consulter le planning des entraînements](https://infos.arcpontoise.fr/planning/)
+
+## Les disciplines

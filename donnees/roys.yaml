@@ -1,0 +1,552 @@
+---
+# Roy, capitaines et bureau de la compagnie depuis 1962 (page /les-roy-et-le-bureau/),
+# dans l'ordre chronologique. Deux sortes d'entrées :
+# - une année : annee, date (jour/mois du tir du Roy), roy, roitelet, petit_prince,
+#   capitaine, secretaire, tresorier, porte_drapeau (champs facultatifs sauf annee) ;
+# - un événement : evenement (date ou titre court) et texte (une ligne par fait).
+
+- annee: 1962
+  date: 08/04
+  roy: Henri HEMERY
+  capitaine: Marcel DELACOURT
+  secretaire: Henri HEMERY
+  tresorier: Emile MARETTE
+- annee: 1963
+  date: 07/04
+  roy: Henri HEMERY
+  capitaine: Marcel DELACOURT
+- annee: 1964
+  date: 05/04
+  roy: Christian CORMIER
+  capitaine: Marcel DELACOURT
+  secretaire: Henri HEMERY
+  tresorier: Emile MARETTE
+- annee: 1965
+  date: 02/05
+  roy: Denis MARETTE
+  capitaine: Marcel DELACOURT
+- annee: 1966
+  date: 20/03
+  roy: Claude LEGRAND (déchu de son titre le 02/05)
+  capitaine: Marcel DELACOURT
+  secretaire: Henri HEMERY
+  tresorier: Emile MARETTE
+  porte_drapeau: Roger MANCEAU
+- annee: 1966
+  date: 14/05 (Nouveau tir du Roy)
+  roy: Denis MARETTE
+  capitaine: Marcel DELACOURT
+- annee: 1967
+  date: 30/04
+  roy: Denis MARETTE
+  capitaine: Marcel DELACOURT
+- evenement: Mai 1967
+  texte: Remise de l'écharpe d'Empereur à Denis MARETTE
+- annee: 1968
+  date: 11/05
+  roy: Roger MANCEAU
+  capitaine: Marcel DELACOURT
+  secretaire: Henri HEMERY
+  tresorier: Emile MARETTE
+  porte_drapeau: Réné MARETTE
+- annee: 1969
+  date: 09/03
+  roy: Georges COULON
+  capitaine: Henri HEMERY
+  secretaire: Henri HEMERY
+  porte_drapeau: Roger MANCEAU
+- evenement: '1970'
+  texte: Aucune mention du Tir du Roy
+- annee: 1971
+  roy: Jean SOLLIEZ
+  capitaine: Henri HEMERY
+  tresorier: Gilbert BONETTI
+  porte_drapeau: René ANQUETIN
+- annee: 1972
+  date: 02/04
+  roy: Henri HEMERY
+  capitaine: Henri HEMERY
+  secretaire: Anne-Marie JUST
+  tresorier: Gilbert BONETTI
+  porte_drapeau: Bernard SARDET
+- annee: 1973
+  date: 28/04
+  roy: Pierre ROUDIER
+  capitaine: Henri HEMERY
+  secretaire: Anne-Marie JUST
+  tresorier: Gilbert BONETTI
+  porte_drapeau: Bernard SARDET
+- evenement: '1973'
+  texte: '24/10 - Décès du Capitaine Henri HEMERY
+
+    10/11 - Élection de Jean-Pierre BOUFFON comme Capitaine'
+- annee: 1974
+  date: 24/03
+  roy: Gilbert BONETTI
+  capitaine: Jean-Pierre BOUFFON
+  secretaire: Anne-Marie JUST
+  tresorier: Gilbert BONETTI
+  porte_drapeau: Bernard SARDET
+- annee: 1975
+  date: 06/04
+  roy: Jean-Pierre BOUFFON
+  capitaine: Jean-Pierre BOUFFON
+  secretaire: Anne-Marie JUST
+  tresorier: Gilbert BONETTI
+  porte_drapeau: Bernard SARDET
+- evenement: 1975, le 04/09
+  texte: Changement de nom de la Compagnie qui devient Compagnie d'Archers de Pontoise-Gouzangrez
+- annee: 1976
+  date: 11/04
+  roy: COULON J.P.
+  roitelet: Olivier PICARD
+  capitaine: Jean-Pierre BOUFFON
+  secretaire: Jacqueline TURNER
+  tresorier: Gilbert BONETTI
+  porte_drapeau: Bernard BOURGET
+- annee: 1977
+  date: 26/03
+  roy: J.P. PLUMET
+  roitelet: Stéphane MESTRE
+  capitaine: Jean-Pierre BOUFFON
+  secretaire: Jacqueline TURNER
+  tresorier: Gilbert BONETTI
+  porte_drapeau: J.P. PLUMET
+- evenement: '1977'
+  texte: Destruction du Jeu d'Arc de Gouzangrez par un incendie
+- annee: 1978
+  date: 23/04
+  roy: Bernard BOURGET
+  roitelet: Françoise BENEZIT
+  capitaine: Jean-Pierre BOUFFON
+  secretaire: Jacqueline TURNER
+  tresorier: Gilbert BONETTI
+  porte_drapeau: J.P. PLUMET
+- annee: 1979
+  date: 06/05
+  roy: Gilbert BONETTI
+  roitelet: Mugette RAMELLA
+  capitaine: Jean-Pierre BOUFFON
+  secretaire: Jacqueline TURNER
+  tresorier: Gilbert BONETTI
+  porte_drapeau: André BRUCHON
+- annee: 1980
+  date: 27/04
+  roy: Daniel POTEL
+  roitelet: Philippe PICARD
+  capitaine: Jean-Pierre BOUFFON
+  secretaire: Muguette RAMELLA
+  tresorier: Gilbert BONETTI
+  porte_drapeau: Jean BENEZIT
+- annee: 1981
+  date: 26/04
+  roy: Jean-Pierre BOUFFON
+  roitelet: Joël MULLER
+  petit_prince: Gilles POTTIER
+  capitaine: Jean-Pierre BOUFFON
+  secretaire: Muguette RAMELLA
+  tresorier: Gilbert BONETTI
+  porte_drapeau: Jean BENEZIT
+- annee: 1982
+  date: 02/05
+  roy: Jean-Pierre BOUFFON
+  roitelet: Nicole THOMAS
+  petit_prince: Yvon RIVOY
+  capitaine: Jean-Pierre BOUFFON
+  secretaire: Françoise BENEZIT
+  tresorier: Gilbert BONETTI
+  porte_drapeau: Jean BENEZIT
+- annee: 1983
+  date: 15/05
+  roy: Jean-Pierre BOUFFON
+  roitelet: Claude BOUJU
+  petit_prince: Eric LAMBERET
+  capitaine: Jean-Pierre BOUFFON
+  secretaire: Françoise BENEZIT
+  tresorier: Gilbert BONETTI
+  porte_drapeau: Jean BENEZIT
+- evenement: '1983'
+  texte: 'Remise de l''écharpe d''Empereur à Jean-Pierre BOUFFON
+
+    Le 18/09 : Inauguration de la nouvelle salle d''armes au Hall Omnisports enrichie d''une seconde pièce,
+    en présence de M. Jean-Philippe LACHENAUD, Maire de Pontoise.'
+- annee: 1984
+  date: 06/05
+  roy: Marc CHARTRAIRE
+  roitelet: M. LEPINE
+  petit_prince: D. GAUTIER
+  capitaine: Jean-Pierre BOUFFON
+  secretaire: Françoise BENEZIT
+  tresorier: Gilbert BONETTI
+  porte_drapeau: Claude MORIN
+- annee: 1985
+  date: 05/05
+  roy: Gilbert BONETTI
+  roitelet: L. BUTON
+  petit_prince: E. HAMON
+  capitaine: Jean-Pierre BOUFFON
+  secretaire: Françoise BENEZIT
+  tresorier: Gilbert BONETTI
+  porte_drapeau: Claude MORIN
+- annee: 1986
+  date: 04/05
+  roy: Jacques FORGET
+  roitelet: Frésia CASTENEDA
+  petit_prince: Sébastien PERONNET
+  capitaine: Jean-Pierre BOUFFON
+  secretaire: Françoise BENEZIT
+  tresorier: Gilbert BONETTI
+  porte_drapeau: Claude MORIN
+- annee: 1987
+  date: 10/05
+  roy: Christiane BOUJU
+  roitelet: Fabrice GORGOLEWSKI
+  petit_prince: L. HOFFMANN
+  capitaine: Jean-Pierre BOUFFON
+  secretaire: Françoise BENEZIT
+  tresorier: Gilbert BONETTI
+  porte_drapeau: Claude MORIN
+- annee: 1988
+  date: 08/05
+  roy: Claude BOUJU
+  roitelet: Marie-Claude POINSOT
+  petit_prince: Xavier JEGU
+  capitaine: Jean-Pierre BOUFFON
+  secretaire: Françoise BENEZIT
+  tresorier: Gilbert BONETTI
+  porte_drapeau: Claude MORIN
+- annee: 1989
+  date: 21/05
+  roy: Stéphane CHESLET
+  roitelet: Didier PERREAU
+  petit_prince: Jérôme THIEBEAUD
+  capitaine: Jean-Pierre BOUFFON
+  secretaire: Christiane BOUJU
+  tresorier: Catherine PERONNET
+  porte_drapeau: Claude BOUJU
+- annee: 1990
+  date: 19/05
+  roy: Michel POTTIER
+  roitelet: ZAMBUJO
+  petit_prince: Olivier GACH
+  capitaine: Jean-Pierre BOUFFON
+  secretaire: Christiane BOUJU
+  tresorier: Catherine PERONNET
+  porte_drapeau: Claude BOUJU
+- evenement: '1990'
+  texte: Remise de l'écharpe de Connétable au Chevalier Georges COULON
+- annee: 1991
+  date: 12/05
+  roy: Gilbert NIQUET (cp)
+  roitelet: Chantal ROBIN
+  petit_prince: Aurore PAGES
+  capitaine: Jean-Pierre BOUFFON
+  secretaire: Christiane BOUJU
+  tresorier: Catherine PERONNET
+  porte_drapeau: Claude BOUJU
+- annee: 1992
+  date: 26/04
+  roy: Colette POTTIER
+  roitelet: Sébastien LACOMBE
+  petit_prince: Mathieu POSTEL
+  capitaine: Jean-Pierre BOUFFON
+  secretaire: Christiane BOUJU
+  tresorier: Catherine PERONNET
+  porte_drapeau: Claude BOUJU
+- annee: 1993
+  date: 02/05
+  roy: Jean-Daniel BORGES
+  roitelet: Frédéric ALAIN
+  petit_prince: Yann KERDILES
+  capitaine: Jean-Pierre BOUFFON
+  secretaire: Christiane BOUJU
+  tresorier: Catherine PERONNET
+  porte_drapeau: Claude BOUJU
+- annee: 1994
+  date: 08/05
+  roy: Guillaume BOUSSUGE (cp)
+  roitelet: Aymeric DE FRANCE
+  petit_prince: Jean-Christophe DEROOSE
+  capitaine: Jean-Pierre BOUFFON
+  secretaire: Christiane BOUJU
+  tresorier: Catherine PERONNET
+  porte_drapeau: Claude BOUJU
+- annee: 1995
+  date: 06/05
+  roy: Aymeric DE FRANCE
+  roitelet: Roget CHARNOIS
+  petit_prince: Audrey DEROOSE
+  capitaine: Jean-Pierre BOUFFON
+  secretaire: Christiane BOUJU
+  tresorier: Thierry DE FRANCE
+  porte_drapeau: Claude BOUJU
+- annee: 1996
+  date: 04/05
+  roy: Emmanuel SANDRET (cp)
+  roitelet: J. LABORIE
+  petit_prince: S. GIVRAN
+  capitaine: Jean-Pierre BOUFFON
+  secretaire: Christiane BOUJU
+  tresorier: Thierry DE FRANCE
+  porte_drapeau: Claude BOUJU
+- annee: 1997
+  date: 03/05
+  roy: Thibault DE FRANCE
+  roitelet: Jorge QUEXALOS
+  petit_prince: Mickaël CARBONI
+  capitaine: Jean-Pierre BOUFFON
+  secretaire: Christiane BOUJU
+  tresorier: Thierry DE FRANCE
+  porte_drapeau: Claude BOUJU
+- annee: 1998
+  date: 16/05
+  roy: Bertrand DUMAS
+  roitelet: Ombeline GODART
+  petit_prince: Adrien POUX
+  capitaine: Thierry DE FRANCE
+  secretaire: Christiane BOUJU
+  tresorier: Catherine PERONNET
+  porte_drapeau: Claude BOUJU
+- annee: 1999
+  date: 01/05
+  roy: Alain CARBONI (cp)
+  roitelet: Pablo QUEXALOS
+  petit_prince: Sylvain DECREMPS
+  capitaine: Thierry DE FRANCE
+  secretaire: Claudine SEYMAND
+  tresorier: Catherine PERONNET
+  porte_drapeau: Claude BOUJU
+- annee: 2000
+  date: 30/04
+  roy: Benoît MALCHROWICZ (cp)
+  roitelet: Denis CHEVICOURT
+  petit_prince: Élodie VIGNON
+  capitaine: Thierry DE FRANCE
+  secretaire: Claudine SEYMAND
+  tresorier: Catherine PERONNET
+  porte_drapeau: Claude BOUJU
+- annee: 2001
+  date: 09/06
+  roy: Thierry DE FRANCE
+  roitelet: Sylvain BEURIENNE
+  petit_prince: François DULONPONT
+  capitaine: Thierry DE FRANCE
+  secretaire: Claudine SEYMAND
+  tresorier: Catherine PERONNET
+  porte_drapeau: Claude BOUJU
+- annee: 2002
+  date: 01/05
+  roy: Christiane BOUJU
+  roitelet: Aurélie DETOEUF
+  petit_prince: Arielle KONCKI
+  capitaine: Thierry DE FRANCE
+  secretaire: Claudine SEYMAND
+  tresorier: Béatrice BERTON
+  porte_drapeau: Claude BOUJU
+- annee: 2003
+  date: 28/04
+  roy: Denis CHEVICOURT
+  roitelet: Bernard CUSSOT
+  petit_prince: Robin COULON
+  capitaine: Thierry DE FRANCE
+  secretaire: Thierry CHOUC
+  tresorier: Béatrice BERTON
+  porte_drapeau: Claude BOUJU
+- annee: 2004
+  date: 01/05
+  roy: Thierry DE FRANCE (cp)
+  roitelet: Swann SAVARY
+  petit_prince: Tristan BOUJU
+  capitaine: Thierry DE FRANCE
+  secretaire: Thierry CHOUC
+  tresorier: Béatrice BERTON
+  porte_drapeau: Claude BOUJU
+- annee: 2005
+  date: 30/04
+  roy: Thierry CHOUC (cp)
+  roitelet: Antoine FEROLDI
+  petit_prince: Jessy BENTZ
+  capitaine: Thierry DE FRANCE
+  secretaire: Thierry CHOUC
+  tresorier: Béatrice BERTON
+  porte_drapeau: Claude BOUJU
+- annee: 2006
+  date: 29/04
+  roy: Didier MULLER
+  roitelet: Tristan JUBERT
+  petit_prince: Richard MORAINE
+  capitaine: Thierry DE FRANCE
+  secretaire: Didier MULLER
+  tresorier: Béatrice BERTON
+  porte_drapeau: Claude BOUJU
+- annee: 2007
+  date: 15/05
+  roy: Ludovic DARRAS
+  roitelet: Brigitte GLAY
+  petit_prince: Paco MENGUAL
+  capitaine: Thierry DE FRANCE
+  secretaire: Didier MULLER
+  tresorier: Béatrice BERTON
+  porte_drapeau: Claude BOUJU
+- annee: 2008
+  date: 17/05
+  roy: Claude BOUJU
+  roitelet: Fabrice COURNET
+  petit_prince: Floriane LE CORNICK
+  capitaine: Didier MULLER
+  secretaire: Louisette LEDUCQ
+  tresorier: Béatrice BERTON
+  porte_drapeau: Claude BOUJU
+- annee: 2009
+  date: 23/05
+  roy: Bernard CUSSOT (cp)
+  roitelet: Philippe AUBERT
+  petit_prince: Axel BACQUET
+  capitaine: Didier MULLER
+  secretaire: Louisette LEDUCQ
+  tresorier: Bernard CUSSOT
+  porte_drapeau: Claude BOUJU
+- annee: 2010
+  date: 01/05
+  roy: Jérôme MERCIER
+  roitelet: Aurélien LEBESCON
+  petit_prince: Thibaut LEGRAS
+  capitaine: Didier MULLER
+  secretaire: Louisette LEDUCQ
+  tresorier: Bernard CUSSOT
+  porte_drapeau: Claude BOUJU
+- annee: 2011
+  date: 06/05
+  roy: Béatrice BERTON (bb)
+  roitelet: Marina BENOMAR
+  petit_prince: Thomas LEMAITRE
+  capitaine: Didier MULLER
+  secretaire: Louisette LEDUCQ
+  tresorier: Bernard CUSSOT
+  porte_drapeau: Claude BOUJU
+- annee: 2012
+  date: 05/05
+  roy: Manon BACQUET
+  roitelet: François GARRIGUES
+  petit_prince: Thomas LEMAITRE
+  capitaine: Didier MULLER
+  secretaire: Louisette LEDUCQ
+  tresorier: Bernard CUSSOT
+  porte_drapeau: Claude BOUJU
+- annee: 2013
+  date: 04/05
+  roy: Bernard CUSSOT (cp)
+  roitelet: Florian LEBRETON
+  petit_prince: Charles MENARD
+  capitaine: Didier MULLER
+  secretaire: Louisette LEDUCQ
+  tresorier: Bernard CUSSOT
+  porte_drapeau: Claude BOUJU
+- annee: 2014
+  date: 03/05
+  roy: Emmanuelle GARRIGUES (cp)
+  roitelet: Laurent PAROTY
+  petit_prince: Charles MENARD
+  capitaine: Didier MULLER
+  secretaire: Louisette LEDUCQ
+  tresorier: Bernard CUSSOT
+  porte_drapeau: Claude BOUJU
+- annee: 2015
+  date: 03/05
+  roy: Thierry CHOUC (cp)
+  roitelet: Gaëlle NOZET
+  petit_prince: Guillaume MIGNOT
+  capitaine: Didier MULLER
+  secretaire: Louisette LEDUCQ
+  tresorier: Bernard CUSSOT
+  porte_drapeau: Claude BOUJU
+- annee: 2016
+  date: 23/04
+  roy: Yolande MAFFRAY
+  roitelet: Fatih UYSAL
+  petit_prince: Hagar ALI CHERIF
+  capitaine: Didier MULLER
+  secretaire: Clément GOSSELIN
+  tresorier: Bernard CUSSOT
+  porte_drapeau: Claude BOUJU
+- annee: 2017
+  roy: Thibault DE FRANCE (cp)
+  roitelet: Manon DOMISE
+  petit_prince: Nokolya VASHKEVICH
+  capitaine: Didier MULLER
+  secretaire: Sandrine KEERSTOCK
+  tresorier: Bernard CUSSOT
+  porte_drapeau: Ludovic DARRAS
+- annee: 2018
+  roy: Laurence FONTAINE
+  roitelet: Sébastien MOREAU
+  petit_prince: Maiwenn PERONNET
+  capitaine: Didier MULLER
+  secretaire: Sandrine KEERSTOCK
+  tresorier: Bernard CUSSOT
+  porte_drapeau: Ludovic DARRAS
+- annee: 2019
+  date: 27/04
+  roy: Emmanuelle GARRIGUES (cp)
+  roitelet: Maxime THEBAUDO
+  petit_prince: Lony GAGE
+  capitaine: Didier MULLER
+  secretaire: Sandrine KEERSTOCK
+  tresorier: Bernard CUSSOT
+  porte_drapeau: Ludovic DARRAS
+- evenement: '2020'
+  texte: Reconduction à l'identique de 2019 pour raison de crise sanitaire liée à la COVID-19
+- annee: 2021
+  date: 19/06
+  roy: Didier MULLER (cp)
+  roitelet: Nathan MILLOT
+  petit_prince: Octave CHEMIN
+  capitaine: Didier MULLER
+  secretaire: Sandrine KEERSTOCK
+  tresorier: Bernard CUSSOT
+  porte_drapeau: Ludovic DARRAS
+- annee: 2022
+  date: 07/05
+  roy: Sandrine KEERSTOCK (bb)
+  roitelet: Baptiste GEORG
+  petit_prince: Yoen JUMEL
+  capitaine: Sandrine KEERSTOCK
+  secretaire: Laurent DUFOURT
+  tresorier: Bernard CUSSOT
+  porte_drapeau: Ludovic DARRAS
+- annee: 2023
+  date: 01/04
+  roy: Thierry DE FRANCE (cp)
+  roitelet: Elaïde PATOUX
+  petit_prince: Martin WILLIAM
+  capitaine: Sandrine KEERSTOCK
+  secretaire: Laurent DUFOURT
+  tresorier: Bernard CUSSOT
+  porte_drapeau: Ludovic DARRAS
+- annee: 2024
+  date: 21/04
+  roy: Guillaume BARRÉ (cp)
+  roitelet: Pierre-André KUNTZMANN
+  petit_prince: Aryanna LOPEZ
+  capitaine: Sandrine KEERSTOCK
+  secretaire: Laurent DUFOURT
+  tresorier: Bernard CUSSOT
+  porte_drapeau: Julien MOREAU
+- annee: 2025
+  date: 12/04
+  roy: Dorian POISSY
+  roitelet: Romain TESTA
+  petit_prince: Élena GARRIGUES
+  capitaine: Sandrine KEERSTOCK
+  secretaire: Laurent DUFOURT
+  tresorier: Bernard CUSSOT
+  porte_drapeau: Julien MOREAU
+- annee: 2026
+  date: 11/04
+  roy: Patrice CARLET
+  roitelet: Reda SENHADJI
+  petit_prince: Élena GARRIGUES
+  capitaine: Sandrine KEERSTOCK
+  secretaire: Laurent DUFOURT
+  tresorier: Bernard CUSSOT
+  porte_drapeau: Julien MOREAU

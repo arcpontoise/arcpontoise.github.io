@@ -1,4 +1,4 @@
-// Photo galleries of the club, read live from the galleries host (drop).
+// Photo galleries of the compagnie, read live from the galleries host (drop).
 //
 // <arc-galerie source="https://photos.arcpontoise.fr" galerie="2024-ecouen">
 //   shows one gallery: thumbnails, then a full-size viewer (<dialog>).
@@ -7,6 +7,8 @@
 //   same page, which then shows that gallery.
 // <arc-couverture source="https://photos.arcpontoise.fr" galerie="2024-ecouen">
 //   shows the cover of one gallery (see below).
+// <arc-portraits source="https://photos.arcpontoise.fr" galerie="encadrants">
+//   fills the portraits of the coaches page (see below).
 //
 // The DOM is built with createElement/textContent only: titles, texts and
 // file names from the JSON never go through innerHTML.
@@ -200,7 +202,35 @@
     }
   }
 
+  // <arc-portraits source="..." galerie="encadrants"> ... <span data-nom="Alain MOREAU">
+  //   puts in each [data-nom] element the photo of the gallery whose
+  //   description is exactly that name. Elements without a photo keep
+  //   their content (initials).
+  class ArcPortraits extends HTMLElement {
+    async connectedCallback() {
+      const source = (this.getAttribute("source") || "").replace(/\/$/, "");
+      const slug = this.getAttribute("galerie") || "";
+      if (!source || !SLUG.test(slug)) return;
+      try {
+        const base = `${source}/${slug}`;
+        const data = await fetchJson(`${base}/galerie.json`);
+        const byName = new Map((data.photos || []).map((p) => [p.alt, p]));
+        for (const holder of this.querySelectorAll("[data-nom]")) {
+          const photo = byName.get(holder.dataset.nom);
+          const picture = photo && image(base, photo.vignette, "");
+          if (picture) {
+            holder.replaceChildren(picture);
+            holder.classList.add("avec-photo");
+          }
+        }
+      } catch {
+        // Gallery missing or host unreachable: the initials stay
+      }
+    }
+  }
+
   if (!customElements.get("arc-galerie")) customElements.define("arc-galerie", ArcGalerie);
+  if (!customElements.get("arc-portraits")) customElements.define("arc-portraits", ArcPortraits);
   if (!customElements.get("arc-couverture")) customElements.define("arc-couverture", ArcCouverture);
   if (!customElements.get("arc-galeries")) customElements.define("arc-galeries", ArcGaleries);
 })();

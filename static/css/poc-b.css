@@ -54,6 +54,8 @@
 
 :root[data-theme="b"] header.site .titre {
   font-family: "Space Grotesk", Inter, sans-serif;
+  font-size: 1.3rem;
+  line-height: 1.2;
   letter-spacing: 0;
   text-transform: none;
 }
@@ -77,6 +79,12 @@
 
 :root[data-theme="b"] .carte {
   border: 0;
+}
+
+/* Texts the charte draws in its blue, the background colour of this version */
+:root[data-theme="b"] .faq summary,
+:root[data-theme="b"] .encadrant-nom {
+  color: var(--ink);
 }
 
 :root[data-theme="b"] footer.site {

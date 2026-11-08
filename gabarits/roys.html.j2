@@ -1,0 +1,50 @@
+{% extends "page.html.j2" %}
+{# Roy and bureau by decade, from donnees/roys.yaml: no wide table to scroll #}
+{% block largeur %}{% endblock %}
+{% macro role(libelle, nom) -%}
+{% if nom %}<div><dt>{{ libelle }}</dt><dd>{{ nom }}</dd></div>{% endif %}
+{%- endmacro %}
+{% block apres %}
+<nav class="decennies" aria-label="Décennies">
+{% for decennie in roys %}
+  <a href="#{{ decennie.ancre }}">{{ decennie.titre | replace("Années ", "") }}</a>
+{% endfor %}
+</nav>
+{% for decennie in roys %}
+<section class="decennie" aria-labelledby="{{ decennie.ancre }}">
+  <h2 id="{{ decennie.ancre }}">{{ decennie.titre }}</h2>
+  <ol class="annees">
+  {% for entree in decennie.entrees %}
+    {% if entree.annee %}
+    <li class="annee">
+      <p class="annee-titre"><b>{{ entree.annee }}</b>{% if entree.date %} <span>{{ entree.date }}</span>{% endif %}</p>
+      <p class="annee-roy"><span>Roy</span> {{ entree.roy }}</p>
+      {% if entree.roitelet or entree.petit_prince %}
+      <p class="annee-jeunes">
+        {% if entree.roitelet %}Roitelet : {{ entree.roitelet }}{% endif %}
+        {% if entree.roitelet and entree.petit_prince %}<br>{% endif %}
+        {% if entree.petit_prince %}Petit Prince : {{ entree.petit_prince }}{% endif %}
+      </p>
+      {% endif %}
+      {% if entree.inchange %}
+      <p class="annee-bureau-inchange">Bureau inchangé</p>
+      {% else %}
+      <dl class="annee-bureau">
+        {{ role("Capitaine", entree.capitaine) }}
+        {{ role("Secrétaire", entree.secretaire) }}
+        {{ role("Trésorier", entree.tresorier) }}
+        {{ role("Porte-drapeau", entree.porte_drapeau) }}
+      </dl>
+      {% endif %}
+    </li>
+    {% else %}
+    <li class="evenement">
+      <b>{{ entree.evenement }}</b>
+      {% for ligne in entree.lignes %}<span>{{ ligne }}</span>{% endfor %}
+    </li>
+    {% endif %}
+  {% endfor %}
+  </ol>
+</section>
+{% endfor %}
+{% endblock %}

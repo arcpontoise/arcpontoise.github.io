@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 {# No inline script or style: everything comes from this site, the charte or the galleries host #}
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' {{ charte }}; style-src 'self' {{ charte }}; font-src 'self' {{ charte }}; img-src 'self' {{ charte }} {{ galeries }}; connect-src {{ galeries }}; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' {{ charte }}; style-src 'self' {{ charte }}; font-src 'self' {{ charte }}; img-src 'self' {{ charte }} {{ galeries }} https://tile.openstreetmap.org; connect-src {{ galeries }}; base-uri 'none'; form-action 'none'">
 <title>{% block titre %}{% endblock %} - Compagnie d'archers de Pontoise</title>
 <meta name="description" content="{% block description %}{% endblock %}">
 <link rel="canonical" href="{{ site_url }}{{ url }}">
@@ -20,6 +20,7 @@
 <link rel="stylesheet" href="/css/poc-c.css">
 <script src="/js/poc-theme.js"></script>
 <script src="{{ charte }}/js/menu.js" defer></script>
+<script src="/js/arc-zoom.js" defer></script>
 {% block scripts %}{% endblock %}
 </head>
 <body>
@@ -29,7 +30,7 @@
       <img class="logo" src="{{ charte }}/img/logo.png" alt="">
       <div>
         <p class="manuscrit">La passion du tir à l'arc depuis 1903</p>
-        <p class="titre">Archers de Pontoise</p>
+        <p class="titre">Compagnie d'archers de Pontoise</p>
       </div>
     </a>
     <arc-menu actuel="{% block menu %}accueil{% endblock %}" site="{{ site_url }}">
@@ -49,5 +50,6 @@
     <a href="/articles/flux.xml">Flux des actualités</a>
   </p>
 </footer>
+<a class="retour-haut" href="#top" aria-label="Revenir en haut de la page">↑</a>
 </body>
 </html>

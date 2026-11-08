@@ -6,18 +6,25 @@
   published in drop, read live by <arc-couverture> (js/arc-galerie.js).
 #}
 {% set disciplines = [
-  ("Tir en salle", "/pratiquer/tir-en-salle/", "2025-concours-salle", "D'octobre à mars, au gymnase Marie Laurencin."),
-  ("Tir extérieur", "/pratiquer/tir-exterieur/", "2024-ecouen", "Sur le terrain du club, aux beaux jours."),
-  ("Tir Beursault", "/pratiquer/tir-beursault/", "2025-roy-france", "Le tir traditionnel des compagnies d'arc."),
-  ("Parcours", "/pratiquer/parcours/", "2026-initiation-parcours", "Cibles 3D et nature, en pleine forêt."),
+  ("Tir en salle", "/pratiquer/tir-en-salle/", "2025-concours-salle", "D'octobre à avril, en salle d'armes et au gymnase."),
+  ("Tir extérieur", "/pratiquer/tir-exterieur/", "2026-initiation-parcours", "Sur le terrain de la compagnie, aux beaux jours."),
+  ("Tir Beursault", "/pratiquer/tir-beursault/", "/images/jeu-arc-allee-tir.webp", "Le tir traditionnel des compagnies d'arc."),
+  ("Parcours", "/pratiquer/parcours/", "2024-ecouen", "Tir nature, tir 3D et tir en campagne."),
 ] %}
+{#
+  couverture(): the cover of a drop gallery, or a picture of this site when
+  given a path starting with « / » (the component leaves a filled element as is)
+#}
 {% macro couverture(galerie, alt="", classe="") -%}
+{% if galerie.startswith("/") -%}
+<arc-couverture{% if classe %} class="{{ classe }}"{% endif %}><img src="{{ galerie }}" alt="{{ alt }}" loading="lazy" decoding="async"></arc-couverture>
+{%- else -%}
 <arc-couverture source="{{ galeries }}" galerie="{{ galerie }}"{% if classe %} class="{{ classe }}"{% endif %} alt="{{ alt }}"></arc-couverture>
+{%- endif %}
 {%- endmacro %}
 {% macro calques(classe) -%}
 <div class="calques {{ classe }}">
-  <img class="calque-fond" src="/images/accueil-fond.webp" alt="" width="2000" height="1333">
-  <img class="calque-archere" src="/images/accueil-archere.webp" alt="Une archère de la compagnie au tir, de dos, sur le terrain du club" width="2000" height="1333">
+  <img class="calque-fond" src="/images/accueil-crepuscule.webp" alt="Les archers de la compagnie alignés sur le pas de tir du terrain, de dos, sous un ciel de crépuscule" width="1200" height="1600">
 </div>
 {%- endmacro %}
 {% block scripts %}
@@ -48,10 +55,11 @@
   <section class="a-hero pleine-largeur">
     {{ calques("a-hero-image") }}
     <div class="a-hero-texte">
-      <p class="manuscrit">La passion du tir à l'arc</p>
-      <h1>Tirer à l'arc à Pontoise depuis 1903</h1>
-      <p class="a-chapo">Salle, extérieur, Beursault et parcours en forêt : un club sportif moderne,
-        une compagnie fidèle à ses traditions. Pour tous, dès 8 ans.</p>
+      {# <p class="manuscrit">La passion du tir à l'arc</p> #}
+      <h1>La passion du tir à l'arc depuis 1903</h1>
+      <p class="a-chapo">En salle, en extérieur, nature, 3D, campagne et Beursault :
+        une compagnie sportive et moderne, fidèle à ses traditions.<br />
+        Pour tous, dès 8 ans.</p>
       <p class="actions">
         <a class="bouton-plein" href="https://infos.arcpontoise.fr/tarifs/">S'inscrire pour la saison</a>
         <a class="bouton-contour" href="https://infos.arcpontoise.fr/planning/">Voir le planning</a>
@@ -62,15 +70,15 @@
   <section class="a-chiffres pleine-largeur">
     <ul class="contenu-large">
       <li><b>1903</b><span>année de fondation</span></li>
-      <li><b>4</b><span>disciplines pratiquées</span></li>
-      <li><b>8 ans</b><span>pour commencer</span></li>
+      <li><b>Toutes</b><span>disciplines pratiquées</span></li>
+      <li><b>8 ans</b><span>pour débuter</span></li>
       <li><b>Label Ambition</b><span>FFTA 2025-2026</span></li>
     </ul>
   </section>
 
   <section class="contenu-large a-section apparition">
     <div class="a-titre-section">
-      <h2>Quatre façons de tirer</h2>
+      <h2>Toutes les façons de tirer</h2>
       <a href="/pratiquer/">Toutes les pratiques</a>
     </div>
     <div class="a-disciplines">
@@ -84,7 +92,7 @@
   </section>
 
   <section class="a-parallaxe pleine-largeur">
-    {{ couverture("2025-roy-france") }}
+    {{ couverture("/images/jeu-arc-allee-couverte.webp") }}
     <div class="a-parallaxe-texte">
       <p class="manuscrit">Comme le veut la tradition</p>
       <p class="a-salut">« Mesdames, Messieurs, je vous salue »</p>
@@ -125,8 +133,8 @@
 <div class="poc-version poc-b">
   <section class="contenu-large b-hero">
     <div class="b-hero-texte">
-      <p class="b-surtitre">Club de tir à l'arc · Pontoise</p>
-      <h1>Vise juste.<br>Depuis 1903.</h1>
+      <p class="b-surtitre">Compagnie d'archers de Pontoise</p>
+      <h1>La passion du tir à l'arc.<br>Depuis 1903.</h1>
       <p class="actions">
         <a class="bouton-plein" href="https://infos.arcpontoise.fr/tarifs/">S'inscrire</a>
         <a class="bouton-contour" href="https://infos.arcpontoise.fr/planning/">Planning et tarifs</a>
@@ -137,8 +145,8 @@
 
   <ul class="contenu-large b-chiffres">
     <li class="b-chiffre-fort"><b>1903</b><span>Une compagnie plus que centenaire</span></li>
-    <li><b>4</b><span>disciplines, de la salle à la forêt</span></li>
-    <li><b>8 ans</b><span>pour commencer</span></li>
+    <li><b>Toutes</b><span>les disciplines, de la salle à la forêt</span></li>
+    <li><b>8 ans</b><span>pour débuter</span></li>
     <li class="b-chiffre-clair"><span>Label Ambition FFTA</span><b>2025-2026</b></li>
   </ul>
 
@@ -185,11 +193,11 @@
 {# --- C. Éditorial épuré ------------------------------------------------ #}
 <div class="poc-version poc-c">
   <section class="contenu-large c-hero">
-    <p class="c-surtitre">Pontoise · Val-d'Oise · depuis 1903</p>
-    <h1>Le tir à l'arc, sérieusement et amicalement.</h1>
+    <p class="c-surtitre">Compagnie d'archers de Pontoise · Val-d'Oise</p>
+    <h1>La passion du tir à l'arc depuis 1903.</h1>
     <div class="c-hero-bas">
-      <p>Salle, extérieur, Beursault, parcours. Une compagnie de tradition, un club sportif
-        d'aujourd'hui, ouvert à tous dès 8 ans.</p>
+      <p>Salle, extérieur, nature, 3D, campagne, Beursault : toutes les disciplines, dans une
+        compagnie de tradition résolument sportive, ouverte à tous dès 8 ans.</p>
       <p class="actions">
         <a class="bouton-plein" href="https://infos.arcpontoise.fr/tarifs/">S'inscrire</a>
         <a class="bouton-contour" href="https://infos.arcpontoise.fr/planning/">Le planning</a>
@@ -198,8 +206,8 @@
   </section>
 
   <figure class="contenu-large c-photo apparition">
-    {{ couverture("2024-fort-de-montbre", "Archers en ligne de tir au fort de Montbré") }}
-    <figcaption>Tir au fort de Montbré, 2024.</figcaption>
+    <img src="/images/terrain-crepuscule.webp" alt="Trois archers sur le pas de tir du terrain, au coucher du soleil" width="1200" height="1600" loading="lazy">
+    <figcaption>Fin de séance sur le terrain de la compagnie.</figcaption>
   </figure>
 
   <section class="contenu-large c-disciplines">
