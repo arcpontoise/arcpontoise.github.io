@@ -1,0 +1,264 @@
+/*
+ * POC - four versions of the site, switched by <html data-theme="...">
+ * (js/poc-theme.js): "actuel" (no change), "a" Héritage contemporain,
+ * "b" Sport et énergie, "c" Éditorial épuré.
+ * Pages other than the home page keep their markup: each version restyles
+ * the charte tokens, the header, the menu and the footer.
+ */
+
+@font-face {
+  font-family: "Space Grotesk";
+  src: url("../fonts/space-grotesk-500.woff2") format("woff2");
+  font-weight: 500;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Space Grotesk";
+  src: url("../fonts/space-grotesk-700.woff2") format("woff2");
+  font-weight: 700;
+  font-display: swap;
+}
+
+/* --- Version switcher ---------------------------------------------------- */
+
+.poc-bascule {
+  position: fixed;
+  bottom: 1rem;
+  left: 50%;
+  z-index: 50;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem;
+  max-width: calc(100vw - 1.5rem);
+  padding: 0.35rem;
+  border-radius: 999px;
+  background: #09132d;
+  box-shadow: 0 10px 30px rgb(9 19 45 / 35%);
+  color: #fff;
+  font: 600 0.85rem/1 Inter, system-ui, sans-serif;
+  transform: translateX(-50%);
+}
+
+.poc-bascule span {
+  padding: 0 0.6rem;
+  color: #8fa6dc;
+}
+
+.poc-bascule button {
+  min-height: 2.5rem;
+  padding: 0 0.9rem;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: #fff;
+  font: inherit;
+  cursor: pointer;
+}
+
+.poc-bascule button:hover {
+  background: rgb(255 255 255 / 12%);
+}
+
+.poc-bascule button[aria-pressed="true"] {
+  background: #fff;
+  color: #09132d;
+}
+
+/* Room for the switcher at the bottom of every page */
+body {
+  padding-bottom: 4.5rem;
+  overflow-x: clip;
+}
+
+/* --- Home page: one version at a time ------------------------------------ */
+
+.poc-version {
+  display: none;
+}
+
+.poc-actuel {
+  max-width: var(--layout-width-narrow);
+  margin: 0 auto;
+  padding: 1.25rem 1.25rem 1.5rem;
+}
+
+:root:not([data-theme]) .poc-actuel,
+:root[data-theme="actuel"] .poc-actuel,
+:root[data-theme="a"] .poc-a,
+:root[data-theme="b"] .poc-b,
+:root[data-theme="c"] .poc-c {
+  display: block;
+}
+
+main.poc-accueil {
+  max-width: none;
+  padding: 0;
+}
+
+.pleine-largeur {
+  position: relative;
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+}
+
+.contenu-large {
+  box-sizing: border-box;
+  max-width: 1240px;
+  margin-right: auto;
+  margin-left: auto;
+  padding-right: 1.5rem;
+  padding-left: 1.5rem;
+}
+
+/* Gallery covers (<arc-couverture>) and the two layers of the home photo:
+   each fills the box its version gives it */
+arc-couverture {
+  display: block;
+  overflow: hidden;
+  background: var(--pale);
+}
+
+arc-couverture img,
+.calques img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.calques {
+  position: relative;
+  overflow: hidden;
+  background: var(--pale);
+}
+
+.calques img {
+  position: absolute;
+  inset: 0;
+  object-position: 30% 60%;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin: 0;
+}
+
+.bouton-plein,
+.bouton-contour,
+.bouton-sombre {
+  display: inline-flex;
+  align-items: center;
+  min-height: 3.25rem;
+  padding: 0 1.6rem;
+  border-radius: 999px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.a-titre-section {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.5rem 1.5rem;
+  margin-bottom: 1.75rem;
+}
+
+.a-titre-section h2 {
+  margin: 0;
+}
+
+.a-titre-section a {
+  font-weight: 700;
+}
+
+/* Scroll-driven effects, without JavaScript: browsers lacking support, and
+   visitors who asked for less motion, simply get the still page. */
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    .apparition {
+      animation: poc-apparition linear both;
+      animation-range: entry 0% cover 25%;
+      animation-timeline: view();
+    }
+
+    .a-parallaxe arc-couverture {
+      animation: poc-parallaxe linear both;
+      animation-timeline: view();
+    }
+
+    /* Hestia-like depth: the background drifts more than the archer */
+    .a-hero .calque-fond {
+      animation: poc-hero-fond linear both;
+      animation-range: 0 100vh;
+      animation-timeline: scroll(root);
+    }
+
+    .a-hero .calque-archere {
+      animation: poc-hero-archere linear both;
+      animation-range: 0 100vh;
+      animation-timeline: scroll(root);
+    }
+  }
+}
+
+@keyframes poc-apparition {
+  from {
+    opacity: 0;
+    transform: translateY(2.5rem);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes poc-parallaxe {
+  from { transform: translateY(-12%); }
+  to { transform: translateY(12%); }
+}
+
+@keyframes poc-hero-fond {
+  to { transform: translateY(30%) scale(1.08); }
+}
+
+@keyframes poc-hero-archere {
+  to { transform: translateY(8%); }
+}
+
+/* --- Narrow screens ------------------------------------------------------ */
+
+@media (width <= 760px) {
+  .contenu-large {
+    padding-right: 1rem;
+    padding-left: 1rem;
+  }
+
+  .poc-bascule {
+    right: 0.5rem;
+    bottom: 0.5rem;
+    left: 0.5rem;
+    flex-wrap: nowrap;
+    max-width: none;
+    overflow-x: auto;
+    border-radius: 14px;
+    transform: none;
+  }
+
+  .poc-bascule span {
+    display: none;
+  }
+
+  .poc-bascule button {
+    flex: none;
+    padding: 0 0.65rem;
+    border-radius: 10px;
+    font-size: 0.8rem;
+  }
+}

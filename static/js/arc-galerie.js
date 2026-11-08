@@ -5,6 +5,8 @@
 // <arc-galeries source="https://photos.arcpontoise.fr">
 //   lists the published galleries; each links to ?galerie=<slug> on the
 //   same page, which then shows that gallery.
+// <arc-couverture source="https://photos.arcpontoise.fr" galerie="2024-ecouen">
+//   shows the cover of one gallery (see below).
 //
 // The DOM is built with createElement/textContent only: titles, texts and
 // file names from the JSON never go through innerHTML.
@@ -160,6 +162,45 @@
     }
   }
 
+  // <arc-couverture source="..." galerie="2024-ecouen" taille="image">
+  //   shows the cover (first photo) of a published gallery: the order set in
+  //   the drop admin decides the picture. taille="vignette" for 480 px.
+  //   Nothing is shown when the gallery is missing or the host unreachable.
+  let indexCache = null;
+
+  function galleryIndex(source) {
+    if (!indexCache) {
+      indexCache = fetchJson(`${source}/galeries.json`).then((data) => data.galeries || []);
+    }
+    return indexCache;
+  }
+
+  class ArcCouverture extends HTMLElement {
+    async connectedCallback() {
+      const source = (this.getAttribute("source") || "").replace(/\/$/, "");
+      const slug = this.getAttribute("galerie") || "";
+      if (!source || !SLUG.test(slug) || this.querySelector("img")) return;
+      try {
+        const gallery = (await galleryIndex(source)).find((g) => g.slug === slug);
+        const cover = gallery?.couverture;
+        if (!cover || !FILE.test(cover.fichier)) return;
+        const large = this.getAttribute("taille") !== "vignette";
+        const file = large ? cover.fichier.replace(/-480\.webp$/, "-1600.webp") : cover.fichier;
+        this.append(
+          el("img", {
+            src: `${source}/${slug}/${file}`,
+            alt: this.getAttribute("alt") ?? cover.alt ?? "",
+            loading: this.getAttribute("loading") || "lazy",
+            decoding: "async",
+          }),
+        );
+      } catch {
+        // Host unreachable: the element stays empty, its background shows
+      }
+    }
+  }
+
   if (!customElements.get("arc-galerie")) customElements.define("arc-galerie", ArcGalerie);
+  if (!customElements.get("arc-couverture")) customElements.define("arc-couverture", ArcCouverture);
   if (!customElements.get("arc-galeries")) customElements.define("arc-galeries", ArcGaleries);
 })();
