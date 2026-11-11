@@ -610,14 +610,3 @@ html {
     scroll-behavior: smooth;
   }
 }
-
-/* Opt-out of the audience measurement (js/stats.js), shown as a link */
-.stats-refus {
-  padding: 0;
-  border: 0;
-  background: none;
-  color: inherit;
-  cursor: pointer;
-  font: inherit;
-  text-decoration: underline;
-}
