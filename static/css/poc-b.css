@@ -1,10 +1,11 @@
 /*
  * POC - version B, Sport et énergie (html[data-theme]), see css/poc-themes.css.
+ * Version D shares every rule of B; only its home page differs (css/poc-d.css).
  */
 
 /* ===== B. Sport et énergie =============================================== */
 
-:root[data-theme="b"] {
+:root:is([data-theme="b"], [data-theme="d"]) {
   --bg: #0d1838;
   --card: #1b2b5a;
   --ink: #fffdfb;
@@ -21,13 +22,13 @@
   --radius-sm: 12px;
 }
 
-:root[data-theme="b"] body {
+:root:is([data-theme="b"], [data-theme="d"]) body {
   font-family: Inter, system-ui, sans-serif;
 }
 
-:root[data-theme="b"] h1,
-:root[data-theme="b"] h2,
-:root[data-theme="b"] h3 {
+:root:is([data-theme="b"], [data-theme="d"]) h1,
+:root:is([data-theme="b"], [data-theme="d"]) h2,
+:root:is([data-theme="b"], [data-theme="d"]) h3 {
   color: #fffdfb;
   font-family: "Space Grotesk", Inter, sans-serif;
   font-weight: 700;
@@ -35,24 +36,24 @@
   text-transform: none;
 }
 
-:root[data-theme="b"] header.site {
+:root:is([data-theme="b"], [data-theme="d"]) header.site {
   border-bottom: 0;
   background: var(--bg);
   color: #fffdfb;
 }
 
-:root[data-theme="b"] header.site .logo {
+:root:is([data-theme="b"], [data-theme="d"]) header.site .logo {
   height: 52px;
   padding: 4px;
   border-radius: 12px;
   background: #fffdfb;
 }
 
-:root[data-theme="b"] header.site .manuscrit {
+:root:is([data-theme="b"], [data-theme="d"]) header.site .manuscrit {
   color: var(--accent);
 }
 
-:root[data-theme="b"] header.site .titre {
+:root:is([data-theme="b"], [data-theme="d"]) header.site .titre {
   font-family: "Space Grotesk", Inter, sans-serif;
   font-size: 1.3rem;
   line-height: 1.2;
@@ -60,34 +61,34 @@
   text-transform: none;
 }
 
-:root[data-theme="b"] .menu-actuel {
+:root:is([data-theme="b"], [data-theme="d"]) .menu-actuel {
   box-shadow: inset 0 -3px var(--accent);
 }
 
-:root[data-theme="b"] .menu-contact {
+:root:is([data-theme="b"], [data-theme="d"]) .menu-contact {
   background: var(--accent);
   color: #0d1838;
 }
 
-:root[data-theme="b"] .menu-panneau {
+:root:is([data-theme="b"], [data-theme="d"]) .menu-panneau {
   border-top-color: var(--accent);
 }
 
-:root[data-theme="b"] main:not(.poc-accueil) h1 {
+:root:is([data-theme="b"], [data-theme="d"]) main:not(.poc-accueil) h1 {
   font-size: clamp(2.2rem, 5vw, 3.25rem);
 }
 
-:root[data-theme="b"] .carte {
+:root:is([data-theme="b"], [data-theme="d"]) .carte {
   border: 0;
 }
 
 /* Texts the charte draws in its blue, the background colour of this version */
-:root[data-theme="b"] .faq summary,
-:root[data-theme="b"] .encadrant-nom {
+:root:is([data-theme="b"], [data-theme="d"]) .faq summary,
+:root:is([data-theme="b"], [data-theme="d"]) .encadrant-nom {
   color: var(--ink);
 }
 
-:root[data-theme="b"] footer.site {
+:root:is([data-theme="b"], [data-theme="d"]) footer.site {
   border-top: 1px solid var(--border);
   padding-top: 1.5rem;
 }
@@ -121,7 +122,7 @@
   text-transform: uppercase;
 }
 
-:root[data-theme="b"] main .b-hero h1 {
+:root:is([data-theme="b"], [data-theme="d"]) main .b-hero h1 {
   margin: 0;
   font-size: clamp(2.8rem, 6vw, 4.75rem);
   line-height: 0.98;
@@ -202,7 +203,7 @@
   padding-top: 4.5rem;
 }
 
-:root[data-theme="b"] .b-section h2 {
+:root:is([data-theme="b"], [data-theme="d"]) .b-section h2 {
   margin-top: 0;
   font-size: clamp(2.2rem, 4vw, 3rem);
 }
@@ -258,7 +259,7 @@
   background: var(--card);
 }
 
-:root[data-theme="b"] .b-capitaine blockquote {
+:root:is([data-theme="b"], [data-theme="d"]) .b-capitaine blockquote {
   border-left-color: var(--accent);
   background: var(--bg);
 }
@@ -316,7 +317,7 @@
   color: #0d1838;
 }
 
-:root[data-theme="b"] .b-appel h2 {
+:root:is([data-theme="b"], [data-theme="d"]) .b-appel h2 {
   max-width: 18ch;
   margin: 0;
   color: #0d1838;
