@@ -152,7 +152,11 @@ npm ci && npm run lint:css && npm run lint:js && npm run lint:md
 - **Composant des galeries** (`static/js/arc-galerie.js`) : construit la
   page avec les fonctions du navigateur, sans jamais interpréter de HTML venu
   des listes JSON.
-- **Aucun cookie, aucun traceur** : voir la page des mentions légales.
+- **Mesure d'audience** : Matomo hébergé par la compagnie
+  ([stats](https://github.com/arcpontoise/stats)), réglé pour l'exemption de
+  consentement de la CNIL ; `static/js/stats.js` est une copie de
+  `suivi/stats.js` de ce dépôt. Aucune publicité, aucun autre traceur : voir
+  la page des mentions légales.
 
 ## Bascule de `arcpontoise.fr`
 

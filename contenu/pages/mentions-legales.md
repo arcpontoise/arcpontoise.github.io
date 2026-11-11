@@ -17,7 +17,8 @@ Le site est hébergé par GitHub Pages (GitHub, Inc., 88 Colin P. Kelly Jr. Stre
 
 ## Données personnelles
 
-- **Aucun cookie** n'est déposé par ce site, et aucun outil de mesure d'audience ni de publicité n'y est utilisé.
+- **Mesure d'audience** : pour savoir quelles pages sont consultées et comment le site est trouvé, la compagnie utilise [Matomo](https://matomo.org/), hébergé par ses soins (`stats.arcpontoise.fr`). Il est réglé selon les recommandations de la CNIL pour être dispensé de consentement : adresse IP tronquée, statistiques anonymes jamais croisées avec d'autres données ni transmises à des tiers, cookie de mesure valable 13 mois au plus, données brutes supprimées au bout de 25 mois. Vous pouvez refuser cette mesure à tout moment avec le bouton « Ne pas mesurer mes visites » en bas de chaque page.
+- **Aucune publicité** ni aucun autre cookie ou traceur n'est utilisé par ce site.
 - **Cartes** : la page du plan d'accès affiche des cartes d'[OpenStreetMap](https://www.openstreetmap.org/), chargées depuis leurs serveurs, qui reçoivent alors votre adresse IP ([politique de confidentialité de la fondation OpenStreetMap](https://osmfoundation.org/wiki/Privacy_Policy)).
 - **Formulaire de contact** : votre nom, votre adresse électronique et votre message sont transmis par courriel aux responsables de la compagnie et ne sont pas conservés sur le serveur. L'adresse IP, la date et le résultat de l'envoi sont gardés dans un journal technique pendant un an au plus, pour lutter contre les abus.
 - **Photos** : les galeries montrent les événements de la compagnie. Toute personne photographiée peut demander le retrait d'une photo par le [formulaire de contact](https://contact.arcpontoise.fr/) : elle est supprimée sans délai.
