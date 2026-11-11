@@ -5,10 +5,14 @@
 // Reference copy: each site serves its own copy of this file, loaded with
 //     <script src="/js/stats.js" data-site="2" defer></script>
 // data-site is the Matomo id of the site; every page view is also counted
-// in the « Ensemble des sites » (id 1).
+// in the « Ensemble des sites » (id 1). Optional attributes, to keep
+// personal data and secrets out of the statistics:
+//     data-titre="Fiche d'un archer"   title recorded instead of the page's
+//     data-adresse="/archers/fiche"    path recorded instead of the page's
+//     data-sans-parametres             query string and fragment dropped
 //
-// An element <button data-stats-refus hidden> on the page becomes the
-// opt-out switch (shown only once the tracker is loaded).
+// An element <button class="stats-refus" data-stats-refus hidden> on the
+// page becomes the opt-out switch (shown only once the tracker is loaded).
 
 (() => {
   "use strict";
@@ -19,9 +23,12 @@
   const MEASURED = /(^|\.)arcpontoise\.fr$|^arcpontoise\.github\.io$/;
   // 13 months at most for the visitor cookie (CNIL), not extended on visits
   const COOKIE_SECONDS = 390 * 24 * 3600;
+  const LABEL_MEASURED = "Refuser la mesure d'audience";
+  const LABEL_REFUSED = "Mesure d'audience refusée : l'accepter";
 
   const script = document.currentScript;
-  const site = Number(script?.dataset.site);
+  const options = script?.dataset ?? {};
+  const site = Number(options.site);
   if (!Number.isInteger(site) || site < 1 || !MEASURED.test(window.location.hostname)) {
     return;
   }
@@ -32,6 +39,17 @@
   push(["setSiteId", String(site)]);
   push(["addTracker", `${HOST}matomo.php`, String(ALL_SITES)]);
   push(["setVisitorCookieTimeout", COOKIE_SECONDS]);
+
+  if (options.adresse || "sansParametres" in options) {
+    const url = new URL(options.adresse || window.location.pathname, window.location.origin);
+    if (!options.adresse) url.search = "";
+    url.hash = "";
+    push(["setCustomUrl", url.href]);
+  }
+  if (options.titre) {
+    push(["setDocumentTitle", options.titre]);
+  }
+
   push(["enableHeartBeatTimer"]);
   push(["trackPageView"]);
   push(["enableLinkTracking"]);
@@ -46,9 +64,7 @@
         button.dataset.pret = "oui";
         const tracker = this;
         const label = () => {
-          button.textContent = tracker.isUserOptedOut()
-            ? "Vos visites ne sont pas mesurées : accepter la mesure d'audience"
-            : "Ne pas mesurer mes visites";
+          button.textContent = tracker.isUserOptedOut() ? LABEL_REFUSED : LABEL_MEASURED;
         };
         button.addEventListener("click", () => {
           push([tracker.isUserOptedOut() ? "forgetUserOptOut" : "optUserOut"]);
