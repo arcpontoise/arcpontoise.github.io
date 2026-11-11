@@ -9,6 +9,8 @@ Sources :
 
 La charte graphique (CSS, polices, menu commun) est chargée en direct depuis
 CHARTE_URL ; les galeries photo sont lues en direct depuis GALERIES_URL.
+La mesure d'audience (Matomo) est autorisée sur STATS_URL, la même adresse
+que dans static/js/stats.js.
 
 Usage :
     python scripts/build.py            # génère dist/
@@ -48,6 +50,7 @@ DIST = RACINE / "dist"
 SITE_URL = os.environ.get("SITE_URL", "https://arcpontoise.fr").rstrip("/")
 CHARTE = os.environ.get("CHARTE_URL", "https://charte.arcpontoise.fr").rstrip("/")
 GALERIES = os.environ.get("GALERIES_URL", "https://photos.arcpontoise.fr").rstrip("/")
+STATS = os.environ.get("STATS_URL", "https://stats.arcpontoise.fr").rstrip("/")
 
 MENU_IDS = {"accueil", "compagnie", "pratiquer", "inscrire", "competitions", "archers", "contact"}
 GABARITS_PAGE = {
@@ -467,6 +470,7 @@ def generer() -> int:
     commun = {
         "charte": CHARTE,
         "galeries": GALERIES,
+        "stats": STATS,
         "site_url": SITE_URL,
         "annee": dt.date.today().year,
     }

@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-{# No inline script or style: everything comes from this site, the charte or the galleries host #}
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' {{ charte }}; style-src 'self' {{ charte }}; font-src 'self' {{ charte }}; img-src 'self' {{ charte }} {{ galeries }} https://tile.openstreetmap.org; connect-src {{ galeries }}; base-uri 'none'; form-action 'none'">
+{# No inline script or style: everything comes from this site, the charte, the galleries host or the audience measurement (Matomo) #}
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' {{ charte }} {{ stats }}; style-src 'self' {{ charte }}; font-src 'self' {{ charte }}; img-src 'self' {{ charte }} {{ galeries }} {{ stats }} https://tile.openstreetmap.org; connect-src {{ galeries }} {{ stats }}; base-uri 'none'; form-action 'none'">
 <title>{% block titre %}{% endblock %} - Compagnie d'archers de Pontoise</title>
 <meta name="description" content="{% block description %}{% endblock %}">
 <link rel="canonical" href="{{ site_url }}{{ url }}">
@@ -22,6 +22,8 @@
 <script src="/js/poc-theme.js"></script>
 <script src="{{ charte }}/js/menu.js" defer></script>
 <script src="/js/arc-zoom.js" defer></script>
+{# Audience measurement, CNIL-exempt: see arcpontoise/stats (id 2 = vitrine) #}
+<script src="/js/stats.js" data-site="2" defer></script>
 {% block scripts %}{% endblock %}
 </head>
 <body>
@@ -50,6 +52,7 @@
     <a href="/mentions-legales/">Mentions légales</a> -
     <a href="/articles/flux.xml">Flux des actualités</a>
   </p>
+  <p><button type="button" class="stats-refus" data-stats-refus hidden></button></p>
 </footer>
 <a class="retour-haut" href="#top" aria-label="Revenir en haut de la page">↑</a>
 </body>
