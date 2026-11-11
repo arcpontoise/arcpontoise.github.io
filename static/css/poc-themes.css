@@ -1,7 +1,7 @@
 /*
- * POC - four versions of the site, switched by <html data-theme="...">
+ * POC - five versions of the site, switched by <html data-theme="...">
  * (js/poc-theme.js): "actuel" (no change), "a" Héritage contemporain,
- * "b" Sport et énergie, "c" Éditorial épuré.
+ * "b" Sport et énergie, "c" Éditorial épuré, "d" B with the top of A's home page.
  * Pages other than the home page keep their markup: each version restyles
  * the charte tokens, the header, the menu and the footer.
  */
@@ -89,7 +89,8 @@ body {
 :root[data-theme="actuel"] .poc-actuel,
 :root[data-theme="a"] .poc-a,
 :root[data-theme="b"] .poc-b,
-:root[data-theme="c"] .poc-c {
+:root[data-theme="c"] .poc-c,
+:root[data-theme="d"] .poc-d {
   display: block;
 }
 

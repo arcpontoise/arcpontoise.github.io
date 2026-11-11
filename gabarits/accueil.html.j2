@@ -1,6 +1,6 @@
 {% extends "page.html.j2" %}
 {#
-  POC: the home page in its four versions. Only the one matching
+  POC: the home page in its five versions. Only the one matching
   <html data-theme> is shown (static/css/poc-themes.css). Photos of people
   never enter this public repository: they are the covers of the galleries
   published in drop, read live by <arc-couverture> (js/arc-galerie.js).
@@ -32,26 +32,12 @@
 {% endblock %}
 {% block largeur %} poc-accueil{% endblock %}
 {% block contenu %}
-
-{# --- Current version -------------------------------------------------- #}
-<div class="poc-version poc-actuel">
-  <h1>{{ page.titre }}</h1>
-  <div class="texte">
-  {{ contenu }}
-  </div>
-  <section class="dernieres" aria-labelledby="dernieres-titre">
-    <h2 id="dernieres-titre">Dernières actualités</h2>
-    <div class="cartes-articles">
-    {% for article in articles[:3] %}
-      {% include "_carte_article.html.j2" %}
-    {% endfor %}
-    </div>
-    <p><a href="/articles/">Toutes les actualités</a> - <a href="/galeries/">Galeries photo</a></p>
-  </section>
-</div>
-
-{# --- A. Héritage contemporain ------------------------------------------ #}
-<div class="poc-version poc-a">
+{#
+  Parts shared by several versions: the top of A (photo, title, key figures)
+  and the body of B (tiles, captain's word, news, call to action).
+  Version D = the top of A, then the body of B, on the colours of B.
+#}
+{% set a_haut %}
   <section class="a-hero pleine-largeur">
     {{ calques("a-hero-image") }}
     <div class="a-hero-texte">
@@ -75,7 +61,68 @@
       <li><b>Label Ambition</b><span>FFTA 2025-2026</span></li>
     </ul>
   </section>
+{% endset %}
+{% set b_suite %}
+  <section class="contenu-large b-section">
+    <h2>Choisis ton terrain</h2>
+    <div class="b-bento">
+    {% for titre, lien, photo, texte in disciplines %}
+      <a class="b-tuile b-tuile-{{ loop.index }}" href="{{ lien }}">
+        {{ couverture(photo) }}
+        <span>{{ titre }}</span>
+      </a>
+    {% endfor %}
+    </div>
+  </section>
 
+  <section class="contenu-large b-section b-capitaine">
+    <div class="texte">
+    {{ contenu }}
+    </div>
+  </section>
+
+  <section class="contenu-large b-section">
+    <div class="a-titre-section">
+      <h2>Dernières nouvelles</h2>
+      <a href="/articles/">Toutes les actualités</a>
+    </div>
+    <div class="b-actualites">
+    {% for article in articles[:3] %}
+      <a class="b-actualite" href="{{ article.url }}">
+        {{ couverture(article.galerie) }}
+        <time datetime="{{ article.date.isoformat() }}">{{ article.date | date_fr }}</time>
+        <b>{{ article.titre }}</b>
+      </a>
+    {% endfor %}
+    </div>
+  </section>
+
+  <section class="contenu-large b-appel">
+    <h2>Une séance d'essai avant de t'engager ?</h2>
+    <a class="bouton-sombre" href="https://contact.arcpontoise.fr/">Nous écrire</a>
+  </section>
+{% endset %}
+
+{# --- Current version -------------------------------------------------- #}
+<div class="poc-version poc-actuel">
+  <h1>{{ page.titre }}</h1>
+  <div class="texte">
+  {{ contenu }}
+  </div>
+  <section class="dernieres" aria-labelledby="dernieres-titre">
+    <h2 id="dernieres-titre">Dernières actualités</h2>
+    <div class="cartes-articles">
+    {% for article in articles[:3] %}
+      {% include "_carte_article.html.j2" %}
+    {% endfor %}
+    </div>
+    <p><a href="/articles/">Toutes les actualités</a> - <a href="/galeries/">Galeries photo</a></p>
+  </section>
+</div>
+
+{# --- A. Héritage contemporain ------------------------------------------ #}
+<div class="poc-version poc-a">
+{{ a_haut }}
   <section class="contenu-large a-section apparition">
     <div class="a-titre-section">
       <h2>Toutes les façons de tirer</h2>
@@ -150,44 +197,7 @@
     <li class="b-chiffre-clair"><span>Label Ambition FFTA</span><b>2025-2026</b></li>
   </ul>
 
-  <section class="contenu-large b-section">
-    <h2>Choisis ton terrain</h2>
-    <div class="b-bento">
-    {% for titre, lien, photo, texte in disciplines %}
-      <a class="b-tuile b-tuile-{{ loop.index }}" href="{{ lien }}">
-        {{ couverture(photo) }}
-        <span>{{ titre }}</span>
-      </a>
-    {% endfor %}
-    </div>
-  </section>
-
-  <section class="contenu-large b-section b-capitaine">
-    <div class="texte">
-    {{ contenu }}
-    </div>
-  </section>
-
-  <section class="contenu-large b-section">
-    <div class="a-titre-section">
-      <h2>Dernières nouvelles</h2>
-      <a href="/articles/">Toutes les actualités</a>
-    </div>
-    <div class="b-actualites">
-    {% for article in articles[:3] %}
-      <a class="b-actualite" href="{{ article.url }}">
-        {{ couverture(article.galerie) }}
-        <time datetime="{{ article.date.isoformat() }}">{{ article.date | date_fr }}</time>
-        <b>{{ article.titre }}</b>
-      </a>
-    {% endfor %}
-    </div>
-  </section>
-
-  <section class="contenu-large b-appel">
-    <h2>Une séance d'essai avant de t'engager ?</h2>
-    <a class="bouton-sombre" href="https://contact.arcpontoise.fr/">Nous écrire</a>
-  </section>
+{{ b_suite }}
 </div>
 
 {# --- C. Éditorial épuré ------------------------------------------------ #}
@@ -241,5 +251,11 @@
     {{ contenu }}
     </div>
   </section>
+</div>
+
+{# --- D. Sport, with the top of Héritage -------------------------------- #}
+<div class="poc-version poc-d">
+{{ a_haut }}
+{{ b_suite }}
 </div>
 {% endblock %}

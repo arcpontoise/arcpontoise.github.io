@@ -1,7 +1,7 @@
-// POC: switch the whole site between the current look and three proposals.
+// POC: switch the whole site between the current look and four proposals.
 //
 // Loaded without defer in <head>, so the chosen version is applied before
-// the first paint. The version comes from ?version=a|b|c|actuel, then from
+// the first paint. The version comes from ?version=a|b|c|d|actuel, then from
 // the last choice (localStorage), and is set as <html data-theme="...">.
 // A small bar at the bottom of every page switches between versions.
 
@@ -13,6 +13,7 @@
     { id: "a", libelle: "A · Héritage" },
     { id: "b", libelle: "B · Sport" },
     { id: "c", libelle: "C · Éditorial" },
+    { id: "d", libelle: "D · Sport + Héritage" },
   ];
   const KEY = "poc-version";
   const ids = VERSIONS.map((v) => v.id);

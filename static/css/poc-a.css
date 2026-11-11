@@ -137,13 +137,13 @@
   padding: 6rem 1.5rem 4rem;
 }
 
-:root[data-theme="a"] main .a-hero .manuscrit {
+:root:is([data-theme="a"], [data-theme="d"]) main .a-hero .manuscrit {
   margin: 0 0 0.5rem;
   color: var(--accent-light);
   font-size: 2rem;
 }
 
-:root[data-theme="a"] main .a-hero h1 {
+:root:is([data-theme="a"], [data-theme="d"]) main .a-hero h1 {
   max-width: 14ch;
   margin: 0;
   color: #fffdfb;

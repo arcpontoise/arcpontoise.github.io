@@ -1,0 +1,38 @@
+/*
+ * POC - version D, Sport et énergie with the top of the Héritage home page.
+ * Every other rule comes from css/poc-b.css; here, the hero and the key
+ * figures of version A get the colours of version B.
+ */
+
+.poc-d .a-hero {
+  background: var(--bg);
+}
+
+.poc-d .a-hero::after {
+  background: linear-gradient(rgb(13 24 56 / 15%), rgb(13 24 56 / 85%));
+}
+
+.poc-d .a-hero .bouton-plein {
+  border-radius: 12px;
+  background: var(--accent);
+  color: #0d1838;
+}
+
+.poc-d .a-hero .bouton-contour {
+  border-radius: 12px;
+  background: rgb(255 253 251 / 10%);
+}
+
+.poc-d .a-chiffres {
+  border-bottom: 1px solid var(--border);
+  background: var(--card);
+}
+
+.poc-d .a-chiffres b {
+  font-family: "Space Grotesk", Inter, sans-serif;
+  letter-spacing: -0.02em;
+}
+
+.poc-d .a-chiffres span {
+  color: var(--accent);
+}
