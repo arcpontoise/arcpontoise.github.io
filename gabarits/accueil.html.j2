@@ -6,10 +6,10 @@
   published in drop, read live by <arc-couverture> (js/arc-galerie.js).
 #}
 {% set disciplines = [
-  ("Tir en salle", "/pratiquer/tir-en-salle/", "2025-concours-salle", "D'octobre à avril, en salle d'armes et au gymnase."),
-  ("Tir extérieur", "/pratiquer/tir-exterieur/", "2026-initiation-parcours", "Sur le terrain de la compagnie, aux beaux jours."),
+  ("Tir en salle", "/pratiquer/tir-en-salle/", "/images/salle-armes-pas-de-tir.webp", "D'octobre à avril, en salle d'armes et au gymnase."),
+  ("Tir extérieur", "/pratiquer/tir-exterieur/", "/images/terrain-exterieur.webp", "Sur le terrain de la compagnie, aux beaux jours."),
   ("Tir Beursault", "/pratiquer/tir-beursault/", "/images/jeu-arc-allee-tir.webp", "Le tir traditionnel des compagnies d'arc."),
-  ("Parcours", "/pratiquer/parcours/", "2024-ecouen", "Tir nature, tir 3D et tir en campagne."),
+  ("Parcours", "/pratiquer/parcours/", "/images/tir-3d-montagne.webp", "Tir nature, tir 3D et tir en campagne."),
 ] %}
 {#
   couverture(): the cover of a drop gallery, or a picture of this site when
@@ -24,7 +24,7 @@
 {%- endmacro %}
 {% macro calques(classe) -%}
 <div class="calques {{ classe }}">
-  <img class="calque-fond" src="/images/accueil-crepuscule.webp" alt="Les archers de la compagnie alignés sur le pas de tir du terrain, de dos, sous un ciel de crépuscule" width="1200" height="1600">
+  <img class="calque-fond" src="/images/accueil-terrain.webp" alt="Un jeune archer de la compagnie au tir, de dos, sur le terrain extérieur" width="1920" height="1080">
 </div>
 {%- endmacro %}
 {% block scripts %}
@@ -216,8 +216,8 @@
   </section>
 
   <figure class="contenu-large c-photo apparition">
-    <img src="/images/terrain-crepuscule.webp" alt="Trois archers sur le pas de tir du terrain, au coucher du soleil" width="1200" height="1600" loading="lazy">
-    <figcaption>Fin de séance sur le terrain de la compagnie.</figcaption>
+    <img src="/images/accueil-terrain.webp" alt="Un jeune archer de la compagnie au tir, de dos, sur le terrain extérieur" width="1920" height="1080" loading="lazy">
+    <figcaption>Au tir sur le terrain de la compagnie.</figcaption>
   </figure>
 
   <section class="contenu-large c-disciplines">

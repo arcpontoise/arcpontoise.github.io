@@ -3,7 +3,7 @@ titre: Le tir en extérieur
 url: /pratiquer/tir-exterieur/
 menu: pratiquer
 ordre: 2
-galerie: 2026-initiation-parcours
+image: /images/terrain-exterieur.webp
 description: "De mars-avril à fin septembre, sur le terrain de la compagnie derrière le Hall Omnisports Philippe Hémet."
 ---
 
@@ -26,6 +26,8 @@ Sur ce terrain les archers disposent :
 
 Toutes les installations ont été construites par les archers.
 Chaque année, une ou deux journées rassemblent les archers pour procéder à l'entretien de ces installations.
+
+![Une séance de l'école de tir : de jeunes archers de dos, sur le pas de tir du terrain](/images/ecole-de-tir.webp)
 
 La municipalité met le terrain gratuitement à la disposition de la Compagnie, et assure la tonte du terrain et la taille des haies.
 

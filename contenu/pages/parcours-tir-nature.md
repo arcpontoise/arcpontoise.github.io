@@ -3,7 +3,7 @@ titre: "Le tir nature"
 url: /pratiquer/parcours/tir-nature/
 menu: pratiquer
 ordre: 2
-galerie: 2025-initiation-parcours
+image: /images/tir-nature.webp
 description: "Tir nature : 21 cibles animalières en papier, deux flèches par cible, en pleine nature."
 ---
 
@@ -11,6 +11,8 @@ description: "Tir nature : 21 cibles animalières en papier, deux flèches par c
 
 Très similaire au tir 3D, le parcours Nature se pratique également en peloton, sur **21 cibles animalières en 2D**. Les animaux sont symbolisés par des blasons représentant du gibier de différentes tailles.
 Les catégories d'armes et d'âge sont les mêmes.
+
+![Un archer au tir nature, de dos, depuis un piquet, vers les cibles animalières en papier](/images/tir-nature.webp)
 
 L'attribution des pas de tir est cependant différente, puisque les deux flèches doivent être "**baguées**" afin d'identifier l'ordre de tir :
 

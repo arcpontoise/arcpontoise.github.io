@@ -4,11 +4,14 @@ url: /pratiquer/parcours/tir-campagne/
 menu: pratiquer
 ordre: 3
 description: "Tir en campagne : 24 cibles à blasons, distances connues ou inconnues, sur un parcours multi-cibles."
+image: /images/tir-campagne-blason.webp
 ---
 
 ## Le principe
 
 Le tir en campagne consiste en un parcours de **24 cibles**. Les blasons comportent **6 anneaux concentriques** (2 jaunes et 4 noires ou bleues). Les points allant **de 1 à 6**. Les distances peuvent être toutes connues, toutes inconnues ou moitié connues/inconnues. Les distances connues seront marquées sur le piquet qui matérialise le pas de tir.
+
+![Une cible de tir en campagne en forêt, avec ses petits blasons, et son piquet de tir au premier plan](/images/tir-campagne-blason.webp)
 
 Quatre catégories d'armes sont possibles. **NB** : selon la catégorie d'âge, certaines armes ne sont pas acceptées.
 

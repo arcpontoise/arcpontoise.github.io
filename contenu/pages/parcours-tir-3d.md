@@ -3,13 +3,15 @@ titre: "Le tir 3D"
 url: /pratiquer/parcours/tir-3d/
 menu: pratiquer
 ordre: 1
-galerie: 2024-ecouen
+image: /images/tir-3d-ratons.webp
 description: "Tir 3D : 24 cibles animalières en mousse, à distance inconnue, en pleine nature."
 ---
 
 ## Le principe
 
 Le tir 3D se pratique en pelotons (de **4 à 6 archers**) sur un parcours de **24 cibles**, représentants des animaux en mousse polyuréthane. La plupart des animaux sont représentés à taille réelle et la **distance** entre le pas de tir et l'animal est **inconnue**.
+
+![Deux cibles 3D en mousse, des ratons laveurs fixés à un tronc, avec des flèches plantées](/images/tir-3d-ratons.webp)
 Selon la zone atteinte, on peut marquer **5, 8, 10 ou 11** points. Les sabots et cornes ne rapportent pas de point. Le score maximal est de **528** points.
 Cinq catégories d'armes sont possibles. **NB** : selon la catégorie d'âge, certaines armes ne sont pas acceptées.
 
@@ -43,10 +45,14 @@ tirent du piquet blanc quand le piquet rose n'est pas installé.
 
 Le terrain peut être plus ou moins vallonné, allant d'un stade à une piste de ski en montagne. La pente, les jeux de lumière et les effets de couloir font totalement parti de l'esprit du tir 3D. Les organisateurs ont libre champ pour mettre les animaux en situation.
 
+![Un archer au tir sur une pente en montagne, vers une cible 3D à l'orée du bois](/images/tir-3d-pente.webp)
+
 ## Déroulement du tir
 
 Les archers se présentent à un piquet d'attente (jaune), depuis lequel théoriquement l'animal n'est pas visible. Lorsque le peloton précédent a libéré la cible, les deux premiers archers du peloton vont sur leur piquet.
 Ils doivent alors se positionner dans un demi-disque d'approximativement un mètre de rayon, derrière le piquet.
 Ils tirent **deux flèches** dans un délais d'**une minute et trente secondes**, puis reviennent au pas d'attente pour laisser les autres archers du peloton tirer à leur tour.
+
+![Deux archères de dos tirant ensemble depuis leur piquet, en sous-bois](/images/tir-3d-foret.webp)
 
 Une fois que tous les archers du peloton ont tiré, les archers vont compter les points, enlever leurs flèches et passent à la cible suivante. En cas de perte d'une ou plusieurs flèches, les archers du peloton peuvent chercher aux abords de l'animal, **sans trop s'éloigner** au risque d'être sur la ligne de tir d'un autre animal. Il est de bonne augure d'arrêter les recherches dès que le peloton suivant arrive au pas d'attente.

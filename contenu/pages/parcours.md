@@ -4,7 +4,7 @@ url: /pratiquer/parcours/
 menu: pratiquer
 gabarit: rubrique
 ordre: 4
-galerie: 2024-ecouen
+image: /images/tir-3d-montagne.webp
 description: "Tir 3D, tir nature et tir en campagne : les disciplines de parcours pratiquées par la compagnie."
 ---
 

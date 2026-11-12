@@ -3,7 +3,7 @@ titre: Le tir en salle
 url: /pratiquer/tir-en-salle/
 menu: pratiquer
 ordre: 1
-galerie: 2025-concours-salle
+image: /images/salle-armes-pas-de-tir.webp
 description: "Le tir en salle à la compagnie, d'octobre à avril : la salle d'armes et le gymnase Marie Laurencin à Pontoise."
 ---
 
@@ -16,9 +16,9 @@ Presque tous les créneaux d'entraînement se font dans la **salle d'armes**, à
 Omnisports Philippe Hémet, 1 rue Pierre de Coubertin, 95300 Pontoise. Il est également possible
 de tirer dans le jeu d'arc, à cette même adresse.
 
-![La salle de tir de la salle d'armes](/images/salle-armes-tir.webp)
+![La salle d'armes prête pour le tir : les lignes du pas de tir au sol et les cibles installées au fond](/images/salle-armes-pas-de-tir.webp)
 
-![Le mur de tir de la salle d'armes](/images/salle-armes-mur.webp)
+![La salle d'armes sur toute sa longueur, du pas de tir jusqu'aux cibles, entre les rideaux de protection](/images/salle-armes-longueur.webp)
 
 ## Le gymnase Marie Laurencin
 

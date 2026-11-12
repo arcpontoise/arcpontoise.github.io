@@ -12,6 +12,12 @@
   background: linear-gradient(rgb(13 24 56 / 15%), rgb(13 24 56 / 85%));
 }
 
+@media (width > 900px) {
+  .poc-d .a-hero::after {
+    background: linear-gradient(rgb(13 24 56 / 75%), rgb(13 24 56 / 25%) 60%, rgb(13 24 56 / 60%));
+  }
+}
+
 .poc-d .a-hero .bouton-plein {
   border-radius: 12px;
   background: var(--accent);
