@@ -117,7 +117,7 @@
 }
 
 .a-hero-image img {
-  object-position: 50% 70%;
+  object-position: 65% 60%;
 }
 
 .a-hero::after {
@@ -352,10 +352,29 @@
   font-size: 2rem;
 }
 
-/* Wide screens: the text sits right of the archer of the home photo */
+/* Wide screens: the text sits in the sky, left of the archer's bow */
 @media (width > 900px) {
+  .a-hero {
+    align-items: flex-start;
+    min-height: min(86vh, 48rem);
+  }
+
+  .a-hero::after {
+    background: linear-gradient(rgb(9 19 45 / 70%), rgb(9 19 45 / 25%) 60%, rgb(9 19 45 / 55%));
+  }
+
   .a-hero-texte {
-    padding-left: max(1.5rem, 46%);
+    padding: 3.5rem max(1.5rem, 38%) 4rem 1.5rem;
+  }
+
+  :root:is([data-theme="a"], [data-theme="d"]) main .a-hero h1 {
+    max-width: 22ch;
+    font-size: clamp(2.4rem, 4.4vw, 3.8rem);
+  }
+
+  .a-chapo {
+    margin: 1rem 0 1.5rem;
+    font-size: 1.15rem;
   }
 }
 

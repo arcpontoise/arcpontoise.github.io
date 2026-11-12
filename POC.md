@@ -28,9 +28,9 @@ page à l'autre. Un lien peut imposer une version, par exemple
 
 Aucune photo de personne reconnaissable n'entre dans ce dépôt public :
 
-- les photos d'archers de dos au crépuscule, sans visage reconnaissable,
-  sont dans `static/images/` (`accueil-crepuscule.webp`,
-  `terrain-crepuscule.webp`) ;
+- les photos d'archers de dos, sans visage reconnaissable, sont dans
+  `static/images/` (`accueil-terrain.webp`, `ecole-de-tir.webp`,
+  `tir-3d-*.webp`, `tir-nature.webp`, `terrain-crepuscule.webp`) ;
 - toutes les autres sont les **couvertures des galeries publiées dans drop**,
   lues en direct par le composant `<arc-couverture>`
   (`static/js/arc-galerie.js`). La couverture est la première photo de la
